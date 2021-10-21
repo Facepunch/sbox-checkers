@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
-    partial class CheckersCell : Entity
+	partial class CheckersCell : Entity
 	{
 
 		[Net]

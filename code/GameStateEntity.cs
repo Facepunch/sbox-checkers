@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
-    partial class GameStateEntity : Entity
+	partial class GameStateEntity : Entity
 	{
 
 		[Net]
@@ -36,7 +36,7 @@ namespace Facepunch.Checkers
 					break;
 				case GameState.Starting:
 					Timer -= Time.Delta;
-					if(Timer <= 0 )
+					if ( Timer <= 0 )
 					{
 						StartGame();
 					}

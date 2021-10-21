@@ -33,7 +33,7 @@ namespace Facepunch.Checkers
 
 			var gridEnt = Create<CheckersBoard>();
 			gridEnt.Mins = gridTrigger.WorldSpaceBounds.Mins;
-			gridEnt.Maxs = gridTrigger.WorldSpaceBounds.Maxs.WithZ(gridEnt.Mins.z);
+			gridEnt.Maxs = gridTrigger.WorldSpaceBounds.Maxs.WithZ( gridEnt.Mins.z );
 			gridEnt.SpawnCells();
 		}
 

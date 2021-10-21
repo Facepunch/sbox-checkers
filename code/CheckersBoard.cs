@@ -29,7 +29,7 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			foreach(var child in Children )
+			foreach ( var child in Children )
 			{
 				child.Delete();
 			}
@@ -41,7 +41,7 @@ namespace Facepunch.Checkers
 					var cell = Entity.Create<CheckersCell>();
 					cell.SetParent( this );
 					cell.Mins = new Vector3( CellSize * x, CellSize * y ) + Mins;
-					cell.Maxs = (CellSize * Vector3.One).WithZ(0) + cell.Mins;
+					cell.Maxs = (CellSize * Vector3.One).WithZ( 0 ) + cell.Mins;
 					cell.BoardPosition = new Vector2( x, y );
 				}
 			}
