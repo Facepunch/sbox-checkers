@@ -16,6 +16,15 @@ namespace Facepunch.Checkers
 			}
 		}
 
+		public override void ClientJoined( Client cl )
+		{
+			base.ClientJoined( cl );
+
+			var player = new CheckersPlayer();
+			player.Team = CheckersTeam.Spectator;
+			cl.Pawn = player;
+		}
+
 		[Event.Entity.PostSpawn]
 		private void CreateGrid()
 		{

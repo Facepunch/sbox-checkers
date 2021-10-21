@@ -11,6 +11,7 @@ namespace Facepunch.Checkers
 			if ( IsClient )
 			{
 				RootPanel.SetTemplate( "ui/hud.html" );
+				RootPanel.Style.PointerEvents = "visible";
 			}
 		}
 
