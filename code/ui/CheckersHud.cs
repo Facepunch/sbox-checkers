@@ -3,14 +3,14 @@ using Sandbox.UI;
 
 namespace Facepunch.Checkers
 {
-	partial class HudEntity : HudEntity<RootPanel>
+	public partial class CheckersHudEntity : Sandbox.HudEntity<RootPanel>
 	{
 
-		public HudEntity()
+		public CheckersHudEntity()
 		{
 			if ( IsClient )
 			{
-				RootPanel.SetTemplate( "ui/hud.html" );
+				RootPanel.SetTemplate( "ui/CheckersHud.html" );
 				RootPanel.Style.PointerEvents = "visible";
 			}
 		}

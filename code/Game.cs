@@ -11,7 +11,7 @@ namespace Facepunch.Checkers
 		{
 			if ( IsServer )
 			{
-				new HudEntity();
+				new CheckersHudEntity();
 				new GameStateEntity();
 			}
 		}
