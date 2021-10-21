@@ -28,8 +28,8 @@ namespace Facepunch.Checkers
 		[Event.Frame]
 		public void OnFrame()
 		{
-			DebugOverlay.Box( Mins, Maxs.WithZ( Mins.z + 2 ), Color );
-			DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
+			//DebugOverlay.Box( Mins, Maxs.WithZ( Mins.z + 2 ), Color );
+			//DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
 		}
 
 	}

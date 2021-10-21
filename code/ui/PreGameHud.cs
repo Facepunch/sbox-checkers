@@ -12,7 +12,7 @@ namespace Facepunch.Checkers
 
 		public PreGameHud()
 		{
-			SetTemplate( "ui/PreGameHud.html" );
+			SetTemplate( "/ui/PreGameHud.html" );
 		}
 
 	}
