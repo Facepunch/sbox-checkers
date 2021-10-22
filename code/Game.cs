@@ -21,8 +21,10 @@ namespace Facepunch.Checkers
 			base.ClientJoined( cl );
 
 			var player = new CheckersPlayer();
-			player.Team = CheckersTeam.Spectator;
 			cl.Pawn = player;
+
+			player.Team = CheckersTeam.Spectator;
+			player.Respawn();
 		}
 
 		[Event.Entity.PostSpawn]

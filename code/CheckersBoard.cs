@@ -47,5 +47,18 @@ namespace Facepunch.Checkers
 			}
 		}
 
+		public CheckersCell GetCellAt( Vector3 origin )
+		{
+			foreach ( var child in Children )
+			{
+				if ( child is not CheckersCell cell || !cell.Contains( origin ) )
+				{
+					continue;
+				}
+				return cell;
+			}
+			return null;
+		}
+
 	}
 }

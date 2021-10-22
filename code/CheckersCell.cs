@@ -17,6 +17,8 @@ namespace Facepunch.Checkers
 		[Net]
 		public Vector3 Maxs { get; set; }
 
+		public bool Hovered { get; set; }
+
 		public Vector3 Center => (Maxs + Mins) / 2;
 		public Color Color => (BoardPosition.x + BoardPosition.y) % 2 == 0 ? Color.Black : Color.Red;
 
@@ -25,11 +27,24 @@ namespace Facepunch.Checkers
 			Transmit = TransmitType.Always;
 		}
 
+		public bool Contains( Vector3 p )
+		{
+			if ( Mins.x <= p.x && p.x <= Maxs.x && Mins.y <= p.y && p.y <= Maxs.y )
+			{
+				return true;
+			}
+			return false;
+		}
+
 		[Event.Frame]
 		public void OnFrame()
 		{
-			//DebugOverlay.Box( Mins, Maxs.WithZ( Mins.z + 2 ), Color );
-			//DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
+			DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
+
+			if ( Hovered )
+			{
+				DebugOverlay.Sphere( Center, 50, Color.White );
+			}
 		}
 
 	}

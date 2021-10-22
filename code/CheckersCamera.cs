@@ -22,9 +22,7 @@ namespace Facepunch.Checkers
 				// todo: maybe spectators can fly around?
 			}
 
-			var targetCam = player.Team == CheckersTeam.Black
-				? "camera_black"
-				: "camera_red";
+			var targetCam = player.Team == CheckersTeam.Black || player.Team == CheckersTeam.Spectator ? "camera_black"	: "camera_red";
 
 			// todo: maybe calculate the ideal camera position using the board's bounds
 			var cam = Entity.FindByName( targetCam );
