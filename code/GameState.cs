@@ -9,6 +9,7 @@ namespace Facepunch.Checkers
 
 	public enum GameState
 	{
+		None,
 		WaitingToStart,
 		Starting,
 		Live,

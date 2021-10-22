@@ -21,6 +21,8 @@ namespace Facepunch.Checkers
 				Components.Add( new GameStateComponent() );
 
 				new CheckersHudEntity();
+
+				State.SetCurrentState( GameState.WaitingToStart );
 			}
 		}
 

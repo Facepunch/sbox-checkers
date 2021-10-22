@@ -9,7 +9,7 @@ namespace Facepunch.Checkers
     static class CheckersEvents
 	{
 
-		public static string GameStateChanged = "GameStateChanged";
+		public const string GameStateChanged = "GameStateChanged";
 
 	}
 }

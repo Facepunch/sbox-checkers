@@ -10,16 +10,18 @@ namespace Facepunch.Checkers
 	partial class GameStateComponent : EntityComponent<CheckersGame>
 	{
 
-		[Net]
+		[Net, Change( nameof( ClientGameStateChanged ) )]
 		public GameState CurrentState { get; set; }
 		[Net]
 		public CheckersPlayer RedPlayer { get; set; }
 		[Net]
 		public CheckersPlayer BlackPlayer { get; set; }
 		[Net]
-		public CheckersTeam ActivePlayer { get; set; } // the team that needs to make a move
+		public CheckersTeam ActivePvvvlayer { get; set; } // the team that needs to make a move
 		[Net]
 		public float StateTimer { get; set; }
+
+		private GameState _prevClientGameState;
 
 		[Event.Tick]
 		private void OnTick()
@@ -58,12 +60,18 @@ namespace Facepunch.Checkers
 			}
 		}
 
-		private void SetCurrentState( GameState newState )
+		public void SetCurrentState( GameState newState )
 		{
 			var oldState = CurrentState;
 			CurrentState = newState;
 
 			Event.Run( CheckersEvents.GameStateChanged, oldState, newState );
+		}
+
+		private void ClientGameStateChanged()
+		{
+			Event.Run( CheckersEvents.GameStateChanged, _prevClientGameState, CurrentState );
+			_prevClientGameState = CurrentState;
 		}
 
 	}
