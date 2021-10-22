@@ -50,7 +50,7 @@ metadata
 ]
 
 //
-// Facepunch.Checkers.Game
+// Facepunch.Checkers.CheckersGame
 //
 @PointClass base(BaseProperties_sbox_checkers) = checkers : ""
 [

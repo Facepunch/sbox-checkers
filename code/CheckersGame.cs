@@ -4,10 +4,10 @@ using System.Linq;
 namespace Facepunch.Checkers
 {
 	[Library( "checkers", Title = "Checkers" )]
-	partial class Game : Sandbox.Game
+	partial class CheckersGame : Sandbox.Game
 	{
 
-		public Game()
+		public CheckersGame()
 		{
 			if ( IsServer )
 			{
