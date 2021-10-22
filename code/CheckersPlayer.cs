@@ -12,6 +12,8 @@ namespace Facepunch.Checkers
 
 		[Net]
 		public CheckersTeam Team { get; set; } = CheckersTeam.Spectator;
+		[Net]
+		public bool ReadyToStart { get; set; }
 
 		private CheckersCell _hoveredCell;
 

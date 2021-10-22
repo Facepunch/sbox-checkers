@@ -7,12 +7,20 @@ namespace Facepunch.Checkers
 	partial class CheckersGame : Sandbox.Game
 	{
 
+		public static CheckersGame Instance;
+
+		public static GameStateComponent State => Instance.Components.Get<GameStateComponent>();
+
 		public CheckersGame()
 		{
+			Instance = this;
+			
 			if ( IsServer )
 			{
+				// let's frick with components
+				Components.Add( new GameStateComponent() );
+
 				new CheckersHudEntity();
-				new GameStateEntity();
 			}
 		}
 
