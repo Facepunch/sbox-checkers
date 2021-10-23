@@ -34,8 +34,11 @@ namespace Facepunch.Checkers
 			// todo: map spawn points
 			Position = Vector3.Up * 400;
 
-			_clothing.LoadFromClient( Client );
-			_clothing.DressEntity( this );
+			if ( Client != null )
+			{
+				_clothing.LoadFromClient( Client );
+				_clothing.DressEntity( this );
+			}
 		}
 
 		public override void Simulate( Client cl )
