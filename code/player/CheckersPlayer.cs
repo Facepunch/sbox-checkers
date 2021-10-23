@@ -16,6 +16,7 @@ namespace Facepunch.Checkers
 		public bool ReadyToStart { get; set; }
 
 		private CheckersCell _hoveredCell;
+		private Clothing.Container _clothing = new();
 
 		public override void Respawn()
 		{
@@ -32,6 +33,9 @@ namespace Facepunch.Checkers
 
 			// todo: map spawn points
 			Position = Vector3.Up * 400;
+
+			_clothing.LoadFromClient( Client );
+			_clothing.DressEntity( this );
 		}
 
 		public override void Simulate( Client cl )
