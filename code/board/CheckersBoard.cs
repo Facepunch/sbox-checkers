@@ -34,6 +34,8 @@ namespace Facepunch.Checkers
 				child.Delete();
 			}
 
+			var pieceIdx = 0;
+
 			for ( int y = 0; y < 8; y++ )
 			{
 				for ( int x = 0; x < 8; x++ )
@@ -43,6 +45,21 @@ namespace Facepunch.Checkers
 					cell.Mins = new Vector3( CellSize * x, CellSize * y ) + Mins;
 					cell.Maxs = (CellSize * Vector3.One).WithZ( 0 ) + cell.Mins;
 					cell.BoardPosition = new Vector2( x, y );
+
+					if((x + y) % 2 == 0)
+					{
+						if (pieceIdx >= 12 && pieceIdx < 20 )
+						{
+							pieceIdx++;
+							continue;
+						}
+						pieceIdx++;
+						var piece = Entity.Create<CheckersPiece>();
+						piece.SetParent( this );
+						piece.Position = cell.Center;
+						piece.RenderColor = pieceIdx <= 12 ? Color.Black : Color.Red;
+					}
+
 				}
 			}
 		}
