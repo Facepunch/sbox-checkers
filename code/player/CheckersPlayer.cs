@@ -38,6 +38,20 @@ namespace Facepunch.Checkers
 		{
 			base.Simulate( cl );
 
+			if ( IsServer )
+			{
+				if ( Input.Pressed( InputButton.Slot1 ) )
+				{
+					CheckersGame.Instance.SetGameState( GameState.Live );
+				}
+
+				if ( Input.Pressed( InputButton.Slot2 ) )
+				{
+					CheckersGame.Instance.SetGameState( GameState.WaitingToStart );
+				}
+			}
+
+
 			if ( !IsClient )
 			{
 				return;

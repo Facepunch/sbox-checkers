@@ -1,4 +1,5 @@
 using Sandbox;
+using Sandbox.UI;
 using System.Linq;
 
 namespace Facepunch.Checkers
@@ -9,20 +10,15 @@ namespace Facepunch.Checkers
 
 		public static CheckersGame Instance;
 
-		public static GameStateComponent State => Instance.Components.Get<GameStateComponent>();
-
 		public CheckersGame()
 		{
 			Instance = this;
 			
 			if ( IsServer )
 			{
-				// let's frick with components
-				Components.Add( new GameStateComponent() );
-
 				new CheckersHudEntity();
 
-				State.SetCurrentState( GameState.WaitingToStart );
+				SetGameState( GameState.WaitingToStart );
 			}
 		}
 

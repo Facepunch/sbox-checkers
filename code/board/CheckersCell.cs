@@ -39,7 +39,7 @@ namespace Facepunch.Checkers
 		[Event.Frame]
 		public void OnFrame()
 		{
-			DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
+			//DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
 
 			if ( Hovered )
 			{

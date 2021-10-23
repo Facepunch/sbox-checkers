@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Sandbox.Checkers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,70 @@ using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
-    partial class CheckersGame
+	partial class CheckersGame
 	{
 
-		[Event( CheckersEvents.GameStateChanged )]
-		private void OnGameStateChanged( GameState oldState, GameState newState )
+		// todo: implement teams via lobby and avoid all this
+
+		public CheckersPlayer Team1 => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+			 && pl.IsValid
+			 && pl.Team == CheckersTeam.One ) as CheckersPlayer;
+
+		public CheckersPlayer Team2 => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+			 && pl.IsValid
+			 && pl.Team == CheckersTeam.Two ) as CheckersPlayer;
+
+		[ServerCmd]
+		public static void SetClientTeam( CheckersTeam team )
 		{
-			Log.Info( "CLIENT: " + IsClient );
-			Log.Info( "CHANGED: " + oldState + " to " + newState );
+			var player = ConsoleSystem.Caller.Pawn as CheckersPlayer;
+
+			if ( player.Team == team )
+			{
+				return;
+			}
+
+			var teamTaken = Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+				 && pl.IsValid
+				 && pl.Team == team ) != null;
+
+			if ( teamTaken )
+			{
+				return;
+			}
+
+			player.Team = team;
+		}
+
+		[ServerCmd]
+		public static void PlayAgainstAi()
+		{
+			foreach ( var pl in Player.All )
+			{
+				if ( pl is not CheckersPlayer cpl )
+				{
+					continue;
+				}
+				cpl.Team = CheckersTeam.Spectator;
+			}
+
+			var player = ConsoleSystem.Caller.Pawn as CheckersPlayer;
+			player.Team = CheckersTeam.One;
+
+			foreach ( var cl in Client.All )
+			{
+				if ( cl.IsBot )
+				{
+					cl.Kick();
+				}
+			}
+
+			var bot = new CheckersBot();
+			bot.Client.Pawn.Delete();
+			var botPlayer = new CheckersPlayer();
+			botPlayer.Respawn();
+			botPlayer.Team = CheckersTeam.Two;
+			bot.Client.Pawn = botPlayer;
 		}
 
 	}

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Facepunch.Checkers
+namespace Sandbox.Checkers
 {
-	enum CheckersTeam
+    class CheckersBot : Bot
 	{
-		One,
-		Two,
-		Spectator
+
+		public CheckersBot()
+		{
+		}
+
 	}
 }
