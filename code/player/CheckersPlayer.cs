@@ -31,14 +31,13 @@ namespace Facepunch.Checkers
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
 
-			// todo: map spawn points
-			Position = Vector3.Up * 400;
-
 			if ( Client != null )
 			{
 				_clothing.LoadFromClient( Client );
 				_clothing.DressEntity( this );
 			}
+
+			base.Respawn();
 		}
 
 		public override void Simulate( Client cl )
