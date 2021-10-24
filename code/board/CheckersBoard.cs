@@ -29,9 +29,14 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			foreach ( var child in Children )
+			for ( int i = Children.Count - 1; i >= 0; i-- )
 			{
-				child.Delete();
+				if ( Children[i] is not CheckersCell
+					|| Children[i] is not CheckersPiece )
+				{
+					continue;
+				}
+				Children[i].Delete();
 			}
 
 			var pieceIdx = 0;
@@ -46,9 +51,9 @@ namespace Facepunch.Checkers
 					cell.Maxs = (CellSize * Vector3.One).WithZ( 0 ) + cell.Mins;
 					cell.BoardPosition = new Vector2( x, y );
 
-					if((x + y) % 2 == 0)
+					if ( (x + y) % 2 == 0 )
 					{
-						if (pieceIdx >= 12 && pieceIdx < 20 )
+						if ( pieceIdx >= 12 && pieceIdx < 20 )
 						{
 							pieceIdx++;
 							continue;
@@ -56,19 +61,37 @@ namespace Facepunch.Checkers
 						pieceIdx++;
 						var piece = Entity.Create<CheckersPiece>();
 						piece.SetParent( this );
-						piece.Position = cell.Center;
-						piece.RenderColor = pieceIdx <= 12 ? Color.Black : Color.Red;
+						piece.MoveToPosition( cell.BoardPosition );
+						piece.Team = pieceIdx <= 12 ? CheckersTeam.Black : CheckersTeam.Red;
 					}
-
 				}
 			}
 		}
 
-		public CheckersCell GetCellAt( Vector3 origin )
+		public CheckersPiece GetPieceAt( Vector2 boardPosition )
+		{
+			return Children.FirstOrDefault( x => x is CheckersPiece p && p.BoardPosition == boardPosition ) as CheckersPiece;
+		}
+
+		public CheckersCell GetCellAt( Vector2 boardPosition )
 		{
 			foreach ( var child in Children )
 			{
-				if ( child is not CheckersCell cell || !cell.Contains( origin ) )
+				if ( child is not CheckersCell cell
+					|| cell.BoardPosition != boardPosition )
+				{
+					continue;
+				}
+				return cell;
+			}
+			return null;
+		}
+
+		public CheckersCell GetCellAt( Vector3 worldOrigin )
+		{
+			foreach ( var child in Children )
+			{
+				if ( child is not CheckersCell cell || !cell.Contains( worldOrigin ) )
 				{
 					continue;
 				}

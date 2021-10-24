@@ -8,8 +8,8 @@ namespace Facepunch.Checkers
 {
 	enum CheckersTeam
 	{
-		One,
-		Two,
+		Red,
+		Black,
 		Spectator
 	}
 }

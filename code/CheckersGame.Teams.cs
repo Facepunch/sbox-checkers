@@ -14,11 +14,11 @@ namespace Facepunch.Checkers
 
 		public CheckersPlayer Team1 => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
 			 && pl.IsValid
-			 && pl.Team == CheckersTeam.One ) as CheckersPlayer;
+			 && pl.Team == CheckersTeam.Red ) as CheckersPlayer;
 
 		public CheckersPlayer Team2 => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
 			 && pl.IsValid
-			 && pl.Team == CheckersTeam.Two ) as CheckersPlayer;
+			 && pl.Team == CheckersTeam.Black ) as CheckersPlayer;
 
 		[ServerCmd]
 		public static void SetClientTeam( CheckersTeam team )
@@ -55,7 +55,7 @@ namespace Facepunch.Checkers
 			}
 
 			var player = ConsoleSystem.Caller.Pawn as CheckersPlayer;
-			player.Team = CheckersTeam.One;
+			player.Team = CheckersTeam.Red;
 
 			foreach ( var cl in Client.All )
 			{
@@ -69,7 +69,7 @@ namespace Facepunch.Checkers
 			bot.Client.Pawn.Delete();
 			var botPlayer = new CheckersPlayer();
 			botPlayer.Respawn();
-			botPlayer.Team = CheckersTeam.Two;
+			botPlayer.Team = CheckersTeam.Black;
 			bot.Client.Pawn = botPlayer;
 		}
 

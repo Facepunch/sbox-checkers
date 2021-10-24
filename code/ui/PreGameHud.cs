@@ -21,12 +21,12 @@ namespace Facepunch.Checkers
 
 		public void ChooseTeam1()
 		{
-			CheckersGame.SetClientTeam( CheckersTeam.One );
+			CheckersGame.SetClientTeam( CheckersTeam.Red );
 		}
 
 		public void ChooseTeam2()
 		{
-			CheckersGame.SetClientTeam( CheckersTeam.Two );
+			CheckersGame.SetClientTeam( CheckersTeam.Black );
 		}
 
 		public void ChooseSpectator()

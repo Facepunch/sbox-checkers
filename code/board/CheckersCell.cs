@@ -22,6 +22,8 @@ namespace Facepunch.Checkers
 		public Vector3 Center => (Maxs + Mins) / 2;
 		public Color Color => (BoardPosition.x + BoardPosition.y) % 2 == 0 ? Color.Black : Color.Red;
 
+		private CellWorldPanel _worldPanel;
+
 		public CheckersCell()
 		{
 			Transmit = TransmitType.Always;
@@ -31,7 +33,14 @@ namespace Facepunch.Checkers
 		{
 			base.ClientSpawn();
 
-			new CellWorldPanel( this );
+			_worldPanel = new CellWorldPanel( this );
+		}
+
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+
+			_worldPanel?.Delete();
 		}
 
 		public bool Contains( Vector3 p )
@@ -46,12 +55,7 @@ namespace Facepunch.Checkers
 		[Event.Frame]
 		public void OnFrame()
 		{
-			//DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
-
-			if ( Hovered )
-			{
-				//DebugOverlay.Sphere( Center, 50, Color.White );
-			}
+			DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
 		}
 
 	}

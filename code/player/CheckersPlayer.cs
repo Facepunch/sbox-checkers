@@ -16,6 +16,7 @@ namespace Facepunch.Checkers
 		public bool ReadyToStart { get; set; }
 
 		private CheckersCell _hoveredCell;
+		private CheckersPiece _selectedPiece;
 		private Clothing.Container _clothing = new();
 
 		public override void Respawn()
@@ -57,6 +58,37 @@ namespace Facepunch.Checkers
 			{
 				var board = Entity.All.FirstOrDefault( x => x is CheckersBoard ) as CheckersBoard;
 				SetHoveredCell( board.GetCellAt( tr.EndPos ) );
+			}
+
+			SimulatePieceControl();
+		}
+
+		private void SimulatePieceControl()
+		{
+			if ( _hoveredCell == null )
+			{
+				return;
+			}
+
+			if ( !Input.Pressed( InputButton.Attack1 ) )
+			{
+				return;
+			}
+
+			if ( _selectedPiece == null )
+			{
+				var piece = Entity.All.FirstOrDefault( x => x is CheckersPiece p && p.BoardPosition == _hoveredCell.BoardPosition ) as CheckersPiece;
+
+				if ( piece == null )
+				{
+					return;
+				}
+				_selectedPiece = piece;
+			}
+			else
+			{
+				CheckersPiece.NetworkMove( _selectedPiece.NetworkIdent, _hoveredCell.BoardPosition );
+				_selectedPiece = null;
 			}
 		}
 

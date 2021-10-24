@@ -75,7 +75,7 @@ namespace Facepunch.Checkers
 
 			// todo: this kinda sucks
 			var pl = Pawn as CheckersPlayer;
-			var yaw = pl.Team == CheckersTeam.Two || pl.Team == CheckersTeam.Spectator ? 90 : -90;
+			var yaw = pl.Team == CheckersTeam.Black || pl.Team == CheckersTeam.Spectator ? 90 : -90;
 			WishVelocity *= Rotation.FromYaw( yaw );
 
 			if ( !Swimming )

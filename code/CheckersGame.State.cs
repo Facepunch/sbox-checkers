@@ -17,8 +17,6 @@ namespace Facepunch.Checkers
 		[Net]
 		public float TurnTimer { get; set; }
 
-		private float _startTimer = 2f;
-
 		[Event.Tick]
 		private void OnTick()
 		{
@@ -40,24 +38,18 @@ namespace Facepunch.Checkers
 		private void TickWaitingToStart()
 		{
 			var player1 = Player.All.FirstOrDefault( x => x is CheckersPlayer pl
-				&& pl.Team == CheckersTeam.One
+				&& pl.Team == CheckersTeam.Red
 				&& pl.IsValid );
 			var player2 = Player.All.FirstOrDefault( x => x is CheckersPlayer pl
-				&& pl.Team == CheckersTeam.Two
+				&& pl.Team == CheckersTeam.Black
 				&& pl.IsValid );
 
 			if ( player1 == null || player2 == null )
 			{
-				_startTimer = 2f;
 				return;
 			}
 
-			_startTimer -= Time.Delta;
-
-			if ( _startTimer <= 0 )
-			{
-				SetGameState( GameState.Live );
-			}
+			SetGameState( GameState.Live );
 		}
 
 		public void SetGameState( GameState newState )
