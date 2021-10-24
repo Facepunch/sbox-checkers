@@ -80,7 +80,7 @@ namespace Facepunch.Checkers
 
 		public bool UpdateNameTag( Player player )
 		{
-			var labelPos = player.EyePos;
+			var labelPos = player.GetAttachment( "hat" ).Value.Position + Vector3.Up * 50; 
 
 			var tr = Trace.Ray( Input.Cursor, 5000 )
 				.WorldAndEntities()
