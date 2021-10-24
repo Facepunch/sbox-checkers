@@ -1,0 +1,15 @@
+﻿.border {
+    width: 100%;
+    height: 100%;
+    border: 99px solid transparent;
+    pointer-events: all;
+    border-radius: 0;
+    background-color: transparent;
+    border-radius: 40%;
+    transition: border-radius .05s bounce-out;
+
+    &:hover {
+        border-color: red;
+        border-radius: 50%;
+    }
+}

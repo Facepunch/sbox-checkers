@@ -33,6 +33,21 @@ namespace Facepunch.Checkers
 			player.Respawn();
 		}
 
+		public override void FrameSimulate( Client cl )
+		{
+			base.FrameSimulate( cl );
+
+			// Make a ray of where the local pawn is looking
+			var ray = Input.Cursor;
+
+			// Emulate the mouse buttons with any inputs we want
+			var leftMouseDown = Input.Down( InputButton.Attack1 );
+			var rightMouseDown = Input.Down( InputButton.Attack2 );
+			var scroll = new Vector2 { x = Input.MouseWheel }; // ( only x is used )
+
+			WorldInput.Update( ray, leftMouseDown, rightMouseDown, scroll );
+		}
+
 		[Event.Entity.PostSpawn]
 		private void CreateGrid()
 		{

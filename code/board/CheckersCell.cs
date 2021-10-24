@@ -27,6 +27,13 @@ namespace Facepunch.Checkers
 			Transmit = TransmitType.Always;
 		}
 
+		public override void ClientSpawn()
+		{
+			base.ClientSpawn();
+
+			new CellWorldPanel( this );
+		}
+
 		public bool Contains( Vector3 p )
 		{
 			if ( Mins.x <= p.x && p.x <= Maxs.x && Mins.y <= p.y && p.y <= Maxs.y )
@@ -43,7 +50,7 @@ namespace Facepunch.Checkers
 
 			if ( Hovered )
 			{
-				DebugOverlay.Sphere( Center, 50, Color.White );
+				//DebugOverlay.Sphere( Center, 50, Color.White );
 			}
 		}
 
