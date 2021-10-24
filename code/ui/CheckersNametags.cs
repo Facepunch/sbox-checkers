@@ -92,6 +92,12 @@ namespace Facepunch.Checkers
 			}
 
 			float dist = labelPos.Distance( tr.EndPos );
+
+			if(Local.Pawn == player )
+			{
+				dist = 0;
+			}
+
 			if ( dist > MaxDrawDistance )
 				return false;
 
