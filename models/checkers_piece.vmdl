@@ -22,7 +22,10 @@
 						import_filter = 
 						{
 							exclude_by_default = false
-							exception_list = [  ]
+							exception_list = 
+							[
+								"Circle",
+							]
 						}
 					},
 				]
@@ -54,6 +57,10 @@
 						[
 							{
 								from = "materials/error.vmat"
+								to = "materials/checkers/checker/checkers.vmat"
+							},
+							{
+								from = "no_material.vmat"
 								to = "materials/checkers/checker/checkers.vmat"
 							},
 						]
