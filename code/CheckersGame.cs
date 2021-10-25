@@ -13,7 +13,7 @@ namespace Facepunch.Checkers
 		public CheckersGame()
 		{
 			Instance = this;
-			
+
 			if ( IsServer )
 			{
 				new CheckersHudEntity();

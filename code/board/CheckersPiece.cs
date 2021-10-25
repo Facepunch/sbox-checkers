@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
+	class CheckersMove
+	{
+		public CheckersPiece Piece;
+		public CheckersCell Cell;
+		public CheckersPiece Jump;
+	}
+
 	partial class CheckersPiece : ModelEntity
 	{
 
@@ -41,9 +48,15 @@ namespace Facepunch.Checkers
 				return false;
 			}
 
-			if ( checkLegality && !GetLegalCells().Contains( cell ) )
+			if ( checkLegality )
 			{
-				return false;
+				var legalMoves = GetLegalMoves();
+				var hasLegalMove = legalMoves.FirstOrDefault( x => x.Cell.IsValid() && x.Cell.BoardPosition == position ) != null;
+
+				if ( !hasLegalMove )
+				{
+					return false;
+				}
 			}
 
 			BoardPosition = cell.BoardPosition;
@@ -83,50 +96,94 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			foreach ( var c in GetLegalCells() )
+			foreach ( var c in GetLegalMoves() )
 			{
-				DebugOverlay.Line( c.Center, c.Center + Vector3.Up * 100 );
+				DebugOverlay.Sphere( c.Cell.Center, 20, Color.Green );
 			}
 		}
 
-		public List<CheckersCell> GetLegalCells()
+		public List<CheckersMove> GetLegalMoves()
 		{
+			var result = new List<CheckersMove>();
 			var board = Parent as CheckersBoard;
-			var my = Team == CheckersTeam.Red ? -1 : 1;
 
-			var legalMoves = new List<Vector2>()
+			foreach ( var dir in MoveDirs )
 			{
-				 new Vector2( 1, my ),
-				 new Vector2( -1, my )
-			};
-
-			if ( IsKing )
-			{
-				legalMoves.Add( new Vector2( 1, -my ) );
-				legalMoves.Add( new Vector2( -1, -my ) );
-			}
-
-			var result = new List<CheckersCell>();
-
-			foreach ( var dir in legalMoves )
-			{
-				var legalPos = BoardPosition + dir;
-				var cell = board.GetCellAt( legalPos );
-
-				if ( cell == null )
+				var targetPosition = BoardPosition + dir;
+				var move = new CheckersMove();
+				move.Piece = this;
+				move.Cell = board.GetCellAt( targetPosition );
+				switch ( GetMoveState( targetPosition ) )
 				{
-					continue;
+					case MoveState.Yes:
+						result.Add( move );
+						break;
+					case MoveState.YesIfKing:
+						if ( IsKing )
+							result.Add( move );
+						break;
+					case MoveState.OccupiedByEnemy:
+						var jumpPosition = BoardPosition + dir * 2;
+						move.Jump = board.GetPieceAt( targetPosition );
+						move.Cell = board.GetCellAt( BoardPosition + dir * 2 );
+						if ( GetMoveState( jumpPosition ) == MoveState.Yes )
+							result.Add( move );
+						break;
 				}
-
-				if ( board.GetPieceAt( legalPos ) != null )
-				{
-					continue;
-				}
-
-				result.Add( cell );
 			}
 
 			return result;
+		}
+
+		static Vector2[] MoveDirs => new Vector2[]
+		{
+			new Vector2(-1, 1),
+			new Vector2(1, 1),
+			new Vector2(1, -1),
+			new Vector2(-1, -1)
+		};
+
+		private enum MoveState
+		{
+			No,
+			Yes,
+			YesIfKing,
+			OccupiedByEnemy
+		}
+
+		private MoveState GetMoveState( Vector2 boardPosition )
+		{
+			var board = Parent as CheckersBoard;
+			var cell = board.GetCellAt( boardPosition );
+
+			// cell doesn't exist, probably outside the board bounds
+			if ( !cell.IsValid() )
+			{
+				return MoveState.No;
+			}
+
+			// there's a piece occupying this space
+			var piece = board.GetPieceAt( boardPosition );
+			if ( piece.IsValid() )
+			{
+				// we can't jump our own piece
+				if( piece.Team == Team )
+				{
+					return MoveState.No;
+				}
+				return MoveState.OccupiedByEnemy;
+			}
+
+			// only kings can move backwards
+			var yDir = boardPosition.y - BoardPosition.y;
+			if ( (yDir > 0 && Team == CheckersTeam.Red)
+				|| (yDir < 0 && Team == CheckersTeam.Black) )
+			{
+				return MoveState.YesIfKing;
+			}
+
+			// the move is ok
+			return MoveState.Yes;
 		}
 
 		private void SetTeamColor()
@@ -136,29 +193,6 @@ namespace Facepunch.Checkers
 				: Team == CheckersTeam.Black
 					? Color.Black
 					: Color.White;
-		}
-
-		[ServerCmd]
-		public static void NetworkMove( int pieceId, Vector2 boardPosition )
-		{
-			if ( ConsoleSystem.Caller.Pawn is not CheckersPlayer player )
-			{
-				return;
-			}
-
-			if ( Entity.FindByIndex( pieceId ) is not CheckersPiece piece
-				|| piece.Team != player.Team )
-			{
-				return;
-			}
-
-			if ( !piece.MoveToPosition( boardPosition, true ) )
-			{
-				// notify invalid move
-				return;
-			}
-
-			// notify valid move
 		}
 
 	}

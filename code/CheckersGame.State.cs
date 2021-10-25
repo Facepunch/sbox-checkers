@@ -59,6 +59,32 @@ namespace Facepunch.Checkers
 			Event.Run( CheckersEvents.GameStateChanged, newState );
 		}
 
+		public void AttemptMove( CheckersPlayer player, CheckersPiece piece, Vector2 target )
+		{
+			if ( IsClient )
+			{
+				// client shouldn't be doing this
+				return;
+			}
+
+			var move = piece.GetLegalMoves().FirstOrDefault( x => x.Cell.BoardPosition == target );
+			if ( move == null )
+			{
+				// invalid move, notify the client
+				return;
+			}
+
+			Log.Info( "JUMPING: " + (move.Jump != null) );
+
+			if ( move.Jump.IsValid() )
+			{
+				// eliminated a piece, notify the client
+				move.Jump.Delete();
+			}
+
+			piece.BoardPosition = target;
+		}
+
 		private void ClientGameStateChanged()
 		{
 			Event.Run( CheckersEvents.GameStateChanged, CurrentState );
