@@ -123,7 +123,7 @@ namespace Facepunch.Checkers
 				cell.Hovered = true;
 
 				var piece = (cell.Parent as CheckersBoard).GetPieceAt( cell.BoardPosition );
-				if ( piece.IsValid() )
+				if ( piece.IsValid() && piece.Team == Team )
 				{
 					LegalMoveCache.AddRange( piece.GetLegalMoves() );
 				}
