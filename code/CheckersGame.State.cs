@@ -17,6 +17,8 @@ namespace Facepunch.Checkers
 		[Net]
 		public float TurnTimer { get; set; }
 
+		public const float PlayerTurnTime = 30;
+
 		[Event.Tick]
 		private void OnTick()
 		{
@@ -31,7 +33,17 @@ namespace Facepunch.Checkers
 					TickWaitingToStart();
 					break;
 				case GameState.Live:
+					TickLive();
 					break;
+			}
+		}
+
+		private void TickLive()
+		{
+			TurnTimer -= Time.Delta;
+			if ( TurnTimer <= 0 )
+			{
+				EndTurn();
 			}
 		}
 
@@ -48,6 +60,9 @@ namespace Facepunch.Checkers
 			{
 				return;
 			}
+
+			TurnTimer = PlayerTurnTime;
+			ActiveTeam = CheckersTeam.Black;
 
 			SetGameState( GameState.Live );
 		}
@@ -67,12 +82,19 @@ namespace Facepunch.Checkers
 				return;
 			}
 
+			if ( player.Team != ActiveTeam )
+			{
+				return;
+			}
+
 			var move = piece.GetLegalMoves().FirstOrDefault( x => x.Cell.BoardPosition == target );
 			if ( move == null )
 			{
 				// invalid move, notify the client
 				return;
 			}
+
+			// todo: mandatory jumps
 
 			if ( move.Jump.IsValid() )
 			{
@@ -87,6 +109,31 @@ namespace Facepunch.Checkers
 			{
 				piece.IsKing = true;
 			}
+
+			EndTurn();
+		}
+
+		public void EndTurn()
+		{
+			ActiveTeam = ActiveTeam == CheckersTeam.Black
+				? CheckersTeam.Red
+				: CheckersTeam.Black;
+			TurnTimer = PlayerTurnTime;
+		}
+
+		private bool TeamHasLegalJump( CheckersTeam team )
+		{
+			var pieces = Entity.All.Where( x => x is CheckersPiece p && p.IsValid() && p.Team == team );
+			foreach ( var ent in pieces )
+			{
+				var piece = ent as CheckersPiece;
+				var moves = piece.GetLegalMoves();
+				if ( moves.FirstOrDefault( x => x.Jump != null ) != null )
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		private void ClientGameStateChanged()
