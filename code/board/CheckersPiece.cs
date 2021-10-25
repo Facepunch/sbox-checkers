@@ -9,6 +9,7 @@ namespace Facepunch.Checkers
 {
 	class CheckersMove
 	{
+		public CheckersPiece Piece;
 		public CheckersCell Cell;
 		public CheckersPiece Jump;
 	}
@@ -110,6 +111,7 @@ namespace Facepunch.Checkers
 			{
 				var targetPosition = BoardPosition + dir;
 				var move = new CheckersMove();
+				move.Piece = this;
 				move.Cell = board.GetCellAt( targetPosition );
 				switch ( GetMoveState( targetPosition ) )
 				{
@@ -122,7 +124,7 @@ namespace Facepunch.Checkers
 						break;
 					case MoveState.OccupiedByEnemy:
 						var jumpPosition = BoardPosition + dir * 2;
-						move.Jump = board.GetPieceAt( jumpPosition );
+						move.Jump = board.GetPieceAt( targetPosition );
 						move.Cell = board.GetCellAt( BoardPosition + dir * 2 );
 						if ( GetMoveState( jumpPosition ) == MoveState.Yes )
 							result.Add( move );
@@ -191,29 +193,6 @@ namespace Facepunch.Checkers
 				: Team == CheckersTeam.Black
 					? Color.Black
 					: Color.White;
-		}
-
-		[ServerCmd]
-		public static void NetworkMove( int pieceId, Vector2 boardPosition )
-		{
-			if ( ConsoleSystem.Caller.Pawn is not CheckersPlayer player )
-			{
-				return;
-			}
-
-			if ( Entity.FindByIndex( pieceId ) is not CheckersPiece piece
-				/*|| piece.Team != player.Team*/ )
-			{
-				return;
-			}
-
-			if ( !piece.MoveToPosition( boardPosition, true ) )
-			{
-				// notify invalid move
-				return;
-			}
-
-			// notify valid move
 		}
 
 	}

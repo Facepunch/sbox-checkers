@@ -68,18 +68,21 @@ namespace Facepunch.Checkers
 				SetSelectedPiece( piece );
 			}
 
-			if ( SelectedPiece.IsValid() )
+			if ( !SelectedPiece.IsValid() )
 			{
-				SelectedPiece.DragPosition = tr.Hit ? tr.EndPos : Vector3.Zero;
+				return;
+			}
 
-				if ( Input.Released( InputButton.Attack1 ) )
+			SelectedPiece.DragPosition = tr.Hit ? tr.EndPos : Vector3.Zero;
+
+			if ( Input.Released( InputButton.Attack1 ) )
+			{
+				if ( !IsClient )
 				{
-					if ( IsClient )
-					{
-						CheckersPiece.NetworkMove( SelectedPiece.NetworkIdent, HoveredCell.BoardPosition );
-					}
-					SetSelectedPiece( null );
+					CheckersGame.Instance.AttemptMove( this, SelectedPiece, HoveredCell.BoardPosition );
 				}
+
+				SetSelectedPiece( null );
 			}
 		}
 
