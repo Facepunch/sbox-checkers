@@ -126,8 +126,11 @@ namespace Facepunch.Checkers
 						var jumpPosition = BoardPosition + dir * 2;
 						move.Jump = board.GetPieceAt( targetPosition );
 						move.Cell = board.GetCellAt( BoardPosition + dir * 2 );
-						if ( GetMoveState( jumpPosition ) == MoveState.Yes )
+						var moveState = GetMoveState( jumpPosition );
+						if( moveState == MoveState.Yes || (moveState == MoveState.YesIfKing && IsKing) )
+						{
 							result.Add( move );
+						}
 						break;
 				}
 			}
