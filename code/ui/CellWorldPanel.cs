@@ -30,5 +30,16 @@ namespace Facepunch.Checkers
 			Rotation = Rotation.LookAt( Vector3.Up );
 		}
 
+		[Event.Frame]
+		private void OnFrame()
+		{
+			if ( Local.Pawn is not CheckersPlayer pl )
+			{
+				return;
+			}
+
+			SetClass( "legalmove", pl.LegalMoveCache.FirstOrDefault( x => x.Cell == _cell ) != null );
+		}
+
 	}
 }

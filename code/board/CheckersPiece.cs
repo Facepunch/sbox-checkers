@@ -87,21 +87,6 @@ namespace Facepunch.Checkers
 			Position = staticPos;
 		}
 
-		[Event.Frame]
-		private void OnFrame()
-		{
-			var cell = (Parent as CheckersBoard).GetCellAt( BoardPosition );
-			if ( !cell.Hovered )
-			{
-				return;
-			}
-
-			foreach ( var c in GetLegalMoves() )
-			{
-				DebugOverlay.Sphere( c.Cell.Center, 20, Color.Green );
-			}
-		}
-
 		public List<CheckersMove> GetLegalMoves()
 		{
 			var result = new List<CheckersMove>();

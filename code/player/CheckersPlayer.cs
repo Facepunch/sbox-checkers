@@ -21,6 +21,8 @@ namespace Facepunch.Checkers
 
 		private Clothing.Container _clothing = new();
 
+		public List<CheckersMove> LegalMoveCache = new List<CheckersMove>();
+
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -107,6 +109,8 @@ namespace Facepunch.Checkers
 
 		private void SetHoveredCell( CheckersCell cell )
 		{
+			LegalMoveCache.Clear();
+
 			if ( HoveredCell != null )
 			{
 				HoveredCell.Hovered = false;
@@ -117,6 +121,12 @@ namespace Facepunch.Checkers
 			if ( cell != null )
 			{
 				cell.Hovered = true;
+
+				var piece = (cell.Parent as CheckersBoard).GetPieceAt( cell.BoardPosition );
+				if ( piece.IsValid() )
+				{
+					LegalMoveCache.AddRange( piece.GetLegalMoves() );
+				}
 			}
 		}
 
