@@ -38,7 +38,9 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			SetClass( "legalmove", pl.LegalMoveCache.FirstOrDefault( x => x.Cell == _cell ) != null );
+			var myTurn = CheckersGame.Instance.ActiveTeam == pl.Team;
+
+			SetClass( "legalmove", myTurn && pl.LegalMoveCache.FirstOrDefault( x => x.Cell == _cell ) != null );
 		}
 
 	}
