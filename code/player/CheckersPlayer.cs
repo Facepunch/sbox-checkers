@@ -64,7 +64,10 @@ namespace Facepunch.Checkers
 
 			if ( Input.Pressed( InputButton.Attack1 ) )
 			{
-				var piece = Entity.All.FirstOrDefault( x => x is CheckersPiece p && p.BoardPosition == HoveredCell.BoardPosition ) as CheckersPiece;
+				var piece = Entity.All.FirstOrDefault( x => x is CheckersPiece p 
+					&& p.BoardPosition == HoveredCell.BoardPosition
+					&& p.Team == Team ) as CheckersPiece;
+
 				SetSelectedPiece( piece );
 			}
 

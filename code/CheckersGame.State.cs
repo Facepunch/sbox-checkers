@@ -82,7 +82,8 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			if ( player.Team != ActiveTeam )
+			if ( player.Team != ActiveTeam
+				|| player.Team != piece.Team )
 			{
 				return;
 			}
