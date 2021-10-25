@@ -1,5 +1,12 @@
 ﻿<link rel="stylesheet" href="CheckersHud.scss" />
 
 <div>
-    <text class="timer" @text="TurnTimer"></text>
+    <div>
+        <text>Turn: </text>
+        <text class="team" @text="ActiveTeam"></text>
+    </div>
+    <div>
+        <text>Time: </text>
+        <text @text="TurnTimer"></text>
+    </div>
 </div>

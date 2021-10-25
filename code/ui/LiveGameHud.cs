@@ -11,7 +11,8 @@ namespace Facepunch.Checkers
 	class LiveGameHud : Panel
 	{
 
-		public float TurnTimer { get; set; }
+		public float TurnTimer => (int)CheckersGame.Instance.TurnTimer;
+		public CheckersTeam ActiveTeam => CheckersGame.Instance.ActiveTeam;
 
 		public LiveGameHud()
 		{
@@ -27,7 +28,6 @@ namespace Facepunch.Checkers
 				return;
 			}
 			Style.Display = DisplayMode.Flex;
-			TurnTimer = CheckersGame.Instance.TurnTimer;
 		}
 
 	}

@@ -27,8 +27,15 @@
 }
 
 livegamehud {
-	.timer {
-		font-size:24px;
-		color:white;
-	}
+	position: absolute;
+	border-radius: 8px;
+	background-color: rgba(black 0.85);
+	padding: 24px;
+	flex-direction: column;
+	width: 200px;
+	font-size: 24px;
+	color: white;
+	left:24px;
+	top:24px;
+	align-items:center;
 }
