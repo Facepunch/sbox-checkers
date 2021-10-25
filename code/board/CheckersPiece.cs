@@ -16,6 +16,10 @@ namespace Facepunch.Checkers
 		public bool IsKing { get; set; }
 		[Net, Change( nameof( SetTeamColor ) )]
 		public CheckersTeam Team { get; set; }
+		[Net]
+		public bool Floating { get; set; }
+		[Net]
+		public Vector3 DragPosition { get; set; }
 
 		public override void Spawn()
 		{
@@ -46,6 +50,28 @@ namespace Facepunch.Checkers
 			Position = cell.Center;
 
 			return true;
+		}
+
+		[Event.Tick]
+		private void OnTick()
+		{
+			if ( IsClient )
+			{
+				return;
+			}
+
+			var cell = (Parent as CheckersBoard).GetCellAt( BoardPosition );
+			var staticPos = cell.Center;
+
+			if ( Floating )
+			{
+				staticPos = DragPosition;
+				Rotation = Rotation.RotateAroundAxis( Vector3.Up, Time.Delta * 30 );
+				staticPos.z += 20;
+				staticPos.z += (float)Math.Sin( Time.Now * Math.PI * .75f ) * 20;
+			}
+
+			Position = staticPos;
 		}
 
 		[Event.Frame]
@@ -92,7 +118,7 @@ namespace Facepunch.Checkers
 					continue;
 				}
 
-				if(board.GetPieceAt(legalPos) != null )
+				if ( board.GetPieceAt( legalPos ) != null )
 				{
 					continue;
 				}
@@ -120,17 +146,13 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			if ( Entity.FindByIndex( pieceId ) is not CheckersPiece piece )
+			if ( Entity.FindByIndex( pieceId ) is not CheckersPiece piece
+				|| piece.Team != player.Team )
 			{
 				return;
 			}
 
-			if ( piece.Team != player.Team )
-			{
-				return;
-			}
-
-			if(!piece.MoveToPosition( boardPosition, true ) )
+			if ( !piece.MoveToPosition( boardPosition, true ) )
 			{
 				// notify invalid move
 				return;

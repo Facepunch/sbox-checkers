@@ -14,9 +14,11 @@ namespace Facepunch.Checkers
 		public CheckersTeam Team { get; set; } = CheckersTeam.Spectator;
 		[Net]
 		public bool ReadyToStart { get; set; }
+		[Net, Predicted]
+		private CheckersPiece SelectedPiece { get; set; }
+		[Net, Predicted]
+		private CheckersCell HoveredCell { get; set; }
 
-		private CheckersCell _hoveredCell;
-		private CheckersPiece _selectedPiece;
 		private Clothing.Container _clothing = new();
 
 		public override void Respawn()
@@ -45,11 +47,6 @@ namespace Facepunch.Checkers
 		{
 			base.Simulate( cl );
 
-			if ( !IsClient )
-			{
-				return;
-			}
-
 			var tr = Trace.Ray( Input.Cursor, 3000 )
 				.WorldOnly()
 				.Run();
@@ -60,46 +57,56 @@ namespace Facepunch.Checkers
 				SetHoveredCell( board.GetCellAt( tr.EndPos ) );
 			}
 
-			SimulatePieceControl();
+			if ( !HoveredCell.IsValid() )
+			{
+				return;
+			}
+
+			if ( Input.Pressed( InputButton.Attack1 ) )
+			{
+				var piece = Entity.All.FirstOrDefault( x => x is CheckersPiece p && p.BoardPosition == HoveredCell.BoardPosition ) as CheckersPiece;
+				SetSelectedPiece( piece );
+			}
+
+			if ( SelectedPiece.IsValid() )
+			{
+				SelectedPiece.DragPosition = tr.Hit ? tr.EndPos : Vector3.Zero;
+
+				if ( Input.Released( InputButton.Attack1 ) )
+				{
+					if ( IsClient )
+					{
+						CheckersPiece.NetworkMove( SelectedPiece.NetworkIdent, HoveredCell.BoardPosition );
+					}
+					SetSelectedPiece( null );
+				}
+			}
 		}
 
-		private void SimulatePieceControl()
+		private void SetSelectedPiece( CheckersPiece piece )
 		{
-			if ( _hoveredCell == null )
+			if ( SelectedPiece.IsValid() )
 			{
-				return;
+				SelectedPiece.Floating = false;
+				SelectedPiece.DragPosition = Vector3.Zero;
 			}
 
-			if ( !Input.Pressed( InputButton.Attack1 ) )
-			{
-				return;
-			}
+			SelectedPiece = piece;
 
-			if ( _selectedPiece == null )
+			if ( piece.IsValid() )
 			{
-				var piece = Entity.All.FirstOrDefault( x => x is CheckersPiece p && p.BoardPosition == _hoveredCell.BoardPosition ) as CheckersPiece;
-
-				if ( piece == null )
-				{
-					return;
-				}
-				_selectedPiece = piece;
-			}
-			else
-			{
-				CheckersPiece.NetworkMove( _selectedPiece.NetworkIdent, _hoveredCell.BoardPosition );
-				_selectedPiece = null;
+				piece.Floating = true;
 			}
 		}
 
 		private void SetHoveredCell( CheckersCell cell )
 		{
-			if ( _hoveredCell != null )
+			if ( HoveredCell != null )
 			{
-				_hoveredCell.Hovered = false;
+				HoveredCell.Hovered = false;
 			}
 
-			_hoveredCell = cell;
+			HoveredCell = cell;
 
 			if ( cell != null )
 			{
