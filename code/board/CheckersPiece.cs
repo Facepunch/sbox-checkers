@@ -19,7 +19,7 @@ namespace Facepunch.Checkers
 
 		[Net]
 		public Vector2 BoardPosition { get; set; }
-		[Net]
+		[Net, Change(nameof(SetIsKing))]
 		public bool IsKing { get; set; }
 		[Net, Change( nameof( SetTeamColor ) )]
 		public CheckersTeam Team { get; set; }
@@ -184,6 +184,13 @@ namespace Facepunch.Checkers
 
 			// the move is ok
 			return MoveState.Yes;
+		}
+
+		private void SetIsKing()
+		{
+			GlowActive = IsKing;
+			GlowState = GlowStates.GlowStateOn;
+			GlowColor = Color.White;
 		}
 
 		private void SetTeamColor()

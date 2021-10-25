@@ -74,8 +74,6 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			Log.Info( "JUMPING: " + (move.Jump != null) );
-
 			if ( move.Jump.IsValid() )
 			{
 				// eliminated a piece, notify the client
@@ -83,6 +81,12 @@ namespace Facepunch.Checkers
 			}
 
 			piece.BoardPosition = target;
+
+			if ( (target.y == 7 && piece.Team == CheckersTeam.Black)
+				|| (target.y == 0 && piece.Team == CheckersTeam.Red) )
+			{
+				piece.IsKing = true;
+			}
 		}
 
 		private void ClientGameStateChanged()
