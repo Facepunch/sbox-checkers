@@ -191,9 +191,14 @@ namespace Facepunch.Checkers
 
 		private void SetIsKing()
 		{
-			GlowActive = IsKing;
-			GlowState = GlowStates.GlowStateOn;
-			GlowColor = Color.White;
+			if ( IsKing )
+			{
+				SetModel( "models/checkers_king.vmdl" );
+			}
+			else
+			{
+				SetModel( "models/checkers_piece.vmdl" );
+			}
 		}
 
 		private void SetTeamColor()
