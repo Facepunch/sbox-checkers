@@ -152,7 +152,6 @@ namespace Facepunch.Checkers
 							result.Add( move );
 						break;
 					case MoveState.OccupiedByEnemy:
-						Log.Info( "Occupied" );
 						var jumpPosition = p.Position + dir * 2;
 						if ( !InBounds( jumpPosition ) ) break;
 						move.Jump = Positions.First( x => x.Position == targetPosition );
