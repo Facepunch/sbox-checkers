@@ -220,12 +220,6 @@ namespace Facepunch.Checkers
 				return MoveState.YesIfKing;
 			}
 
-			if ( targetPosition == new Vector2( 5, 3 ) )
-			{
-				var p = Positions.FirstOrDefault( x => x.Position == targetPosition );
-				Log.Info( "NULL : " + (p == null) );
-			}
-
 			// the move is ok
 			return MoveState.Yes;
 		}
