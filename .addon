@@ -1,5 +1,5 @@
 {
     "name": "checkers",
     "version": "1.0",
-    "sharedassets": "*.*"
+	"ident": "facepunch.checkers"
 }
