@@ -15,17 +15,9 @@ namespace Sandbox.Checkers
 			base.Tick();
 
 			var me = Client.Pawn as CheckersPlayer;
-			if ( !me.IsValid() )
-			{
-				return;
-			}
-
-			if ( CheckersGame.Instance.CurrentState != GameState.Live )
-			{
-				return;
-			}
-
-			if ( me.Team != CheckersGame.Instance.ActiveTeam )
+			if ( !me.IsValid()
+				|| CheckersGame.Instance.CurrentState != GameState.Live
+				|| me.Team != CheckersGame.Instance.ActiveTeam )
 			{
 				return;
 			}
@@ -38,21 +30,8 @@ namespace Sandbox.Checkers
 			}
 
 			var board = Entity.All.FirstOrDefault( x => x is CheckersBoard ) as CheckersBoard;
-			if ( board == null )
-			{
-				// ???
-				return;
-			}
-
 			var piece = board.GetPieceAt( piecePos );
 
-			if ( piece == null )
-			{
-				// ???
-				return;
-			}
-
-			// todo: pass Move object instead?
 			CheckersGame.Instance.AttemptMove( me, piece, targetPos );
 		}
 
@@ -64,12 +43,14 @@ namespace Sandbox.Checkers
 			var me = Client.Pawn as CheckersPlayer;
 			var pieces = Entity.All.Where( x => x is CheckersPiece p
 				&& p.IsValid() );
-			var boardPositions = new List<ScoredBoardState.BoardPosition>();
+			var boardPositions = new List<AiBoardState.PieceData>();
+
+			// todo: integrate ai state so we don't have to set it up always
 
 			foreach ( var ent in pieces )
 			{
 				var piece = ent as CheckersPiece;
-				boardPositions.Add( new ScoredBoardState.BoardPosition()
+				boardPositions.Add( new AiBoardState.PieceData()
 				{
 					IsAlive = true,
 					IsKing = piece.IsKing,
@@ -80,8 +61,8 @@ namespace Sandbox.Checkers
 
 			// todo : recursively calculate a few moves and board states to predict the best move
 
-			var boardState = new ScoredBoardState( null, boardPositions );
-			ScoredBoardState.AiCheckersMove bestMove = null;
+			var boardState = new AiBoardState( null, boardPositions );
+			AiBoardState.AiCheckersMove bestMove = null;
 
 			switch ( me.Team )
 			{
@@ -102,6 +83,13 @@ namespace Sandbox.Checkers
 			targetPosition = bestMove.TargetPosition;
 
 			return true;
+		}
+
+		private AiBoardState PredictBestMove( AiBoardState init, int depth = 8 )
+		{
+			AiBoardState.AiCheckersMove bestMove = null;
+
+			return null;
 		}
 
 	}

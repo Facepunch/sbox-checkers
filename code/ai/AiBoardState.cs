@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
-	class ScoredBoardState
+	class AiBoardState
 	{
 
-		public class BoardPosition
+		public class PieceData
 		{
 			public CheckersTeam Team;
 			public Vector2 Position;
@@ -23,12 +23,12 @@ namespace Facepunch.Checkers
 
 		public int RedScore { get; private set; }
 		public int BlackScore { get; private set; }
-		public ScoredBoardState Parent { get; private set; }
-		public List<BoardPosition> Positions { get; private set; }
+		public AiBoardState Parent { get; private set; }
+		public List<PieceData> Positions { get; private set; }
 		public AiCheckersMove BestRedMove { get; private set; }
 		public AiCheckersMove BestBlackMove { get; private set; }
 
-		public ScoredBoardState( ScoredBoardState parent, List<BoardPosition> positions )
+		public AiBoardState( AiBoardState parent, List<PieceData> positions )
 		{
 			Parent = parent;
 			Positions = positions;
@@ -54,7 +54,7 @@ namespace Facepunch.Checkers
 			BestBlackMove = FindMaxMove( blackMoves );
 		}
 
-		private AiCheckersMove FindMaxMove( IEnumerable<BoardPosition> positions )
+		private AiCheckersMove FindMaxMove( IEnumerable<PieceData> positions )
 		{
 			var maxScore = int.MinValue;
 			AiCheckersMove result = null;
@@ -75,7 +75,7 @@ namespace Facepunch.Checkers
 			return result;
 		}
 
-		private void CalculateScore( BoardPosition position )
+		private void CalculateScore( PieceData position )
 		{
 			// alive piece = 1
 			// king piece = 2
@@ -118,7 +118,7 @@ namespace Facepunch.Checkers
 			}
 		}
 
-		private bool WillBecomeKing( BoardPosition p, AiCheckersMove move )
+		private bool WillBecomeKing( PieceData p, AiCheckersMove move )
 		{
 			if ( (move.TargetPosition.y == 0 && p.Team == CheckersTeam.Black)
 				|| (move.TargetPosition.y == 7 && p.Team == CheckersTeam.Red) )
@@ -131,7 +131,7 @@ namespace Facepunch.Checkers
 		// todo: this is quickly ported from CheckersPiece.cs
 		// it should be unified somewhere
 
-		private List<AiCheckersMove> GetLegalMoves( BoardPosition p )
+		private List<AiCheckersMove> GetLegalMoves( PieceData p )
 		{
 			var result = new List<AiCheckersMove>();
 
@@ -178,9 +178,9 @@ namespace Facepunch.Checkers
 
 		public class AiCheckersMove
 		{
-			public BoardPosition Me;
+			public PieceData Me;
 			public Vector2 TargetPosition;
-			public BoardPosition Jump;
+			public PieceData Jump;
 			public int Score;
 		}
 
@@ -192,7 +192,7 @@ namespace Facepunch.Checkers
 			OccupiedByEnemy
 		}
 
-		private MoveState GetMoveState( BoardPosition me, Vector2 targetPosition )
+		private MoveState GetMoveState( PieceData me, Vector2 targetPosition )
 		{
 			if ( !InBounds( targetPosition ) )
 			{
