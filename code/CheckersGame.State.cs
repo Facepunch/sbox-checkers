@@ -17,7 +17,7 @@ namespace Facepunch.Checkers
 		[Net]
 		public float TurnTimer { get; set; }
 
-		public const float PlayerTurnTime = 30;
+		public const float PlayerTurnTime = 9000;
 
 		[Event.Tick]
 		private void OnTick()
