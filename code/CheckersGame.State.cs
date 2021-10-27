@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Sandbox.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,7 @@ namespace Facepunch.Checkers
 			SetGameState( GameState.Live );
 		}
 
-		public void SetGameState( GameState newState )
+		private void SetGameState( GameState newState )
 		{
 			CurrentState = newState;
 
@@ -114,27 +115,51 @@ namespace Facepunch.Checkers
 			EndTurn();
 		}
 
-		public void EndTurn()
+		private void EndTurn()
 		{
 			ActiveTeam = ActiveTeam == CheckersTeam.Black
 				? CheckersTeam.Red
 				: CheckersTeam.Black;
 			TurnTimer = PlayerTurnTime;
+
+			CheckWinConditions();
 		}
 
-		private bool TeamHasLegalJump( CheckersTeam team )
+		private void CheckWinConditions()
 		{
-			var pieces = Entity.All.Where( x => x is CheckersPiece p && p.IsValid() && p.Team == team );
+			if ( !HasMoves( CheckersTeam.Red ) )
+			{
+				DeclareWinner( CheckersTeam.Black );
+			}
+
+			if ( !HasMoves( CheckersTeam.Black ) )
+			{
+				DeclareWinner( CheckersTeam.Red );
+			}
+		}
+
+		private bool HasMoves( CheckersTeam t )
+		{
+			var pieces = t == CheckersTeam.Red
+				? CheckersBoard.Current.RedPieces
+				: CheckersBoard.Current.BlackPieces;
+
 			foreach ( var ent in pieces )
 			{
 				var piece = ent as CheckersPiece;
-				var moves = piece.GetLegalMoves();
-				if ( moves.FirstOrDefault( x => x.Jump != null ) != null )
+				if ( piece.GetLegalMoves().Count > 0 )
 				{
 					return true;
 				}
 			}
+
 			return false;
+		}
+
+		private void DeclareWinner( CheckersTeam team )
+		{
+			// todo: glorious celebration
+			SetGameState( GameState.Ended );
 		}
 
 		private void ClientGameStateChanged()

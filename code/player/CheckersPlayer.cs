@@ -55,8 +55,7 @@ namespace Facepunch.Checkers
 
 			if ( tr.Hit )
 			{
-				var board = Entity.All.FirstOrDefault( x => x is CheckersBoard ) as CheckersBoard;
-				SetHoveredCell( board.GetCellAt( tr.EndPos ) );
+				SetHoveredCell( CheckersBoard.Current.GetCellAt( tr.EndPos ) );
 			}
 
 			if ( !HoveredCell.IsValid() )
@@ -66,10 +65,7 @@ namespace Facepunch.Checkers
 
 			if ( Input.Pressed( InputButton.Attack1 ) )
 			{
-				var piece = Entity.All.FirstOrDefault( x => x is CheckersPiece p 
-					&& p.BoardPosition == HoveredCell.BoardPosition
-					&& p.Team == Team ) as CheckersPiece;
-
+				var piece = CheckersBoard.Current.GetPieceAt( HoveredCell.BoardPosition );
 				SetSelectedPiece( piece );
 			}
 
@@ -99,12 +95,14 @@ namespace Facepunch.Checkers
 				SelectedPiece.DragPosition = Vector3.Zero;
 			}
 
-			SelectedPiece = piece;
-
-			if ( piece.IsValid() )
+			if( !piece.IsValid() || piece.Team != Team )
 			{
-				piece.Floating = true;
+				SelectedPiece = null;
+				return;
 			}
+
+			SelectedPiece = piece;
+			SelectedPiece.Floating = true;
 		}
 
 		private void SetHoveredCell( CheckersCell cell )

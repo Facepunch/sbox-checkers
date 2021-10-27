@@ -29,8 +29,7 @@ namespace Sandbox.Checkers
 				return;
 			}
 
-			var board = Entity.All.FirstOrDefault( x => x is CheckersBoard ) as CheckersBoard;
-			var piece = board.GetPieceAt( piecePos );
+			var piece = CheckersBoard.Current.GetPieceAt( piecePos );
 
 			CheckersGame.Instance.AttemptMove( me, piece, targetPos );
 		}
@@ -41,13 +40,11 @@ namespace Sandbox.Checkers
 			targetPosition = Vector2.Zero;
 
 			var me = Client.Pawn as CheckersPlayer;
-			var pieces = Entity.All.Where( x => x is CheckersPiece p
-				&& p.IsValid() );
 			var boardPositions = new List<AiBoardState.PieceData>();
 
 			// todo: integrate ai state so we don't have to set it up always
 
-			foreach ( var ent in pieces )
+			foreach ( var ent in CheckersBoard.Current.Pieces )
 			{
 				var piece = ent as CheckersPiece;
 				boardPositions.Add( new AiBoardState.PieceData()

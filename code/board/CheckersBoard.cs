@@ -10,15 +10,23 @@ namespace Facepunch.Checkers
 	partial class CheckersBoard : Entity
 	{
 
+		public static CheckersBoard Current;
+
 		[Net]
 		public Vector3 Mins { get; set; }
 		[Net]
 		public Vector3 Maxs { get; set; }
 
+		public IEnumerable<CheckersPiece> Pieces => Children.Where(x => x.IsValid() && x is CheckersPiece).Cast<CheckersPiece>();
+		public IEnumerable<CheckersPiece> RedPieces => Pieces.Where( x => x.Team == CheckersTeam.Red );
+		public IEnumerable<CheckersPiece> BlackPieces => Pieces.Where( x => x.Team == CheckersTeam.Black );
+
 		public float CellSize => (Maxs.x - Mins.x) / 8;
 
 		public CheckersBoard()
 		{
+			Current = this;
+
 			Transmit = TransmitType.Always;
 		}
 
