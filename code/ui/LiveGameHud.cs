@@ -12,11 +12,23 @@ namespace Facepunch.Checkers
 	{
 
 		public float TurnTimer => (int)CheckersGame.Instance.TurnTimer;
-		public CheckersTeam ActiveTeam => CheckersGame.Instance.ActiveTeam;
+		public string PlayerName => GetActiveTeamName();
 
 		public LiveGameHud()
 		{
 			SetTemplate( "/ui/livegamehud.html" );
+		}
+
+		private string GetActiveTeamName()
+		{
+			var pl = Player.All.FirstOrDefault( x => x is CheckersPlayer cp && cp.Team == CheckersGame.Instance.ActiveTeam );
+
+			if ( !pl.IsValid() )
+			{
+				return "Unknown";
+			}
+
+			return pl.Client.Name;
 		}
 
 		[Event.Frame]
