@@ -167,5 +167,25 @@ namespace Facepunch.Checkers
 			Event.Run( CheckersEvents.GameStateChanged, CurrentState );
 		}
 
+		[ServerCmd]
+		public static void NetworkRestart()
+		{
+			for(int i = Bot.All.Count - 1; i >= 0; i-- )
+			{
+				Bot.All[i].Client.Kick();
+			}
+
+			foreach ( var player in Player.All )
+			{
+				if ( player is CheckersPlayer pl && pl.IsValid() )
+				{
+					pl.Team = CheckersTeam.Spectator;
+				}
+			}
+
+			CheckersBoard.Current.SpawnCells();
+			Instance.SetGameState( GameState.WaitingToStart );
+		}
+
 	}
 }

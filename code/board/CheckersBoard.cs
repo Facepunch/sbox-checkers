@@ -40,7 +40,7 @@ namespace Facepunch.Checkers
 			for ( int i = Children.Count - 1; i >= 0; i-- )
 			{
 				if ( Children[i] is not CheckersCell
-					|| Children[i] is not CheckersPiece )
+					&& Children[i] is not CheckersPiece )
 				{
 					continue;
 				}

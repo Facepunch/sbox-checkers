@@ -16,9 +16,11 @@ namespace Facepunch.Checkers
 
 			if ( IsServer )
 			{
-				new CheckersHudEntity();
-
 				SetGameState( GameState.WaitingToStart );
+			}
+			else
+			{
+				new CheckersHud();
 			}
 		}
 
