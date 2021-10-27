@@ -27,7 +27,16 @@ namespace Facepunch.Checkers
 				Style.Display = DisplayMode.None;
 				return;
 			}
+
 			Style.Display = DisplayMode.Flex;
+
+			var fill = Children.First( x => x.HasClass( "timer" ) ).Children.First( x => x.HasClass( "fill" ) );
+
+			fill.Style.Width = new Length()
+			{
+				Value = TurnTimer / CheckersGame.PlayerTurnTime * 100,
+				Unit = LengthUnit.Percentage
+			};
 		}
 
 	}

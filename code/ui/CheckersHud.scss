@@ -28,14 +28,36 @@
 
 livegamehud {
 	position: absolute;
-	border-radius: 8px;
-	background-color: rgba(black 0.85);
-	padding: 24px;
 	flex-direction: column;
-	width: 200px;
-	font-size: 24px;
+	font-size: 30px;
+	font-family: Poppins;
+	text-transform:uppercase;
+	font-weight:800;
+	letter-spacing:-1px;
 	color: white;
-	left:24px;
-	top:24px;
-	align-items:center;
+	left: 0px;
+	top: 10%;
+
+	.details {
+		background-color: rgba(black 0.85);
+		padding: 10px 24px;
+		border-radius: 0 10px 10px 0;
+		border-left: 0;
+	}
+
+	.timer {
+		margin-top: 5px;
+		padding: 8px;
+		background-color: rgba(black 0.85);
+		height: 30px;
+		border-radius: 0 10px 10px 0;
+
+		.fill {
+			transition: width 1s linear;
+			width: 50%;
+			height: 100%;
+			background-color: lime;
+			border-radius: 0 20px 20px 0;
+		}
+	}
 }
