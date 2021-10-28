@@ -4,11 +4,12 @@ checkershud {
 	.team-buttons {
 		position: absolute;
 		width: 400px;
-		left: 32px;
+		left: 45%;
 		top: 32px;
 		flex-direction: column;
-		pointer-events: auto;
 		z-index: 1;
+		pointer-events:auto;
+		opacity:1;
 
 		button {
 			color: white;
