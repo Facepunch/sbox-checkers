@@ -33,12 +33,17 @@ namespace Facepunch.Checkers
 		[Event( CheckersEvents.ServerPieceEliminated )]
 		private void OnPieceEliminated( CheckersPiece piece )
 		{
-			var victim = piece.Team == CheckersTeam.Red 
-				? Entity.RedPlayer 
+			if ( Entity.CurrentState != GameState.Live )
+			{
+				return;
+			}
+
+			var victim = piece.Team == CheckersTeam.Red
+				? Entity.RedPlayer
 				: Entity.BlackPlayer;
 
-			var attacker = victim == Entity.RedPlayer 
-				? Entity.BlackPlayer 
+			var attacker = victim == Entity.RedPlayer
+				? Entity.BlackPlayer
 				: Entity.RedPlayer;
 
 			GameServices.RecordEvent( victim.Client, $"Lost {piece.Team} Chip" );
@@ -46,10 +51,10 @@ namespace Facepunch.Checkers
 		}
 
 		[Event( CheckersEvents.ServerMatchCompleted )]
-		private void OnMatchCompleted( CheckersPlayer winner, CheckersPlayer loser )
+		private void OnMatchCompleted()
 		{
-			winner.Client.SetGameResult( GameplayResult.Win, 0 );
-			loser.Client.SetGameResult( GameplayResult.Lose, 0 );
+			Entity.Winner.Client.SetGameResult( GameplayResult.Win, 0 );
+			Entity.Loser.Client.SetGameResult( GameplayResult.Lose, 0 );
 
 			GameServices.EndGame();
 		}

@@ -79,7 +79,7 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			var cell = (Parent as CheckersBoard).GetCellAt( BoardPosition );
+			var cell = CheckersBoard.Current.GetCellAt( BoardPosition );
 			var staticPos = cell.Center;
 
 			if ( Floating )

@@ -19,6 +19,10 @@ namespace Facepunch.Checkers
 		public float TurnTimer { get; set; }
 		[Net]
 		public float EndGameTimer { get; set; }
+		[Net]
+		public CheckersPlayer Winner { get; set; }
+		[Net]
+		public CheckersPlayer Loser { get; set; }
 
 		public const float PlayerTurnTime = 30;
 		public const float EndGameTime = 5;
@@ -186,19 +190,18 @@ namespace Facepunch.Checkers
 
 		private void DeclareWinner( CheckersTeam team )
 		{
-			CheckersPlayer winner, loser;
 			if ( team == CheckersTeam.Red )
 			{
-				winner = RedPlayer;
-				loser = BlackPlayer;
+				Winner = RedPlayer;
+				Loser = BlackPlayer;
 			}
 			else
 			{
-				winner = BlackPlayer;
-				loser = RedPlayer;
+				Winner = BlackPlayer;
+				Loser = RedPlayer;
 			}
 
-			Event.Run( CheckersEvents.ServerMatchCompleted, winner, loser );
+			Event.Run( CheckersEvents.ServerMatchCompleted );
 
 			// todo: glorious celebration
 			SetGameState( GameState.Completed );
@@ -218,9 +221,11 @@ namespace Facepunch.Checkers
 			Event.Run( CheckersEvents.GameStateChanged, CurrentState );
 		}
 
-		[ServerCmd]
-		public static void NetworkRestart()
+		private void RestartGame()
 		{
+			Winner = null;
+			Loser = null;
+
 			for ( int i = Bot.All.Count - 1; i >= 0; i-- )
 			{
 				Bot.All[i].Client.Kick();
@@ -235,7 +240,13 @@ namespace Facepunch.Checkers
 			}
 
 			CheckersBoard.Current.SpawnCells();
-			Instance.SetGameState( GameState.WaitingToStart );
+			SetGameState( GameState.WaitingToStart );
+		}
+
+		[ServerCmd]
+		public static void NetworkRestart()
+		{
+			CheckersGame.Instance.RestartGame();
 		}
 
 	}
