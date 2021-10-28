@@ -17,8 +17,11 @@ namespace Facepunch.Checkers
 		public CheckersTeam ActiveTeam { get; set; } // the team that needs to make a move
 		[Net]
 		public float TurnTimer { get; set; }
+		[Net]
+		public float EndGameTimer { get; set; }
 
 		public const float PlayerTurnTime = 30;
+		public const float EndGameTime = 5;
 
 		[Event.Tick]
 		private void OnTick()
@@ -36,6 +39,20 @@ namespace Facepunch.Checkers
 				case GameState.Live:
 					TickLive();
 					break;
+				case GameState.Completed:
+				case GameState.Abandoned:
+					TickGameEnd();
+					break;
+			}
+		}
+
+		private void TickGameEnd()
+		{
+			EndGameTimer -= Time.Delta;
+
+			if ( EndGameTimer <= 0 )
+			{
+				NetworkRestart();
 			}
 		}
 
@@ -119,7 +136,7 @@ namespace Facepunch.Checkers
 
 		private void EliminatePiece( CheckersPiece piece )
 		{
-			Assert.True( IsServer );
+			Host.AssertServer();
 
 			piece.Delete();
 
@@ -169,9 +186,6 @@ namespace Facepunch.Checkers
 
 		private void DeclareWinner( CheckersTeam team )
 		{
-			// todo: glorious celebration
-			SetGameState( GameState.Ended );
-
 			CheckersPlayer winner, loser;
 			if ( team == CheckersTeam.Red )
 			{
@@ -184,7 +198,19 @@ namespace Facepunch.Checkers
 				loser = RedPlayer;
 			}
 
-			Event.Run( CheckersEvents.ServerVictory, winner, loser );
+			Event.Run( CheckersEvents.ServerMatchCompleted, winner, loser );
+
+			// todo: glorious celebration
+			SetGameState( GameState.Completed );
+
+			EndGameTimer = EndGameTime;
+		}
+
+		private void AbandonGame()
+		{
+			EndGameTimer = EndGameTime;
+
+			SetGameState( GameState.Abandoned );
 		}
 
 		private void ClientGameStateChanged()

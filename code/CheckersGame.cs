@@ -18,7 +18,7 @@ namespace Facepunch.Checkers
 			{
 				SetGameState( GameState.WaitingToStart );
 
-				Components.Add(new CheckersGameServices());
+				Components.Add( new CheckersGameServices() );
 			}
 			else
 			{
@@ -35,6 +35,22 @@ namespace Facepunch.Checkers
 
 			player.Team = CheckersTeam.Spectator;
 			player.Respawn();
+		}
+
+		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+		{
+			base.ClientDisconnect( cl, reason );
+
+			if ( CurrentState != GameState.Live
+				|| cl.Pawn is not CheckersPlayer pl )
+			{
+				return;
+			}
+
+			if ( pl == RedPlayer || pl == BlackPlayer )
+			{
+				AbandonGame();
+			}
 		}
 
 		public override void FrameSimulate( Client cl )

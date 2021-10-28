@@ -11,7 +11,7 @@ namespace Facepunch.Checkers
 
 		public const string GameStateChanged = "GameStateChanged";
 		public const string ServerPieceEliminated = "PieceEliminated";
-		public const string ServerVictory = "Victory";
+		public const string ServerMatchCompleted = "MatchCompleted";
 
 	}
 }
