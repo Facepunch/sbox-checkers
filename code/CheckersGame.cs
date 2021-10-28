@@ -17,6 +17,8 @@ namespace Facepunch.Checkers
 			if ( IsServer )
 			{
 				SetGameState( GameState.WaitingToStart );
+
+				Components.Add(new CheckersGameServices());
 			}
 			else
 			{

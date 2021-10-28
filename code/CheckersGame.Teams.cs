@@ -12,11 +12,11 @@ namespace Facepunch.Checkers
 
 		// todo: implement teams via lobby and avoid all this
 
-		public CheckersPlayer Team1 => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+		public CheckersPlayer RedPlayer => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
 			 && pl.IsValid
 			 && pl.Team == CheckersTeam.Red ) as CheckersPlayer;
 
-		public CheckersPlayer Team2 => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+		public CheckersPlayer BlackPlayer => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
 			 && pl.IsValid
 			 && pl.Team == CheckersTeam.Black ) as CheckersPlayer;
 

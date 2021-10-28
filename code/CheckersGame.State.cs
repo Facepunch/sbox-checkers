@@ -172,13 +172,19 @@ namespace Facepunch.Checkers
 			// todo: glorious celebration
 			SetGameState( GameState.Ended );
 
-			var pl = Player.All.FirstOrDefault( x => x is CheckersPlayer pl && pl.Team == team );
-			if ( !pl.IsValid() )
+			CheckersPlayer winner, loser;
+			if ( team == CheckersTeam.Red )
 			{
-				return;
+				winner = RedPlayer;
+				loser = BlackPlayer;
+			}
+			else
+			{
+				winner = BlackPlayer;
+				loser = RedPlayer;
 			}
 
-			Event.Run( CheckersEvents.ServerVictory, pl );
+			Event.Run( CheckersEvents.ServerVictory, winner, loser );
 		}
 
 		private void ClientGameStateChanged()

@@ -50,12 +50,12 @@ namespace Facepunch.Checkers
 
 			Style.Display = DisplayMode.Flex;
 
-			Player1Name = CheckersGame.Instance.Team1 != null
-				? CheckersGame.Instance.Team1.Client.Name
+			Player1Name = CheckersGame.Instance.RedPlayer != null
+				? CheckersGame.Instance.RedPlayer.Client.Name
 				: "Nobody";
 
-			Player2Name = CheckersGame.Instance.Team2 != null
-				? CheckersGame.Instance.Team2.Client.Name
+			Player2Name = CheckersGame.Instance.BlackPlayer != null
+				? CheckersGame.Instance.BlackPlayer.Client.Name
 				: "Nobody";
 		}
 
