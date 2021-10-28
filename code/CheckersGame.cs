@@ -19,9 +19,7 @@ namespace Facepunch.Checkers
 				SetGameState( GameState.WaitingToStart );
 
 				Components.Add( new CheckersGameServices() );
-			}
-			else
-			{
+
 				new CheckersHud();
 			}
 		}

@@ -1,31 +1,27 @@
-checkershud {
-	pointer-events: visible;
+.team-buttons {
+	position: absolute;
+	width: 400px;
+	left: 32px;
+	top: 32px;
+	flex-direction: column;
+	z-index: 1;
+	pointer-events: auto;
+	opacity: 1;
 
-	.team-buttons {
-		position: absolute;
-		width: 400px;
-		left: 32px;
-		top: 32px;
-		flex-direction: column;
-		z-index: 1;
-		pointer-events: auto;
-		opacity: 1;
+	button {
+		color: white;
+		font-size: 24px;
+		padding: 8px;
+		margin-bottom: 8px;
+		justify-content: center;
+		background-color: rgba(black 0.5);
+		border: 2px solid white;
+		border-radius: 10px;
+		backdrop-filter: blur(5px);
 
-		button {
-			color: white;
-			font-size: 24px;
-			padding: 8px;
-			margin-bottom: 8px;
-			justify-content: center;
-			background-color: rgba(black 0.5);
-			border: 2px solid white;
-			border-radius: 10px;
-			backdrop-filter: blur(5px);
-
-			&:hover {
-				background-color: black;
-				cursor: pointer;
-			}
+		&:hover {
+			background-color: black;
+			cursor: pointer;
 		}
 	}
 }

@@ -4,12 +4,16 @@ using System.Linq;
 
 namespace Facepunch.Checkers
 {
-	public partial class CheckersHud : RootPanel
+	public partial class CheckersHud : HudEntity<RootPanel>
 	{
 
 		public CheckersHud()
 		{
-			SetTemplate( "/ui/CheckersHud.html" );
+			if ( IsClient )
+			{
+				RootPanel.SetTemplate( "/ui/checkershud.html" );
+				RootPanel.Style.PointerEvents = "all";
+			}
 		}
 
 	}
