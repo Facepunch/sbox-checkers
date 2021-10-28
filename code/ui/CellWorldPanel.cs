@@ -18,7 +18,7 @@ namespace Facepunch.Checkers
 			_cell = cell;
 			UpdateSizeAndPosition();
 			Add.Panel( "border" );
-			//StyleSheet.Load( "/ui/cellworldpanel.scss" );
+			StyleSheet.Load( "/ui/cellworldpanel.scss" );
 		}
 
 		private void UpdateSizeAndPosition()

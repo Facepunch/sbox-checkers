@@ -41,7 +41,7 @@ namespace Facepunch.Checkers
 
 		public CheckersNametags()
 		{
-			//StyleSheet.Load( "/ui/CheckersNameTags.scss" );
+			StyleSheet.Load( "/ui/CheckersNameTags.scss" );
 		}
 
 		public override void Tick()
