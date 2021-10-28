@@ -107,6 +107,13 @@ namespace Facepunch.Checkers
 
 			piece.MoveToPosition( target );
 
+			if ( attemptedMove.Jump != null
+				&& piece.GetLegalMoves().Any( x => x.Jump.IsValid() ) )
+			{
+				// this piece can jump again
+				return;
+			}
+
 			EndTurn();
 		}
 
