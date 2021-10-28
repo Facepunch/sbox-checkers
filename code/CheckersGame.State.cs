@@ -77,40 +77,35 @@ namespace Facepunch.Checkers
 
 		public void AttemptMove( CheckersPlayer player, CheckersPiece piece, Vector2 target )
 		{
-			if ( IsClient )
-			{
-				// client shouldn't be doing this
-				return;
-			}
+			Assert.True( IsServer );
 
-			if ( player.Team != ActiveTeam
-				|| player.Team != piece.Team )
+			if ( player.Team != ActiveTeam || player.Team != piece.Team )
 			{
 				return;
 			}
 
-			var move = piece.GetLegalMoves().FirstOrDefault( x => x.Cell.BoardPosition == target );
-			if ( move == null )
+			var moves = piece.GetLegalMoves();
+			var attemptedMove = moves.FirstOrDefault( x => x.Cell.BoardPosition == target );
+			if ( attemptedMove == null )
 			{
-				// invalid move, notify the client
+				// move is invalid! pour some juice
 				return;
 			}
 
-			// todo: mandatory jumps
-
-			if ( move.Jump.IsValid() )
+			if ( attemptedMove.Jump == null )
 			{
-				// eliminated a piece, notify the client
-				move.Jump.Delete();
+				if ( CheckersBoard.Current.TeamCanJump( player.Team ) )
+				{
+					// this player has a mandatory jump
+					return;
+				}
+			}
+			else
+			{
+				attemptedMove.Jump.Delete();
 			}
 
-			piece.BoardPosition = target;
-
-			if ( (target.y == 7 && piece.Team == CheckersTeam.Black)
-				|| (target.y == 0 && piece.Team == CheckersTeam.Red) )
-			{
-				piece.IsKing = true;
-			}
+			piece.MoveToPosition( target );
 
 			EndTurn();
 		}
@@ -170,7 +165,7 @@ namespace Facepunch.Checkers
 		[ServerCmd]
 		public static void NetworkRestart()
 		{
-			for(int i = Bot.All.Count - 1; i >= 0; i-- )
+			for ( int i = Bot.All.Count - 1; i >= 0; i-- )
 			{
 				Bot.All[i].Client.Kick();
 			}

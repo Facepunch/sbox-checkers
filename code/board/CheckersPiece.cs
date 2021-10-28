@@ -62,6 +62,12 @@ namespace Facepunch.Checkers
 			BoardPosition = cell.BoardPosition;
 			Position = cell.Center;
 
+			if ( (position.y == 7 && Team == CheckersTeam.Black)
+				|| (position.y == 0 && Team == CheckersTeam.Red) )
+			{
+				IsKing = true;
+			}
+
 			return true;
 		}
 

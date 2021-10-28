@@ -17,7 +17,7 @@ namespace Facepunch.Checkers
 		[Net]
 		public Vector3 Maxs { get; set; }
 
-		public IEnumerable<CheckersPiece> Pieces => Children.Where(x => x.IsValid() && x is CheckersPiece).Cast<CheckersPiece>();
+		public IEnumerable<CheckersPiece> Pieces => Children.Where( x => x.IsValid() && x is CheckersPiece ).Cast<CheckersPiece>();
 		public IEnumerable<CheckersPiece> RedPieces => Pieces.Where( x => x.Team == CheckersTeam.Red );
 		public IEnumerable<CheckersPiece> BlackPieces => Pieces.Where( x => x.Team == CheckersTeam.Black );
 
@@ -69,8 +69,8 @@ namespace Facepunch.Checkers
 						pieceIdx++;
 						var piece = Entity.Create<CheckersPiece>();
 						piece.SetParent( this );
-						piece.MoveToPosition( cell.BoardPosition );
 						piece.Team = pieceIdx <= 12 ? CheckersTeam.Black : CheckersTeam.Red;
+						piece.MoveToPosition( cell.BoardPosition );
 					}
 				}
 			}
@@ -106,6 +106,17 @@ namespace Facepunch.Checkers
 				return cell;
 			}
 			return null;
+		}
+
+		public bool TeamCanJump( CheckersTeam team )
+		{
+			var pieces = team == CheckersTeam.Red ? RedPieces : BlackPieces;
+			List<CheckersMove> moves = new List<CheckersMove>();
+			foreach ( var p in pieces )
+			{
+				moves.AddRange( p.GetLegalMoves() );
+			}
+			return moves.Any( x => x.Jump.IsValid() );
 		}
 
 	}
