@@ -102,7 +102,7 @@ namespace Facepunch.Checkers
 			}
 			else
 			{
-				attemptedMove.Jump.Delete();
+				EliminatePiece( attemptedMove.Jump );
 			}
 
 			piece.MoveToPosition( target );
@@ -115,6 +115,15 @@ namespace Facepunch.Checkers
 			}
 
 			EndTurn();
+		}
+
+		private void EliminatePiece( CheckersPiece piece )
+		{
+			Assert.True( IsServer );
+
+			piece.Delete();
+
+			Event.Run( CheckersEvents.ServerPieceEliminated, piece );
 		}
 
 		private void EndTurn()
@@ -162,6 +171,14 @@ namespace Facepunch.Checkers
 		{
 			// todo: glorious celebration
 			SetGameState( GameState.Ended );
+
+			var pl = Player.All.FirstOrDefault( x => x is CheckersPlayer pl && pl.Team == team );
+			if ( !pl.IsValid() )
+			{
+				return;
+			}
+
+			Event.Run( CheckersEvents.ServerVictory, pl );
 		}
 
 		private void ClientGameStateChanged()
