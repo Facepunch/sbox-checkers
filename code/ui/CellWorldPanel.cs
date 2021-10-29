@@ -38,8 +38,6 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			var myTurn = CheckersGame.Instance.ActiveTeam == pl.Team;
-
 			var hasMove = pl.LegalMoveCache.Any( x => x.Cell == _cell );
 			var hasJump = pl.LegalMoveCache.Any( x => x.Cell == _cell && x.Jump.IsValid() );
 
