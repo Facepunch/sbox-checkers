@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Sandbox.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Facepunch.Checkers
 
 		[Net]
 		public Vector2 BoardPosition { get; set; }
-		[Net, Change(nameof(SetIsKing))]
+		[Net, Change( nameof( SetIsKing ) )]
 		public bool IsKing { get; set; }
 		[Net, Change( nameof( SetTeamColor ) )]
 		public CheckersTeam Team { get; set; }
@@ -36,6 +37,27 @@ namespace Facepunch.Checkers
 
 			SetModel( "models/checkers_piece.vmdl" );
 			SetTeamColor();
+		}
+
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+
+			if ( !IsClient )
+			{
+				return;
+			}
+
+			var game = CheckersGame.Instance;
+
+			if ( game.CurrentState != GameState.Live )
+			{
+				return;
+			}
+
+			var pl = Team == CheckersTeam.Red ? game.RedPlayer : game.BlackPlayer;
+
+			ChatBox.AddInformation( $"{pl.Client.Name}'s chip was eliminated", $"avatar:{pl.Client.SteamId}" );
 		}
 
 		public bool MoveToPosition( Vector2 position, bool checkLegality = false )
@@ -118,7 +140,7 @@ namespace Facepunch.Checkers
 						move.Jump = board.GetPieceAt( targetPosition );
 						move.Cell = board.GetCellAt( BoardPosition + dir * 2 );
 						var moveState = GetMoveState( jumpPosition );
-						if( moveState == MoveState.Yes || (moveState == MoveState.YesIfKing && IsKing) )
+						if ( moveState == MoveState.Yes || (moveState == MoveState.YesIfKing && IsKing) )
 						{
 							result.Add( move );
 						}
@@ -126,7 +148,7 @@ namespace Facepunch.Checkers
 				}
 			}
 
-			if( result.Any(x => x.Jump.IsValid() ) )
+			if ( result.Any( x => x.Jump.IsValid() ) )
 			{
 				result.RemoveAll( x => !x.Jump.IsValid() );
 			}
@@ -166,7 +188,7 @@ namespace Facepunch.Checkers
 			if ( piece.IsValid() )
 			{
 				// we can't jump our own piece
-				if( piece.Team == Team )
+				if ( piece.Team == Team )
 				{
 					return MoveState.No;
 				}
