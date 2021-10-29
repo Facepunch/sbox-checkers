@@ -12,7 +12,7 @@ namespace Facepunch.Checkers
 			if ( IsClient )
 			{
 				RootPanel.SetTemplate( "/ui/checkershud.html" );
-				RootPanel.Style.PointerEvents = "all";
+				RootPanel.Style.PointerEvents = "visible";
 			}
 		}
 
