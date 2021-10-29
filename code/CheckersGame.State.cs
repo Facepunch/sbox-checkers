@@ -223,6 +223,8 @@ namespace Facepunch.Checkers
 
 		private void ClientGameStateChanged()
 		{
+			Sound.FromScreen( "game-restart" );
+
 			Event.Run( CheckersEvents.GameStateChanged, CurrentState );
 		}
 
