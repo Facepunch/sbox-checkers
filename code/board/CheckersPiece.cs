@@ -18,7 +18,7 @@ namespace Facepunch.Checkers
 	partial class CheckersPiece : ModelEntity
 	{
 
-		[Net]
+		[Net, Change( nameof( OnMoved ) )]
 		public Vector2 BoardPosition { get; set; }
 		[Net, Change( nameof( SetIsKing ) )]
 		public bool IsKing { get; set; }
@@ -58,6 +58,8 @@ namespace Facepunch.Checkers
 			var pl = Team == CheckersTeam.Red ? game.RedPlayer : game.BlackPlayer;
 
 			ChatBox.AddInformation( $"{pl.Client.Name}'s chip was eliminated", $"avatar:{pl.Client.SteamId}" );
+
+			Sound.FromScreen( "piece-eliminate" );
 		}
 
 		public bool MoveToPosition( Vector2 position, bool checkLegality = false )
@@ -205,6 +207,11 @@ namespace Facepunch.Checkers
 
 			// the move is ok
 			return MoveState.Yes;
+		}
+
+		private void OnMoved()
+		{
+			Sound.FromScreen( "piece-move" );
 		}
 
 		private void SetIsKing()
