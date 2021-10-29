@@ -10,6 +10,8 @@ namespace Sandbox.Checkers
 	class CheckersBot : Bot
 	{
 
+		private float _moveDelay = 3;
+
 		public override void Tick()
 		{
 			base.Tick();
@@ -21,6 +23,14 @@ namespace Sandbox.Checkers
 			{
 				return;
 			}
+
+			if ( _moveDelay > 0 )
+			{
+				_moveDelay -= Time.Delta;
+				return;
+			}
+
+			_moveDelay = new Random().Float( 1, 5 );
 
 			if ( !FindBestMove( out Vector2 piecePos, out Vector2 targetPos ) )
 			{
