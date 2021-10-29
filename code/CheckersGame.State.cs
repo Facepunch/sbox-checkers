@@ -100,6 +100,11 @@ namespace Facepunch.Checkers
 		{
 			Assert.True( IsServer );
 
+			if ( CurrentState != GameState.Live )
+			{
+				return;
+			}
+
 			if ( player.Team != ActiveTeam || player.Team != piece.Team )
 			{
 				return;
