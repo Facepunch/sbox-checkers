@@ -15,6 +15,10 @@
 }
 
 .legalmove {
-    border-radius: 10%;
-    border: 50px solid rgba(lime, .5);
+    border-radius: 0;
+    border: 50px solid white;
+
+    &.jump {
+        border-color: rgba(lime, 1);
+    }
 }

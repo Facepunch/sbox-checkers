@@ -40,7 +40,11 @@ namespace Facepunch.Checkers
 
 			var myTurn = CheckersGame.Instance.ActiveTeam == pl.Team;
 
-			SetClass( "legalmove", myTurn && pl.LegalMoveCache.FirstOrDefault( x => x.Cell == _cell ) != null );
+			var hasMove = pl.LegalMoveCache.Any( x => x.Cell == _cell );
+			var hasJump = pl.LegalMoveCache.Any( x => x.Cell == _cell && x.Jump.IsValid() );
+
+			SetClass( "legalmove", hasMove );
+			SetClass( "jump", hasJump );
 		}
 
 	}
