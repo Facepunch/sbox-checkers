@@ -126,6 +126,11 @@ namespace Facepunch.Checkers
 				}
 			}
 
+			if( result.Any(x => x.Jump.IsValid() ) )
+			{
+				result.RemoveAll( x => !x.Jump.IsValid() );
+			}
+
 			return result;
 		}
 
