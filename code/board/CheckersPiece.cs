@@ -34,6 +34,7 @@ namespace Facepunch.Checkers
 			base.Spawn();
 
 			Transmit = TransmitType.Always;
+			LagCompensation = false;
 
 			SetModel( "models/checkers_piece.vmdl" );
 			SetTeamColor();
