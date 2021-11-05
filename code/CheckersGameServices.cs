@@ -53,6 +53,9 @@ namespace Facepunch.Checkers
 		[Event( CheckersEvents.ServerMatchCompleted )]
 		private void OnMatchCompleted()
 		{
+			if ( Entity.Winner.Client.IsBot || Entity.Loser.Client.IsBot )
+				return;
+
 			Entity.Winner.Client.SetGameResult( GameplayResult.Win, 0 );
 			Entity.Loser.Client.SetGameResult( GameplayResult.Lose, 0 );
 
