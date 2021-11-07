@@ -35,6 +35,9 @@ namespace Facepunch.Checkers
 
 			Transmit = TransmitType.Always;
 			LagCompensation = false;
+			GlowState = GlowStates.GlowStateOn;
+			GlowActive = false;
+			GlowColor = Color.White;
 
 			SetModel( "models/checkers_piece.vmdl" );
 			SetTeamColor();
@@ -99,13 +102,18 @@ namespace Facepunch.Checkers
 		[Event.Tick]
 		private void OnTick()
 		{
-			if ( IsClient )
-			{
-				return;
-			}
-
 			var cell = CheckersBoard.Current.GetCellAt( BoardPosition );
 			var staticPos = cell.Center;
+
+			if ( IsClient )
+			{
+				if( Local.Pawn is CheckersPlayer pl && Team == pl.Team )
+				{
+					GlowActive = pl.HoveredCell == cell || this == pl.SelectedPiece;
+					GlowColor = pl.SelectedPiece == this ? Color.Green : Color.White;
+				}
+				return;
+			}
 
 			if ( Floating )
 			{

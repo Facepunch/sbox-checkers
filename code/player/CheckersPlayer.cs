@@ -15,9 +15,9 @@ namespace Facepunch.Checkers
 		[Net]
 		public bool ReadyToStart { get; set; }
 		[Net, Predicted]
-		private CheckersPiece SelectedPiece { get; set; }
+		public CheckersPiece SelectedPiece { get; set; }
 		[Net, Predicted]
-		private CheckersCell HoveredCell { get; set; }
+		public CheckersCell HoveredCell { get; set; }
 
 		private Clothing.Container _clothing = new();
 
