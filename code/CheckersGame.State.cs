@@ -25,7 +25,7 @@ namespace Facepunch.Checkers
 		public CheckersPlayer Loser { get; set; }
 
 		public const float PlayerTurnTime = 30;
-		public const float EndGameTime = 5;
+		public const float EndGameTime = 8;
 
 		[Event.Tick]
 		private void OnTick()

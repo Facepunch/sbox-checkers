@@ -12,6 +12,7 @@ namespace Facepunch.Checkers
 	{
 
 		public string GameResult => GetGameResultString();
+		public string Timer => GetTimerString();
 
 		public EndGameHud()
 		{
@@ -22,13 +23,18 @@ namespace Facepunch.Checkers
 		private void OnFrame()
 		{
 			if ( CheckersGame.Instance.CurrentState != GameState.Completed
-				&& CheckersGame.Instance.CurrentState != GameState.Abandoned )
+				&& CheckersGame.Instance.CurrentState != GameState.Abandoned)
 			{
-				Style.Display = DisplayMode.None;
+				Style.Opacity = 0;
 				return;
 			}
 
-			Style.Display = DisplayMode.Flex;
+			Style.Opacity = 1;
+		}
+
+		private string GetTimerString()
+		{
+			return "Restarting in " + (int)CheckersGame.Instance.EndGameTimer + " seconds";
 		}
 
 		private string GetGameResultString()
@@ -44,7 +50,7 @@ namespace Facepunch.Checkers
 				return "unknown";
 			}
 
-			return "Winner: " + game.Winner.Client.Name;
+			return game.Winner.Client.Name + " has won the game!";
 		}
 
 	}
