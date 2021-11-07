@@ -41,6 +41,7 @@ namespace Facepunch.Checkers
 			var hasMove = pl.LegalMoveCache.Any( x => x.Cell == _cell );
 			var hasJump = pl.LegalMoveCache.Any( x => x.Cell == _cell && x.Jump.IsValid() );
 
+			SetClass( "hovered", _cell.Hovered );
 			SetClass( "legalmove", hasMove );
 			SetClass( "jump", hasJump );
 		}

@@ -5,20 +5,24 @@
     pointer-events: auto;
     background-color: transparent;
     border-radius: 40%;
-    transition: border-radius .05s bounce-out;
-    pixel-snap:0;
+    pixel-snap: 0;
 
-    &:hover {
+    &.hovered {
         border-color: rgba(white 0.5);
         border-radius: 50%;
     }
 }
 
 .legalmove {
-    border-radius: 0;
-    border: 50px solid white;
+    border: 50px solid rgba(white .5);
+    transition: all .1s linear;
+    border-radius: 10%;
 
     &.jump {
+        border-color: rgba(red, .75);
+    }
+
+    &.hovered {
         border-color: rgba(lime, 1);
     }
 }
