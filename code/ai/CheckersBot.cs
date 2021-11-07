@@ -30,7 +30,7 @@ namespace Sandbox.Checkers
 				return;
 			}
 
-			_moveDelay = new Random().Float( 1, 5 );
+			_moveDelay = new Random().Float( 1, 3.5f );
 
 			if ( !FindBestMove( out Vector2 piecePos, out Vector2 targetPos ) )
 			{
