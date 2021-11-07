@@ -1,18 +1,22 @@
 ﻿<link rel="stylesheet" href="CheckersHud.scss" />
 
-<div class="team-buttons">
-    <button onclick="ChooseTeam1()">
-        <text>Red: </text>
-        <text @text="Player1Name"></text>
-    </button>
-    <button onclick="ChooseTeam2()">
-        <text>Black: </text>
-        <text @text="Player2Name"></text>
-    </button>
-    <button onclick="ChooseSpectator()">
-        <text>Spectate</text>
-    </button>
-    <button onclick="PlayAgainstAi()">
-        <text>Play vs AI</text>
-    </button>
-</div>
+<root>
+    <text class="title">Choose a team</text>
+    <div class="team-buttons">
+        <button onclick="ChooseTeam1()">
+            <text>Red: </text>
+            <text @text="Player1Name"></text>
+        </button>
+        <button onclick="ChooseTeam2()">
+            <text>Black: </text>
+            <text @text="Player2Name"></text>
+        </button>
+        <button onclick="ChooseSpectator()">
+            <text>Spectate</text>
+        </button>
+        <button onclick="PlayAgainstAi()">
+            <text>Play vs AI</text>
+        </button>
+    </div>
+</root>
+

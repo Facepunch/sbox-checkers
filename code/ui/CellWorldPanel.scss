@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
     border: 99px solid transparent;
-    pointer-events: all;
+    pointer-events: auto;
     background-color: transparent;
     border-radius: 40%;
     transition: border-radius .05s bounce-out;
