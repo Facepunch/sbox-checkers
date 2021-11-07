@@ -107,7 +107,10 @@ namespace Facepunch.Checkers
 
 		private void SetHoveredCell( CheckersCell cell )
 		{
-			LegalMoveCache.Clear();
+			if( !SelectedPiece.IsValid() )
+			{
+				LegalMoveCache.Clear();
+			}
 
 			if ( HoveredCell != null )
 			{
