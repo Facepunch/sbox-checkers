@@ -24,9 +24,9 @@ namespace Facepunch.Checkers
 		public bool IsKing { get; set; }
 		[Net, Change( nameof( SetTeamColor ) )]
 		public CheckersTeam Team { get; set; }
-		[Net]
+		[Net, Predicted]
 		public bool Floating { get; set; }
-		[Net]
+		[Net, Predicted]
 		public Vector3 DragPosition { get; set; }
 
 		public override void Spawn()
