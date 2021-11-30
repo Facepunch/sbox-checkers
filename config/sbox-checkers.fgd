@@ -18,7 +18,6 @@
 //
 @PointClass base(BaseProperties_sbox_checkers) = checkers : ""
 [
-	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 ]
 
 //
