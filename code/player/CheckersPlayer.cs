@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Sandbox.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Facepunch.Checkers
 		public CheckersCell HoveredCell { get; set; }
 
 		private Clothing.Container _clothing = new();
+		private WorldInput worldInput = new();
 
 		public List<CheckersMove> LegalMoveCache = new List<CheckersMove>();
 
@@ -85,6 +87,16 @@ namespace Facepunch.Checkers
 
 				SetSelectedPiece( null );
 			}
+		}
+
+		public override void BuildInput( InputBuilder input )
+		{
+			base.BuildInput( input );
+
+			worldInput.Ray = input.Cursor;
+			worldInput.MouseLeftPressed = input.Down( InputButton.Attack1 );
+			worldInput.MouseRightPressed = input.Down( InputButton.Attack2 );
+			worldInput.MouseScroll = input.MouseWheel;
 		}
 
 		private void SetSelectedPiece( CheckersPiece piece )
