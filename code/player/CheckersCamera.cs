@@ -23,8 +23,8 @@ namespace Facepunch.Checkers
 
 			// todo: maybe calculate the ideal camera position using the board's bounds
 			var cam = Entity.FindByName( targetCam );
-			Pos = cam.Position;
-			Rot = cam.Rotation;
+			Position = cam.Position;
+			Rotation = cam.Rotation;
 			FieldOfView = 70;
 		}
 

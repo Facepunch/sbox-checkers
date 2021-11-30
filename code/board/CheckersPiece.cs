@@ -61,7 +61,7 @@ namespace Facepunch.Checkers
 
 			var pl = Team == CheckersTeam.Red ? game.RedPlayer : game.BlackPlayer;
 
-			ChatBox.AddInformation( $"{pl.Client.Name}'s chip was eliminated", $"avatar:{pl.Client.SteamId}" );
+			ChatBox.AddInformation( $"{pl.Client.Name}'s chip was eliminated", $"avatar:{pl.Client.PlayerId}" );
 
 			Sound.FromScreen( "piece-eliminate" );
 		}
