@@ -34,8 +34,7 @@ namespace Facepunch.Checkers
 			base.Spawn();
 
 			Transmit = TransmitType.Always;
-			LagCompensation = false;
-			GlowState = GlowStates.GlowStateOn;
+			GlowState = GlowStates.On;
 			GlowActive = false;
 			GlowColor = Color.White;
 
