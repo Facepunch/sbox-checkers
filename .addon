@@ -1,6 +1,15 @@
 {
-	"sharedassets": "*.*",
-    "name": "checkers",
-    "version": "1.0",
-    "ident": "facepunch.checkers"
+  "SharedAssets": "*",
+  "Title": "Checkers",
+  "Type": "game",
+  "Org": "local",
+  "Ident": "sbox-checkers",
+  "FullIdent": "local.sbox-checkers",
+  "Schema": 1,
+  "NeedsUpgrade": false,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "HasCode": true,
+  "CodePath": "code",
+  "RootNamespace": "Facepunch.Checkers"
 }
