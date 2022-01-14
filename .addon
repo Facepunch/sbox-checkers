@@ -1,5 +1,5 @@
 {
-  "SharedAssets": "*",
+  "SharedAssets": "*.*",
   "Title": "Checkers",
   "Type": "game",
   "Org": "local",
