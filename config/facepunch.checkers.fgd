@@ -1,5 +1,5 @@
 
-@BaseClass = BaseProperties_sbox_checkers
+@BaseClass = BaseProperties_facepunch_checkers
 [
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
 	parentAttachmentName(parentAttachment) [ group="Hierarchy" ] : "Parent Model Bone/Attachment Name" : : "The name of the bone or attachment to attach to on the entity's parent in the movement hierarchy. Use !bonemerge to use bone-merge style attachment."
@@ -16,14 +16,14 @@
 //
 // Facepunch.Checkers.CheckersGame
 //
-@PointClass base(BaseProperties_sbox_checkers) = checkers : ""
+@PointClass base(BaseProperties_facepunch_checkers) = checkers : ""
 [
 ]
 
 //
 // Facepunch.Checkers.BoardTrigger
 //
-@SolidClass base(BaseProperties_sbox_checkers) tags( Trigger ) 
+@SolidClass base(BaseProperties_facepunch_checkers) tags( Trigger ) 
 metadata
 {
 	auto_apply_material = "materials/tools/toolstrigger.vmat"

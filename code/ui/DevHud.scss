@@ -1,19 +1,22 @@
-﻿devhud {
-    .restart {
-        position: absolute;
-        top: 32px;
-        right: 32px;
-        background-color: rgba(black 0.5);
-        padding: 12px;
-        color: white;
-        font-size: 24px;
-        border-radius: 10px;
-        border:2px solid white;
-        pointer-events:auto;
+﻿devhud
+{
+	.restart
+	{
+		position: absolute;
+		top: 32px;
+		right: 32px;
+		background-color: rgba(black 0.5);
+		padding: 12px;
+		color: white;
+		font-size: 24px;
+		border-radius: 10px;
+		border: 2px solid white;
+		pointer-events: auto;
 
-        &:hover {
-            background-color: black;
-            cursor: pointer;
-        }
-    }
+		&:hover
+		{
+			background-color: black;
+			cursor: pointer;
+		}
+	}
 }
