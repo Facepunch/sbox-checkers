@@ -27,24 +27,24 @@ namespace Facepunch.Checkers
 
 			if ( tr.Hit )
 			{
-				var lookDir = (tr.EndPos - Pawn.Position).WithZ( 0 ).Normal;
+				var lookDir = (tr.EndPosition - Pawn.Position).WithZ( 0 ).Normal;
 				Rotation = Rotation.LookAt( lookDir, Vector3.Up );
 			}
 		}
 
 		public override void Simulate()
 		{
-			EyePosLocal = Vector3.Up * (EyeHeight * Pawn.Scale);
+			EyeLocalPosition = Vector3.Up * (EyeHeight * Pawn.Scale);
 			UpdateBBox();
 
-			EyePosLocal += TraceOffset;
-			EyeRot = Input.Rotation;
+			EyeLocalPosition += TraceOffset;
+			EyeRotation = Input.Rotation;
 
 			if ( Unstuck.TestAndFix() )
 				return;
 
 			CheckLadder();
-			Swimming = Pawn.WaterLevel.Fraction > 0.6f;
+			Swimming = Pawn.WaterLevel > 0.6f;
 
 			if ( !Swimming )
 			{

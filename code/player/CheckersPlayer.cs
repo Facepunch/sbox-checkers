@@ -29,7 +29,7 @@ namespace Facepunch.Checkers
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			Camera = new CheckersCamera();
+			CameraMode = new CheckersCamera();
 			Animator = new StandardPlayerAnimator();
 			Controller = new CheckersController();
 
@@ -57,7 +57,7 @@ namespace Facepunch.Checkers
 
 			if ( tr.Hit )
 			{
-				SetHoveredCell( CheckersBoard.Current.GetCellAt( tr.EndPos ) );
+				SetHoveredCell( CheckersBoard.Current.GetCellAt( tr.EndPosition ) );
 			}
 
 			if ( !HoveredCell.IsValid() )
@@ -76,7 +76,7 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			SelectedPiece.DragPosition = tr.Hit ? tr.EndPos : Vector3.Zero;
+			SelectedPiece.DragPosition = tr.Hit ? tr.EndPosition : Vector3.Zero;
 
 			if ( Input.Released( InputButton.Attack1 ) )
 			{

@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Sandbox.Component;
 using Sandbox.UI;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,10 @@ namespace Facepunch.Checkers
 			base.Spawn();
 
 			Transmit = TransmitType.Always;
-			GlowState = GlowStates.On;
-			GlowActive = false;
-			GlowColor = Color.White;
+
+			var glow = Components.Create<Glow>();
+			glow.Color = Color.White;
+			glow.Active = false;
 
 			SetModel( "models/checkers_piece.vmdl" );
 			SetTeamColor();
@@ -106,10 +108,11 @@ namespace Facepunch.Checkers
 
 			if ( IsClient )
 			{
-				if( Local.Pawn is CheckersPlayer pl && Team == pl.Team )
+				var glow = Components.Get<Glow>();
+				if( Local.Pawn is CheckersPlayer pl && Team == pl.Team && glow != null)
 				{
-					GlowActive = pl.HoveredCell == cell || this == pl.SelectedPiece;
-					GlowColor = pl.SelectedPiece == this ? Color.Green : Color.White;
+					glow.Active = pl.HoveredCell == cell || this == pl.SelectedPiece;
+					glow.Color = pl.SelectedPiece == this ? Color.Green : Color.White;
 				}
 				return;
 			}

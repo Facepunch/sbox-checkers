@@ -91,7 +91,7 @@ namespace Facepunch.Checkers
 				return false;
 			}
 
-			float dist = labelPos.Distance( tr.EndPos );
+			float dist = labelPos.Distance( tr.EndPosition );
 
 			if(Local.Pawn == player )
 			{
