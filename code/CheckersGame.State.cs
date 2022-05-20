@@ -250,7 +250,7 @@ namespace Facepunch.Checkers
 			SetGameState( GameState.WaitingToStart );
 		}
 
-		[ServerCmd]
+		[ConCmd.Server]
 		public static void NetworkRestart()
 		{
 			CheckersGame.Instance.RestartGame();

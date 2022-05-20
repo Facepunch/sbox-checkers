@@ -20,7 +20,7 @@ namespace Facepunch.Checkers
 			 && pl.IsValid
 			 && pl.Team == CheckersTeam.Black ) as CheckersPlayer;
 
-		[ServerCmd]
+		[ConCmd.Server]
 		public static void SetClientTeam( CheckersTeam team )
 		{
 			var player = ConsoleSystem.Caller.Pawn as CheckersPlayer;
@@ -42,7 +42,7 @@ namespace Facepunch.Checkers
 			player.Team = team;
 		}
 
-		[ServerCmd]
+		[ConCmd.Server]
 		public static void PlayAgainstAi()
 		{
 			foreach ( var pl in Player.All )

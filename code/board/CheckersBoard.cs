@@ -53,7 +53,7 @@ namespace Facepunch.Checkers
 			{
 				for ( int x = 0; x < 8; x++ )
 				{
-					var cell = Entity.Create<CheckersCell>();
+					var cell = new CheckersCell();
 					cell.SetParent( this );
 					cell.Mins = new Vector3( CellSize * x, CellSize * y ) + Mins;
 					cell.Maxs = (CellSize * Vector3.One).WithZ( 0 ) + cell.Mins;
@@ -67,7 +67,7 @@ namespace Facepunch.Checkers
 							continue;
 						}
 						pieceIdx++;
-						var piece = Entity.Create<CheckersPiece>();
+						var piece = new CheckersPiece();
 						piece.SetParent( this );
 						piece.Team = pieceIdx <= 12 ? CheckersTeam.Black : CheckersTeam.Red;
 						piece.MoveToPosition( cell.BoardPosition );

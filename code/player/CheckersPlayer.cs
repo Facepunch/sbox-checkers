@@ -20,7 +20,7 @@ namespace Facepunch.Checkers
 		[Net, Predicted]
 		public CheckersCell HoveredCell { get; set; }
 
-		private Clothing.Container _clothing = new();
+		private ClothingContainer _clothing = new();
 		private WorldInput worldInput = new();
 
 		public List<CheckersMove> LegalMoveCache = new List<CheckersMove>();
@@ -65,7 +65,7 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			if ( Input.Pressed( InputButton.Attack1 ) )
+			if ( Input.Pressed( InputButton.PrimaryAttack ) )
 			{
 				var piece = CheckersBoard.Current.GetPieceAt( HoveredCell.BoardPosition );
 				SetSelectedPiece( piece );
@@ -78,7 +78,7 @@ namespace Facepunch.Checkers
 
 			SelectedPiece.DragPosition = tr.Hit ? tr.EndPosition : Vector3.Zero;
 
-			if ( Input.Released( InputButton.Attack1 ) )
+			if ( Input.Released( InputButton.PrimaryAttack ) )
 			{
 				if ( !IsClient )
 				{
@@ -94,8 +94,8 @@ namespace Facepunch.Checkers
 			base.BuildInput( input );
 
 			worldInput.Ray = input.Cursor;
-			worldInput.MouseLeftPressed = input.Down( InputButton.Attack1 );
-			worldInput.MouseRightPressed = input.Down( InputButton.Attack2 );
+			worldInput.MouseLeftPressed = input.Down( InputButton.PrimaryAttack );
+			worldInput.MouseRightPressed = input.Down( InputButton.SecondaryAttack );
 			worldInput.MouseScroll = input.MouseWheel;
 		}
 
