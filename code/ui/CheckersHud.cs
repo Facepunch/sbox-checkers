@@ -2,19 +2,14 @@
 using Sandbox.UI;
 using System.Linq;
 
-namespace Facepunch.Checkers
+namespace Facepunch.Checkers;
+
+[UseTemplate]
+public partial class CheckersHud : RootPanel
 {
-	public partial class CheckersHud : HudEntity<RootPanel>
+
+	public CheckersHud()
 	{
-
-		public CheckersHud()
-		{
-			if ( IsClient )
-			{
-				RootPanel.SetTemplate( "/ui/checkershud.html" );
-				RootPanel.Style.PointerEvents = "visible";
-			}
-		}
-
 	}
+
 }

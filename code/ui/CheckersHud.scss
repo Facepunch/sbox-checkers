@@ -1,3 +1,12 @@
+
+CheckersHud {
+	pointer-events: none;
+}
+
+.pointer-visible {
+	pointer-events: all;
+}
+
 pregamehud
 {
 	position: absolute;
@@ -6,12 +15,12 @@ pregamehud
 	background-color: rgba(#222, 0.9);
 	backdrop-filter: blur(15px);
 	transition: all .5s ease-out;
-	pointer-events: none;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	padding-bottom: 100px;
 	font-family: Poppins;
+	pointer-events: all;
 
 	.title
 	{
@@ -108,7 +117,7 @@ endgamehud
 	background-color: rgba(black .5);
 	backdrop-filter: blur(15px);
 	transition: all .5s ease-out;
-	pointer-events: none;
+	pointer-events: all;
 
 	.bar
 	{

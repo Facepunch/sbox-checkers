@@ -19,9 +19,12 @@ namespace Facepunch.Checkers
 				SetGameState( GameState.WaitingToStart );
 
 				Components.Add( new CheckersGameServices() );
-
-				new CheckersHud();
 			}
+
+            if (IsClient)
+            {
+				new CheckersHud();
+            }
 		}
 
 		public override void ClientJoined( Client cl )
