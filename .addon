@@ -3,7 +3,7 @@
   "Type": "game",
   "Org": "facepunch",
   "Ident": "checkers",
-  "Tags": null,
+  "Tags": "strategy boardgame",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
@@ -21,6 +21,10 @@
     "MinPlayers": 1,
     "PerMapRanking": false,
     "GameNetworkType": 0,
-    "MaxPlayers": 8
+    "MaxPlayers": 8,
+    "DefaultLeaderboards": null,
+    "Summary": "Checkers for S\u0026box",
+    "Description": "Checkers is a board game where the objective is to have the last remaining piece on the board.  Pair up and play with a friend, a stranger, or play against a bot.",
+    "Public": true
   }
 }
