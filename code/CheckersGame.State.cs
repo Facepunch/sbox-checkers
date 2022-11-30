@@ -56,7 +56,7 @@ namespace Facepunch.Checkers
 
 			if ( EndGameTimer <= 0 )
 			{
-				NetworkRestart();
+				RestartGame();
 			}
 		}
 
@@ -230,6 +230,8 @@ namespace Facepunch.Checkers
 
 		private void RestartGame()
 		{
+			Log.Error("Restarting");
+
 			Winner = null;
 			Loser = null;
 

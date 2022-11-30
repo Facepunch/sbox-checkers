@@ -5,12 +5,6 @@
 @using Sandbox.UI;
 @using Facepunch.Checkers;
 
-<style>
-    EndGameHud {
-        display: @Display;
-    }
-</style>
-
 <root class="endgamehud">
     <div class="bar">
         <text class="result" text=@GetGameResultString()></text>
@@ -19,8 +13,6 @@
 </root>
 
 @code {
-    string Display => (CheckersGame.Instance.CurrentState == GameState.Completed) ? "flex" : "none";
-
 	private string GetTimerString()
 	{
 		return "Restarting in " + (int)CheckersGame.Instance.EndGameTimer + " seconds";
@@ -44,7 +36,7 @@
 
     protected override int BuildHash()
     {
-		return HashCode.Combine(Display, GetTimerString(), GetGameResultString());
+		return HashCode.Combine(GetTimerString(), GetGameResultString());
 	}
 }
 

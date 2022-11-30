@@ -1,6 +1,7 @@
 ﻿
 @inherits Sandbox.UI.RootPanel;
 @attribute [Sandbox.UI.StyleSheet("ui/styles.scss")]
+@using Facepunch.Checkers;
 
 <root>
 	<div class="pointer-visible"></div>
@@ -10,3 +11,17 @@
 	<pregamehud></pregamehud>
 	<endgamehud></endgamehud>
 </root>
+
+@code {
+	public override void Tick()
+	{
+		base.Tick();
+
+		this.RemoveClass("abandoned");
+		this.RemoveClass("completed");
+		this.RemoveClass("live");
+		this.RemoveClass("waitingtostart");
+		
+		this.AddClass(CheckersGame.Instance.CurrentState.ToString().ToLower());
+	}
+}

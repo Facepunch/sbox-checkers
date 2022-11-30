@@ -17,14 +17,22 @@ namespace Facepunch.Checkers
 			if ( IsServer )
 			{
 				SetGameState( GameState.WaitingToStart );
-
-				Components.Add( new CheckersGameServices() );
 			}
 
             if (IsClient)
             {
 				new CheckersHud();
             }
+		}
+
+		public override void Simulate(Client cl)
+		{
+			base.Simulate(cl);
+
+			if (Input.Pressed(InputButton.Jump))
+			{
+				DeclareWinner(CheckersTeam.Red);
+			}
 		}
 
 		public override void ClientJoined( Client cl )

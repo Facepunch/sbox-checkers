@@ -5,12 +5,6 @@
 @using Facepunch.Checkers;
 @using System.Linq;
 
-<style>
-	LiveGameHud {
-		display: @Display;
-	}
-</style>
-
 <root>
     <div class="details">
         <div>
@@ -26,11 +20,10 @@
 	Sandbox.UI.Panel Fill;
 	float TurnTimer => (int)CheckersGame.Instance.TurnTimer;
 	string PlayerName => GetActiveTeamName();
-	string Display => (CheckersGame.Instance.CurrentState == GameState.Live) ? "flex" : "none";
 
 	protected override int BuildHash()
 	{
-		return System.HashCode.Combine(PlayerName, TurnTimer, Display);
+		return System.HashCode.Combine(PlayerName, TurnTimer);
 	}
 
 	private string GetActiveTeamName()
