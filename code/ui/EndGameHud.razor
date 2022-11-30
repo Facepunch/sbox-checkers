@@ -1,0 +1,50 @@
+﻿
+@inherits Sandbox.UI.Panel;
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch.Checkers;
+
+<style>
+    EndGameHud {
+        display: @Display;
+    }
+</style>
+
+<root class="endgamehud">
+    <div class="bar">
+        <text class="result" text=@GetGameResultString()></text>
+        <text class="timer" text=@GetTimerString()></text>
+    </div>
+</root>
+
+@code {
+    string Display => (CheckersGame.Instance.CurrentState == GameState.Completed) ? "flex" : "none";
+
+	private string GetTimerString()
+	{
+		return "Restarting in " + (int)CheckersGame.Instance.EndGameTimer + " seconds";
+	}
+
+	private string GetGameResultString()
+	{
+		var game = CheckersGame.Instance;
+		if (game.CurrentState == GameState.Abandoned)
+		{
+			return "Game abandoned, scores will not count";
+		}
+
+		if (game.CurrentState != GameState.Completed || !game.Winner.IsValid())
+		{
+			return "unknown";
+		}
+
+		return game.Winner.Client.Name + " has won the game!";
+	}
+
+    protected override int BuildHash()
+    {
+		return HashCode.Combine(Display, GetTimerString(), GetGameResultString());
+	}
+}
+

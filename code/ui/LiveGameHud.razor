@@ -1,0 +1,58 @@
+﻿
+@inherits Sandbox.UI.Panel;
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch.Checkers;
+@using System.Linq;
+
+<style>
+	LiveGameHud {
+		display: @Display;
+	}
+</style>
+
+<root>
+    <div class="details">
+        <div>
+            <label class="team" text=@PlayerName />
+        </div>
+    </div>
+    <div class="timer">
+        <div @ref="Fill" class="fill" width="70%" />
+    </div>
+</root>
+
+@code {
+	Sandbox.UI.Panel Fill;
+	float TurnTimer => (int)CheckersGame.Instance.TurnTimer;
+	string PlayerName => GetActiveTeamName();
+	string Display => (CheckersGame.Instance.CurrentState == GameState.Live) ? "flex" : "none";
+
+	protected override int BuildHash()
+	{
+		return System.HashCode.Combine(PlayerName, TurnTimer, Display);
+	}
+
+	private string GetActiveTeamName()
+	{
+		var pl = Player.All.FirstOrDefault(x => x is CheckersPlayer cp && cp.Team == CheckersGame.Instance.ActiveTeam);
+
+		if (!pl.IsValid())
+		{
+			return "Unknown";
+		}
+
+		return pl.Client.Name;
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+
+		Fill.Style.Width = new Length()
+			{
+				Value = TurnTimer / CheckersGame.PlayerTurnTime * 100,
+				Unit = LengthUnit.Percentage
+			};
+	}
+}
