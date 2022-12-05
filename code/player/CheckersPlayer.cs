@@ -20,7 +20,12 @@ namespace Facepunch.Checkers
 		[Net, Predicted]
 		public CheckersCell HoveredCell { get; set; }
 
-		private ClothingContainer _clothing = new();
+		[ClientInput]
+		public Vector3 CursorDirection { get; set; }
+        [ClientInput]
+        public Vector3 CursorPosition { get; set; }
+
+        private ClothingContainer _clothing = new();
 		private WorldInput worldInput = new();
 
 		public List<CheckersMove> LegalMoveCache = new List<CheckersMove>();
@@ -51,9 +56,14 @@ namespace Facepunch.Checkers
 		{
 			base.Simulate( cl );
 
-			var tr = Trace.Ray( Input.Cursor, 3000 )
+			var screeenRay = new Ray(CursorPosition, CursorDirection);
+
+            var tr = Trace.Ray(screeenRay, 3000 )
 				.WorldOnly()
 				.Run();
+
+			DebugOverlay.TraceResult(tr);
+			DebugOverlay.Text(IsClient.ToString(), tr.EndPosition, 0, 5000);
 
 			if ( tr.Hit )
 			{
@@ -89,14 +99,15 @@ namespace Facepunch.Checkers
 			}
 		}
 
-		public override void BuildInput( InputBuilder input )
+		public override void BuildInput()
 		{
-			base.BuildInput( input );
+			CursorPosition = CurrentView.Position;
+            CursorDirection = Mouse.Visible? Screen.GetDirection(Mouse.Position) : CurrentView.Rotation.Forward;
 
-			worldInput.Ray = input.Cursor;
-			worldInput.MouseLeftPressed = input.Down( InputButton.PrimaryAttack );
-			worldInput.MouseRightPressed = input.Down( InputButton.SecondaryAttack );
-			worldInput.MouseScroll = input.MouseWheel;
+            worldInput.Ray = new Ray( CurrentView.Position, CursorDirection );
+			worldInput.MouseLeftPressed = Input.Down( InputButton.PrimaryAttack );
+			worldInput.MouseRightPressed = Input.Down( InputButton.SecondaryAttack );
+			worldInput.MouseScroll = Input.MouseWheel;
 		}
 
 		private void SetSelectedPiece( CheckersPiece piece )

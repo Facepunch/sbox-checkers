@@ -10,18 +10,15 @@ namespace Facepunch.Checkers
     class CheckersController : WalkController
 	{
 
-		public override void BuildInput( InputBuilder input )
-		{
-			base.BuildInput( input );
-
-			input.ViewAngles = Rotation.Angles();
-		}
-
 		public override void FrameSimulate()
 		{
 			base.FrameSimulate();
 
-			var tr = Trace.Ray( Input.Cursor, 3000 )
+			if (Pawn is not CheckersPlayer p) return;
+
+            var screeenRay = new Ray(p.CursorPosition, p.CursorDirection);
+
+            var tr = Trace.Ray(screeenRay, 3000 )
 				.WorldOnly()
 				.Run();
 
@@ -34,11 +31,14 @@ namespace Facepunch.Checkers
 
 		public override void Simulate()
 		{
+			var player = Pawn as CheckersPlayer;
+			if (!player.IsValid()) return;
+
 			EyeLocalPosition = Vector3.Up * (EyeHeight * Pawn.Scale);
 			UpdateBBox();
 
 			EyeLocalPosition += TraceOffset;
-			EyeRotation = Input.Rotation;
+			EyeRotation = player.ViewAngles.ToRotation();
 
 			if ( Unstuck.TestAndFix() )
 				return;
@@ -70,7 +70,7 @@ namespace Facepunch.Checkers
 				}
 			}
 
-			WishVelocity = new Vector3( Input.Forward, Input.Left, 0 );
+			WishVelocity = new Vector3( player.InputDirection.x, player.InputDirection.y, 0 );
 			var inSpeed = WishVelocity.Length.Clamp( 0, 1 );
 
 			// todo: this kinda sucks
