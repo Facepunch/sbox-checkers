@@ -62,9 +62,6 @@ namespace Facepunch.Checkers
 				.WorldOnly()
 				.Run();
 
-			DebugOverlay.TraceResult(tr);
-			DebugOverlay.Text(IsClient.ToString(), tr.EndPosition, 0, 5000);
-
 			if ( tr.Hit )
 			{
 				SetHoveredCell( CheckersBoard.Current.GetCellAt( tr.EndPosition ) );
