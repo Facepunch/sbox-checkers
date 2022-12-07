@@ -23,7 +23,7 @@ namespace Facepunch.Checkers
 			var client = player.Client;
 
 			NameLabel = Add.Label( $"{client.Name}" );
-			Avatar = Add.Image( $"avatar:{client.PlayerId}" );
+			Avatar = Add.Image( $"avatar:{client.SteamId}" );
 		}
 
 		public virtual void UpdateFromPlayer( Player player )
@@ -52,7 +52,7 @@ namespace Facepunch.Checkers
 			deleteList.AddRange( ActiveTags.Keys );
 
 			int count = 0;
-			foreach ( var player in Entity.All.OfType<Player>().OrderBy( x => Vector3.DistanceBetween( x.Position, CurrentView.Position ) ) )
+			foreach ( var player in Entity.All.OfType<Player>().OrderBy( x => Vector3.DistanceBetween( x.Position, Camera.Position ) ) )
 			{
 				if ( UpdateNameTag( player ) )
 				{
@@ -84,7 +84,7 @@ namespace Facepunch.Checkers
 
             if (Local.Pawn is not CheckersPlayer p) return false;
 
-            var screeenRay = new Ray(CurrentView.Position, p.CursorDirection);
+            var screeenRay = new Ray(Camera.Position, p.CursorDirection);
 
             var tr = Trace.Ray(screeenRay, 5000 )
 				.WorldAndEntities()
@@ -106,7 +106,7 @@ namespace Facepunch.Checkers
 				return false;
 
 			var alpha = dist.LerpInverse( MaxDrawDistance, MaxDrawDistance * 0.1f, true );
-			var objectSize = .05f / dist / (2.0f * MathF.Tan( (CurrentView.FieldOfView / 2.0f).DegreeToRadian() )) * 1500.0f;
+			var objectSize = .05f / dist / (2.0f * MathF.Tan( (Camera.FieldOfView / 2.0f).DegreeToRadian() )) * 1500.0f;
 
 			objectSize = objectSize.Clamp( 0.05f, .3f );
 

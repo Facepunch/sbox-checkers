@@ -30,7 +30,7 @@ namespace Facepunch.Checkers
 			Rotation = Rotation.LookAt( Vector3.Up );
 		}
 
-		[Event.Frame]
+		[Event.Client.Frame]
 		private void OnFrame()
 		{
 			if ( Local.Pawn is not CheckersPlayer pl )

@@ -5,7 +5,7 @@ using System.Linq;
 namespace Facepunch.Checkers
 {
 	[Library( "checkers", Title = "Checkers" )]
-	partial class CheckersGame : Sandbox.Game
+	partial class CheckersGame : GameManager
 	{
 
 		public static CheckersGame Instance;
@@ -83,5 +83,21 @@ namespace Facepunch.Checkers
 			gridEnt.SpawnCells();
 		}
 
-	}
+        public override void FrameSimulate(Client cl)
+        {
+            base.FrameSimulate(cl);
+
+            if ( Local.Pawn is not CheckersPlayer player )
+                return;
+
+            var targetCam = player.Team != CheckersTeam.Red ? "camera_black" : "camera_red";
+
+            // todo: maybe calculate the ideal camera position using the board's bounds
+            var cam = Entity.FindByName(targetCam);
+            Camera.Position = cam.Position;
+            Camera.Rotation = cam.Rotation;
+			Camera.FieldOfView = Screen.CreateVerticalFieldOfView( 55 );
+        }
+
+    }
 }

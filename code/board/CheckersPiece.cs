@@ -38,9 +38,10 @@ namespace Facepunch.Checkers
 
 			var glow = Components.Create<Glow>();
 			glow.Color = Color.White;
-			glow.Active = false;
+			glow.Enabled = false;
 
-			SetModel( "models/checkers_piece.vmdl" );
+
+            SetModel( "models/checkers_piece.vmdl" );
 			SetTeamColor();
 		}
 
@@ -62,7 +63,7 @@ namespace Facepunch.Checkers
 
 			var pl = Team == CheckersTeam.Red ? game.RedPlayer : game.BlackPlayer;
 
-			ChatBox.AddInformation( $"{pl.Client.Name}'s chip was eliminated", $"avatar:{pl.Client.PlayerId}" );
+			ChatBox.AddInformation( $"{pl.Client.Name}'s chip was eliminated", $"avatar:{pl.Client.SteamId}" );
 
 			Sound.FromScreen( "piece-eliminate" );
 		}
@@ -108,10 +109,10 @@ namespace Facepunch.Checkers
 
 			if ( IsClient )
 			{
-				var glow = Components.Get<Glow>();
+				var glow = Components.Get<Glow>( true );
 				if( Local.Pawn is CheckersPlayer pl && Team == pl.Team && glow != null)
 				{
-					glow.Active = pl.HoveredCell == cell || this == pl.SelectedPiece;
+					glow.Enabled = pl.HoveredCell == cell || this == pl.SelectedPiece;
 					glow.Color = pl.SelectedPiece == this ? Color.Green : Color.White;
 				}
 				return;

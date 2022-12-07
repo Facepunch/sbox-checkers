@@ -25,6 +25,7 @@
     "DefaultLeaderboards": null,
     "Summary": "Checkers for S\u0026box",
     "Description": "Checkers is a board game where the objective is to have the last remaining piece on the board.  Pair up and play with a friend, a stranger, or play against a bot.",
-    "Public": true
+    "Public": true,
+    "ReplaceTags": "boardgame checkers twoplayer casual"
   }
 }

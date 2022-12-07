@@ -34,8 +34,6 @@ namespace Facepunch.Checkers
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
 
-			CameraMode = new CheckersCamera();
-			Animator = new StandardPlayerAnimator();
 			Controller = new CheckersController();
 
 			EnableAllCollisions = true;
@@ -61,6 +59,8 @@ namespace Facepunch.Checkers
             var tr = Trace.Ray(screeenRay, 3000 )
 				.WorldOnly()
 				.Run();
+
+			DebugOverlay.Sphere(tr.EndPosition, 2.0f, Host.Color, 2.0f);
 
 			if ( tr.Hit )
 			{
@@ -96,12 +96,13 @@ namespace Facepunch.Checkers
 			}
 		}
 
-		public override void BuildInput()
+        
+        public override void BuildInput()
 		{
-			CursorPosition = CurrentView.Position;
-            CursorDirection = Mouse.Visible? Screen.GetDirection(Mouse.Position) : CurrentView.Rotation.Forward;
+			CursorPosition = Camera.Position;
+            CursorDirection = Mouse.Visible ? Screen.GetDirection( Mouse.Position ) : Camera.Rotation.Forward;
 
-            worldInput.Ray = new Ray( CurrentView.Position, CursorDirection );
+            worldInput.Ray = new Ray(Camera.Position, CursorDirection );
 			worldInput.MouseLeftPressed = Input.Down( InputButton.PrimaryAttack );
 			worldInput.MouseRightPressed = Input.Down( InputButton.SecondaryAttack );
 			worldInput.MouseScroll = Input.MouseWheel;

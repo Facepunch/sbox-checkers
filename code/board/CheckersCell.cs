@@ -52,7 +52,7 @@ namespace Facepunch.Checkers
 			return false;
 		}
 
-		[Event.Frame]
+		[Event.Client.Frame]
 		public void OnFrame()
 		{
 			//DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );
