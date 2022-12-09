@@ -60,7 +60,7 @@ namespace Facepunch.Checkers
 				.WorldOnly()
 				.Run();
 
-			DebugOverlay.Sphere(tr.EndPosition, 2.0f, Host.Color, 2.0f);
+			//DebugOverlay.Sphere(tr.EndPosition, 2.0f, Host.Color, 2.0f);
 
 			if ( tr.Hit )
 			{

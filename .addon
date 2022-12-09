@@ -10,7 +10,6 @@
   "ResourcePaths": null,
   "HasCode": true,
   "CodePath": "code",
-  "RootNamespace": "Facepunch.Checkers",
   "Metadata": {
     "MapList": [
       "facepunch.checkers_park"

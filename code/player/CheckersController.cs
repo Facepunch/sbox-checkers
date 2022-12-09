@@ -44,7 +44,6 @@ namespace Facepunch.Checkers
 				return;
 
 			CheckLadder();
-			Swimming = Pawn.WaterLevel > 0.6f;
 
 			if ( !Swimming )
 			{
