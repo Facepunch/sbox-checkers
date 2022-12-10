@@ -25,7 +25,7 @@ namespace Facepunch.Checkers
             }
 		}
 
-		public override void Simulate(Client cl)
+		public override void Simulate(IClient cl)
 		{
 			base.Simulate(cl);
 
@@ -35,7 +35,7 @@ namespace Facepunch.Checkers
 			}
 		}
 
-		public override void ClientJoined( Client cl )
+		public override void ClientJoined(IClient cl )
 		{
 			base.ClientJoined( cl );
 
@@ -46,7 +46,7 @@ namespace Facepunch.Checkers
 			player.Respawn();
 		}
 
-		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+		public override void ClientDisconnect(IClient cl, NetworkDisconnectionReason reason )
 		{
 			base.ClientDisconnect( cl, reason );
 
@@ -83,11 +83,11 @@ namespace Facepunch.Checkers
 			gridEnt.SpawnCells();
 		}
 
-        public override void FrameSimulate(Client cl)
+        public override void FrameSimulate(IClient cl)
         {
             base.FrameSimulate(cl);
 
-            if ( Local.Pawn is not CheckersPlayer player )
+            if ( Game.LocalPawn is not CheckersPlayer player )
                 return;
 
             var targetCam = player.Team != CheckersTeam.Red ? "camera_black" : "camera_red";

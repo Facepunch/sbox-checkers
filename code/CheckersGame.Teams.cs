@@ -57,7 +57,7 @@ namespace Facepunch.Checkers
 			var player = ConsoleSystem.Caller.Pawn as CheckersPlayer;
 			player.Team = CheckersTeam.Red;
 
-			foreach ( var cl in Client.All )
+			foreach ( var cl in Game.Clients )
 			{
 				if ( cl.IsBot )
 				{

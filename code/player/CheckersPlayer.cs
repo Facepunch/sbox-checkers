@@ -50,7 +50,7 @@ namespace Facepunch.Checkers
 			base.Respawn();
 		}
 
-		public override void Simulate( Client cl )
+		public override void Simulate(IClient cl )
 		{
 			base.Simulate( cl );
 

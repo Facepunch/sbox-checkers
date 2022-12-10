@@ -33,7 +33,7 @@ namespace Facepunch.Checkers
 		[Event.Client.Frame]
 		private void OnFrame()
 		{
-			if ( Local.Pawn is not CheckersPlayer pl )
+			if ( Game.LocalPawn is not CheckersPlayer pl )
 			{
 				return;
 			}

@@ -110,7 +110,7 @@ namespace Facepunch.Checkers
 			if ( IsClient )
 			{
 				var glow = Components.Get<Glow>( true );
-				if( Local.Pawn is CheckersPlayer pl && Team == pl.Team && glow != null)
+				if( Game.LocalPawn is CheckersPlayer pl && Team == pl.Team && glow != null)
 				{
 					glow.Enabled = pl.HoveredCell == cell || this == pl.SelectedPiece;
 					glow.Color = pl.SelectedPiece == this ? Color.Green : Color.White;

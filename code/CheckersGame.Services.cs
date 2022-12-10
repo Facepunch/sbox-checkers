@@ -16,10 +16,10 @@ namespace Facepunch.Checkers
 			switch (newState)
 			{
 				case GameState.Live:
-					GameServices.StartGame();
+					//Global.Service.StartGame();
 					break;
 				case GameState.Abandoned:
-					GameServices.AbandonGame(); // todo: pass player who abandoned the game 
+                   // Global.Service.AbandonGame(); // todo: pass player who abandoned the game 
 					break;
 			}
 		}
@@ -40,20 +40,20 @@ namespace Facepunch.Checkers
 				? BlackPlayer
 				: RedPlayer;
 
-			GameServices.RecordEvent(victim.Client, $"Lost {piece.Team} Chip");
-			GameServices.RecordEvent(attacker.Client, $"Eliminated {piece.Team} Chip");
+           // Global.Service.RecordEvent(victim.Client, $"Lost {piece.Team} Chip");
+           // Global.Service.RecordEvent(attacker.Client, $"Eliminated {piece.Team} Chip");
 		}
 
 		[Event(CheckersEvents.ServerMatchCompleted)]
 		private void OnMatchCompleted()
 		{
-			//if (Winner.Client.IsBot || Loser.Client.IsBot)
-			//	return;
+            //if (Winner.Client.IsBot || Loser.Client.IsBot)
+            //	return;
 
-			//Winner.Client.SetGameResult(GameplayResult.Win, 0);
-			//Loser.Client.SetGameResult(GameplayResult.Lose, 0);
+            //Winner.Client.SetGameResult(GameplayResult.Win, 0);
+            //Loser.Client.SetGameResult(GameplayResult.Lose, 0);
 
-			GameServices.EndGame();
+          //  Global.Service.EndGame();
 		}
 
 	}

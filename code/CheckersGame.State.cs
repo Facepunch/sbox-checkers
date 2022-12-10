@@ -3,8 +3,7 @@ using Sandbox.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Sandbox.Diagnostics;
 
 namespace Facepunch.Checkers
 {
@@ -145,7 +144,7 @@ namespace Facepunch.Checkers
 
 		private void EliminatePiece( CheckersPiece piece )
 		{
-			Host.AssertServer();
+			Game.AssertServer();
 
 			piece.Delete();
 

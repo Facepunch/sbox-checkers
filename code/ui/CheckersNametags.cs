@@ -82,7 +82,7 @@ namespace Facepunch.Checkers
 		{
 			var labelPos = player.GetAttachment( "hat" ).Value.Position + Vector3.Up * 50;
 
-            if (Local.Pawn is not CheckersPlayer p) return false;
+            if (Game.LocalPawn is not CheckersPlayer p) return false;
 
             var screeenRay = new Ray(Camera.Position, p.CursorDirection);
 
@@ -97,7 +97,7 @@ namespace Facepunch.Checkers
 
 			float dist = labelPos.Distance( tr.EndPosition );
 
-			if(Local.Pawn == player )
+			if(Game.LocalPawn == player )
 			{
 				dist = 0;
 			}
