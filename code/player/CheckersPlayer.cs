@@ -87,7 +87,7 @@ namespace Facepunch.Checkers
 
 			if ( Input.Released( InputButton.PrimaryAttack ) )
 			{
-				if ( !IsClient )
+				if ( !Game.IsClient )
 				{
 					CheckersGame.Instance.AttemptMove( this, SelectedPiece, HoveredCell.BoardPosition );
 				}

@@ -8,7 +8,7 @@ namespace Facepunch.Checkers
 		[Event(CheckersEvents.GameStateChanged)]
 		private void OnGameStateChanged(GameState newState)
 		{
-			if (IsClient)
+			if (Game.IsClient)
 			{
 				return;
 			}

@@ -14,12 +14,12 @@ namespace Facepunch.Checkers
 		{
 			Instance = this;
 
-			if ( IsServer )
+			if ( Game.IsServer )
 			{
 				SetGameState( GameState.WaitingToStart );
 			}
 
-            if (IsClient)
+            if (Game.IsClient)
             {
 				new CheckersHud();
             }
@@ -65,7 +65,7 @@ namespace Facepunch.Checkers
 		[Event.Entity.PostSpawn]
 		private void CreateGrid()
 		{
-			if ( IsClient )
+			if ( Game.IsClient )
 			{
 				return;
 			}

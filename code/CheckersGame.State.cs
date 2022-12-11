@@ -29,7 +29,7 @@ namespace Facepunch.Checkers
 		[Event.Tick]
 		private void OnTick()
 		{
-			if ( IsClient )
+			if ( Game.IsClient )
 			{
 				return;
 			}
@@ -97,7 +97,7 @@ namespace Facepunch.Checkers
 
 		public void AttemptMove( CheckersPlayer player, CheckersPiece piece, Vector2 target )
 		{
-			Assert.True( IsServer );
+			Assert.True( Game.IsServer );
 
 			if ( CurrentState != GameState.Live )
 			{

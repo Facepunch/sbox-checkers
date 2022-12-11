@@ -32,7 +32,7 @@ namespace Facepunch.Checkers
 
 		public void SpawnCells()
 		{
-			if ( IsClient )
+			if ( Game.IsClient )
 			{
 				return;
 			}

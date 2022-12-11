@@ -49,7 +49,7 @@ namespace Facepunch.Checkers
 		{
 			base.OnDestroy();
 
-			if ( !IsClient )
+			if ( !Game.IsClient )
 			{
 				return;
 			}
@@ -107,7 +107,7 @@ namespace Facepunch.Checkers
 			var cell = CheckersBoard.Current.GetCellAt( BoardPosition );
 			var staticPos = cell.Center;
 
-			if ( IsClient )
+			if ( Game.IsClient )
 			{
 				var glow = Components.Get<Glow>( true );
 				if( Game.LocalPawn is CheckersPlayer pl && Team == pl.Team && glow != null)
