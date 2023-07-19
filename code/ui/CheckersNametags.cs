@@ -4,8 +4,6 @@ using Sandbox.UI.Construct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
@@ -14,19 +12,15 @@ namespace Facepunch.Checkers
 		public Label NameLabel;
 		public Image Avatar;
 
-		Player player;
-
-		public CheckersBaseNameTag( Player player )
+		public CheckersBaseNameTag( CheckersPlayer player )
 		{
-			this.player = player;
-
 			var client = player.Client;
 
 			NameLabel = Add.Label( $"{client.Name}" );
 			Avatar = Add.Image( $"avatar:{client.SteamId}" );
 		}
 
-		public virtual void UpdateFromPlayer( Player player )
+		public virtual void UpdateFromPlayer(CheckersPlayer player )
 		{
 			// Nothing to do unless we're showing health and shit
 		}
@@ -35,7 +29,7 @@ namespace Facepunch.Checkers
 	class CheckersNametags : Panel
 	{
 
-		Dictionary<Player, CheckersBaseNameTag> ActiveTags = new Dictionary<Player, CheckersBaseNameTag>();
+		Dictionary<CheckersPlayer, CheckersBaseNameTag> ActiveTags = new Dictionary<CheckersPlayer, CheckersBaseNameTag>();
 
 		public const float MaxDrawDistance = 300;
 
@@ -48,11 +42,11 @@ namespace Facepunch.Checkers
 		{
 			base.Tick();
 
-			var deleteList = new List<Player>();
+			var deleteList = new List<CheckersPlayer>();
 			deleteList.AddRange( ActiveTags.Keys );
 
 			int count = 0;
-			foreach ( var player in Entity.All.OfType<Player>().OrderBy( x => Vector3.DistanceBetween( x.Position, Camera.Position ) ) )
+			foreach ( var player in Entity.All.OfType<CheckersPlayer>().OrderBy( x => Vector3.DistanceBetween( x.Position, Camera.Position ) ) )
 			{
 				if ( UpdateNameTag( player ) )
 				{
@@ -68,7 +62,7 @@ namespace Facepunch.Checkers
 			}
 		}
 
-		public virtual CheckersBaseNameTag CreateNameTag( Player player )
+		public virtual CheckersBaseNameTag CreateNameTag(CheckersPlayer player )
 		{
 			if ( player.Client == null )
 				return null;
@@ -78,7 +72,7 @@ namespace Facepunch.Checkers
 			return tag;
 		}
 
-		public bool UpdateNameTag( Player player )
+		public bool UpdateNameTag(CheckersPlayer player )
 		{
 			var labelPos = player.GetAttachment( "hat" ).Value.Position + Vector3.Up * 50;
 
@@ -87,7 +81,7 @@ namespace Facepunch.Checkers
             var screeenRay = new Ray(Camera.Position, p.CursorDirection);
 
             var tr = Trace.Ray(screeenRay, 5000 )
-				.WorldAndEntities()
+				.StaticOnly()
 				.Run();
 
 			if ( !tr.Hit )

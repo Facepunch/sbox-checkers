@@ -12,11 +12,11 @@ namespace Facepunch.Checkers
 
 		// todo: implement teams via lobby and avoid all this
 
-		public CheckersPlayer RedPlayer => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+		public CheckersPlayer RedPlayer => Entity.All.FirstOrDefault( x => x is CheckersPlayer pl
 			 && pl.IsValid
 			 && pl.Team == CheckersTeam.Red ) as CheckersPlayer;
 
-		public CheckersPlayer BlackPlayer => Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+		public CheckersPlayer BlackPlayer => Entity.All.FirstOrDefault( x => x is CheckersPlayer pl
 			 && pl.IsValid
 			 && pl.Team == CheckersTeam.Black ) as CheckersPlayer;
 
@@ -30,7 +30,7 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			var teamTaken = Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+			var teamTaken = Entity.All.FirstOrDefault( x => x is CheckersPlayer pl
 				 && pl.IsValid
 				 && pl.Team == team ) != null;
 
@@ -45,7 +45,7 @@ namespace Facepunch.Checkers
 		[ConCmd.Server]
 		public static void PlayAgainstAi()
 		{
-			foreach ( var pl in Player.All )
+			foreach ( var pl in Entity.All )
 			{
 				if ( pl is not CheckersPlayer cpl )
 				{
@@ -68,7 +68,6 @@ namespace Facepunch.Checkers
 			var bot = new CheckersBot();
 			bot.Client.Pawn.Delete();
 			var botPlayer = new CheckersPlayer();
-			botPlayer.Respawn();
 			botPlayer.Team = CheckersTeam.Black;
 			bot.Client.Pawn = botPlayer;
 		}

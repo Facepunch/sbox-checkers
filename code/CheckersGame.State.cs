@@ -26,7 +26,7 @@ namespace Facepunch.Checkers
 		public const float PlayerTurnTime = 30;
 		public const float EndGameTime = 8;
 
-		[Event.Tick]
+		[GameEvent.Tick]
 		private void OnTick()
 		{
 			if ( Game.IsClient )
@@ -70,10 +70,10 @@ namespace Facepunch.Checkers
 
 		private void TickWaitingToStart()
 		{
-			var player1 = Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+			var player1 = Entity.All.FirstOrDefault( x => x is CheckersPlayer pl
 				&& pl.Team == CheckersTeam.Red
 				&& pl.IsValid );
-			var player2 = Player.All.FirstOrDefault( x => x is CheckersPlayer pl
+			var player2 = Entity.All.FirstOrDefault( x => x is CheckersPlayer pl
 				&& pl.Team == CheckersTeam.Black
 				&& pl.IsValid );
 
@@ -239,7 +239,7 @@ namespace Facepunch.Checkers
 				Bot.All[i].Client.Kick();
 			}
 
-			foreach ( var player in Player.All )
+			foreach ( var player in Entity.All )
 			{
 				if ( player is CheckersPlayer pl && pl.IsValid() )
 				{

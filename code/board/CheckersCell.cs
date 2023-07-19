@@ -1,13 +1,9 @@
-﻿using Sandbox;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Sandbox;
 
 namespace Facepunch.Checkers
 {
-	partial class CheckersCell : Entity
+	public partial class CheckersCell : Entity
 	{
 
 		[Net]
@@ -52,7 +48,7 @@ namespace Facepunch.Checkers
 			return false;
 		}
 
-		[Event.Client.Frame]
+		[GameEvent.Client.Frame]
 		public void OnFrame()
 		{
 			//DebugOverlay.Text( Center, BoardPosition.ToString(), Color.White, 0, 2000 );

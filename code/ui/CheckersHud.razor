@@ -1,27 +1,26 @@
-﻿
-@inherits Sandbox.UI.RootPanel;
-@attribute [Sandbox.UI.StyleSheet("ui/styles.scss")]
+﻿@inherits Sandbox.UI.RootPanel;
+@attribute [Sandbox.UI.StyleSheet("styles.scss")]
 @using Facepunch.Checkers;
 
 <root>
-	<div class="pointer-visible"></div>
-	<checkersnametags></checkersnametags>
-	<chatbox></chatbox>
-	<livegamehud></livegamehud>
-	<pregamehud></pregamehud>
-	<endgamehud></endgamehud>
+    <div class="pointer-visible"></div>
+    <checkersnametags></checkersnametags>
+    <chatbox></chatbox>
+    <livegamehud></livegamehud>
+    <pregamehud></pregamehud>
+    <endgamehud></endgamehud>
 </root>
 
 @code {
-	public override void Tick()
-	{
-		base.Tick();
+    public override void Tick()
+    {
+        base.Tick();
 
-		this.RemoveClass("abandoned");
-		this.RemoveClass("completed");
-		this.RemoveClass("live");
-		this.RemoveClass("waitingtostart");
-		
-		this.AddClass(CheckersGame.Instance.CurrentState.ToString().ToLower());
-	}
+        this.RemoveClass("abandoned");
+        this.RemoveClass("completed");
+        this.RemoveClass("live");
+        this.RemoveClass("waitingtostart");
+
+        this.AddClass(CheckersGame.Instance.CurrentState.ToString().ToLower());
+    }
 }

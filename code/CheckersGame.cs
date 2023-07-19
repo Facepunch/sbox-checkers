@@ -1,7 +1,6 @@
+
 using Sandbox;
-using Sandbox.UI;
 using System.Linq;
-using System.Numerics;
 
 namespace Facepunch.Checkers
 {
@@ -26,16 +25,6 @@ namespace Facepunch.Checkers
             }
         }
 
-        public override void Simulate(IClient cl)
-        {
-            base.Simulate(cl);
-
-            if (Input.Pressed(InputButton.Jump))
-            {
-                DeclareWinner(CheckersTeam.Red);
-            }
-        }
-
         public override void ClientJoined(IClient cl)
         {
             base.ClientJoined(cl);
@@ -44,7 +33,6 @@ namespace Facepunch.Checkers
             cl.Pawn = player;
 
             player.Team = CheckersTeam.Spectator;
-            player.Respawn();
         }
 
         public override void ClientDisconnect(IClient cl, NetworkDisconnectionReason reason)

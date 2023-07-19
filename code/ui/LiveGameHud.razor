@@ -28,7 +28,7 @@
 
 	private string GetActiveTeamName()
 	{
-		var pl = Player.All.FirstOrDefault(x => x is CheckersPlayer cp && cp.Team == CheckersGame.Instance.ActiveTeam);
+		var pl = Entity.All.FirstOrDefault(x => x is CheckersPlayer cp && cp.Team == CheckersGame.Instance.ActiveTeam);
 
 		if (!pl.IsValid())
 		{

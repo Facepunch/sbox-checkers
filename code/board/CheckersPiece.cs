@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
-	class CheckersMove
+	public class CheckersMove
 	{
 		public CheckersPiece Piece;
 		public CheckersCell Cell;
 		public CheckersPiece Jump;
 	}
 
-	partial class CheckersPiece : ModelEntity
+	public partial class CheckersPiece : ModelEntity
 	{
 
 		[Net, Change( nameof( OnMoved ) )]
@@ -101,7 +101,7 @@ namespace Facepunch.Checkers
 			return true;
 		}
 
-		[Event.Tick]
+		[GameEvent.Tick]
 		private void OnTick()
 		{
 			var cell = CheckersBoard.Current.GetCellAt( BoardPosition );

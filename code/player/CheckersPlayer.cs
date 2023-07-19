@@ -1,14 +1,11 @@
-﻿using Sandbox;
+﻿
+using Sandbox;
 using Sandbox.UI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
-	partial class CheckersPlayer : Sandbox.Player
+	public partial class CheckersPlayer : AnimatedEntity
 	{
 
 		[Net]
@@ -30,37 +27,28 @@ namespace Facepunch.Checkers
 
 		public List<CheckersMove> LegalMoveCache = new List<CheckersMove>();
 
-		public override void Respawn()
-		{
-			SetModel( "models/citizen/citizen.vmdl" );
+        public override void Spawn()
+        {
+            base.Spawn();
 
-			Controller = new CheckersController();
-
-			EnableAllCollisions = true;
-			EnableDrawing = true;
-			EnableHideInFirstPerson = true;
-			EnableShadowInFirstPerson = true;
-
-			if ( Client != null )
-			{
-				_clothing.LoadFromClient( Client );
-				_clothing.DressEntity( this );
-			}
-
-			base.Respawn();
-		}
+            SetModel("models/citizen/citizen.vmdl");
+            EnableAllCollisions = true;
+            EnableDrawing = true;
+            EnableHideInFirstPerson = true;
+            EnableShadowInFirstPerson = true;
+        }
 
 		public override void Simulate(IClient cl )
 		{
 			base.Simulate( cl );
 
-			if ( !CheckersBoard.Current.IsValid() )
+            if ( !CheckersBoard.Current.IsValid() )
 				return;
 
 			var screeenRay = new Ray(CursorPosition, CursorDirection);
 
             var tr = Trace.Ray(screeenRay, 3000 )
-				.WorldOnly()
+				.StaticOnly()
 				.Run();
 
 			//DebugOverlay.Sphere(tr.EndPosition, 2.0f, Host.Color, 2.0f);
@@ -75,7 +63,7 @@ namespace Facepunch.Checkers
 				return;
 			}
 
-			if ( Input.Pressed( InputButton.PrimaryAttack ) )
+			if ( Input.Pressed("click") )
 			{
 				var piece = CheckersBoard.Current.GetPieceAt( HoveredCell.BoardPosition );
 				SetSelectedPiece( piece );
@@ -88,7 +76,7 @@ namespace Facepunch.Checkers
 
 			SelectedPiece.DragPosition = tr.Hit ? tr.EndPosition : Vector3.Zero;
 
-			if ( Input.Released( InputButton.PrimaryAttack ) )
+			if ( Input.Released("click") )
 			{
 				if ( !Game.IsClient )
 				{
@@ -106,8 +94,8 @@ namespace Facepunch.Checkers
             CursorDirection = Mouse.Visible ? Screen.GetDirection( Mouse.Position ) : Camera.Rotation.Forward;
 
             worldInput.Ray = new Ray(Camera.Position, CursorDirection );
-			worldInput.MouseLeftPressed = Input.Down( InputButton.PrimaryAttack );
-			worldInput.MouseRightPressed = Input.Down( InputButton.SecondaryAttack );
+			worldInput.MouseLeftPressed = Input.Down("click");
+			worldInput.MouseRightPressed = Input.Down("rightclick");
 			worldInput.MouseScroll = Input.MouseWheel;
 		}
 

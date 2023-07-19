@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Facepunch.Checkers
 {
-	enum CheckersTeam
+	public enum CheckersTeam
 	{
 		Red,
 		Black,
