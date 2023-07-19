@@ -54,6 +54,9 @@ namespace Facepunch.Checkers
 		{
 			base.Simulate( cl );
 
+			if ( !CheckersBoard.Current.IsValid() )
+				return;
+
 			var screeenRay = new Ray(CursorPosition, CursorDirection);
 
             var tr = Trace.Ray(screeenRay, 3000 )
