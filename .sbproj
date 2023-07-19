@@ -7,9 +7,12 @@
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "ResourcePaths": null,
+  "Resources": null,
+  "MenuResources": null,
   "HasCode": true,
   "CodePath": "code",
+  "PackageReferences": [],
+  "EditorReferences": null,
   "Metadata": {
     "MapList": [
       "facepunch.checkers_park"
@@ -24,7 +27,6 @@
     "DefaultLeaderboards": null,
     "Summary": "Checkers for S\u0026box",
     "Description": "Checkers is a board game where the objective is to have the last remaining piece on the board.  Pair up and play with a friend, a stranger, or play against a bot.",
-    "Public": true,
-    "ReplaceTags": "boardgame checkers twoplayer casual"
+    "Public": true
   }
 }
