@@ -1,0 +1,140 @@
+
+$primary: #669dcb;
+$foreground: #c9c9c9;
+
+.hidden {
+    display: none;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.rows {
+    flex-direction: row;
+}
+
+.columns {
+    flex-direction: column;
+}
+
+.button {
+    padding: 8px;
+    background-color: darken( $primary, 25% );
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    cursor: pointer;
+    align-self: flex-start;
+
+    &:hover {
+        background-color: $primary;
+    }
+
+    &:active {
+        background-color: lighten($primary, 25%);
+    }
+}
+
+CheckersMainMenu {
+    color: $foreground;
+    font-size: 17px;
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        background-image: url( "menu/bg.jpg" );
+    }
+
+
+    .logo {
+        font-size: 80px;
+        font-weight: 900;
+        text-shadow: 2px 2px 2px black;
+        text-transform: uppercase;
+        margin-bottom: 150px;
+        margin-top: 150px;
+    }
+
+    .content {
+        flex-direction: row;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(#131821, .95);
+        justify-content: center;
+        gap: 20px;
+
+        .navbar {
+            padding-left: 100px;
+            flex-direction: column;
+            width: 600px;
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        .body {
+            flex-grow: 1;
+            margin: 100px;
+        }
+
+        .link {
+            padding: 25px 50px;
+            font-size: 30px;
+            color: #adadad;
+            cursor: pointer;
+            text-shadow: 2px 2px 2px black;
+
+            &:hover {
+                color: white;
+            }
+
+            &:active, &.active {
+                color: #669dcb;
+            }
+        }
+    }
+}
+
+FindGamePage {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.games-list {
+    flex-direction: column;
+    overflow: scroll;
+    gap: 4px;
+
+    .games-entry {
+        flex-direction: row;
+        flex-shrink: 0;
+        padding: 20px;
+        background-color: rgba(black, .55);
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(black, .8);
+        }
+
+        .player-box {
+            min-width: 200px;
+
+            .name {
+                font-weight: 800;
+                font-size: 30px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .versus {
+            color: #ff6a00;
+        }
+    }
+}

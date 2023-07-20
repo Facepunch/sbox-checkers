@@ -1,0 +1,22 @@
+﻿
+@using Sandbox.UI
+@inherits NavHostPanel
+
+<root class="content">
+    <div class="navbar">
+        <div class="logo">Checkers</div>
+        <navlink href="/findgame" class="link">⚔️ Versus Player</navlink>
+        <navlink href="/creategame" class="link">🤖 Versus AI</navlink>
+        <div class="link">🚶‍♂️ Quit</div>
+    </div>
+    <div @ref="NavigatorCanvas" class="body"></div>
+</root>
+
+@code {
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnParametersSet();
+
+        if(firstTime) Navigate("/findgame");
+    }
+}
