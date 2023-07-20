@@ -33,6 +33,7 @@ namespace Facepunch.Checkers
             cl.Pawn = player;
 
             player.Team = CheckersTeam.Spectator;
+            player.Dress(cl);
         }
 
         public override void ClientDisconnect(IClient cl, NetworkDisconnectionReason reason)

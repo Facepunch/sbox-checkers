@@ -2,6 +2,7 @@
 using Sandbox;
 using Sandbox.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Facepunch.Checkers
 {
@@ -36,6 +37,30 @@ namespace Facepunch.Checkers
             EnableDrawing = true;
             EnableHideInFirstPerson = true;
             EnableShadowInFirstPerson = true;
+
+			MoveToSpawnPoint();
+        }
+
+		public void Dress(IClient client)
+		{
+			_clothing ??= new();
+			_clothing.LoadFromClient(client);
+			_clothing.DressEntity(this);
+		}
+
+		void MoveToSpawnPoint()
+		{
+            var spawnpoint = All
+				.OfType<SpawnPoint>()               // get all SpawnPoint entities
+				.OrderBy(x => Game.Random.Int(9999))     // order them by random
+				.FirstOrDefault();                  // take the first one
+
+            if (spawnpoint == null)
+            {
+                return;
+            }
+
+            Transform = spawnpoint.Transform;
         }
 
 		public override void Simulate(IClient cl )

@@ -207,6 +207,18 @@
           "GroupName": "Other"
         }
       ]
-    }
+    },
+    "LaunchConfigs": [
+      {
+        "Name": "My New Config",
+        "GameIdent": "facepunch.checkers#local",
+        "MapName": "facepunch.checkers_park",
+        "MaxPlayers": 1,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": ""
+      }
+    ]
   }
 }
