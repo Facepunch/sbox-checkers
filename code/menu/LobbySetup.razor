@@ -1,0 +1,29 @@
+@using Sandbox.MenuSystem
+@using Sandbox.Menu
+
+@if(Lobby == null)
+{
+    <div>Lobby is null, this shouldn't happen</div>
+    return;
+}
+
+<root>
+    <div class="button" @onmousedown=@LeaveLobby>Leave Game</div>
+    <div class="slots">
+        <div class="player-slot red">
+            <PlayerBox />
+        </div>
+        <div class="player-slot black">
+            <PlayerBox />
+        </div>
+    </div>
+</root>
+
+@code {
+    public ILobby Lobby { get; set; }
+
+    void LeaveLobby()
+    {
+        Lobby.Leave();
+    }
+}

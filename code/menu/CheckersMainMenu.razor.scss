@@ -103,38 +103,60 @@ FindGamePage {
     flex-direction: column;
     gap: 20px;
     width: 100%;
+
+    .games-list {
+        flex-direction: column;
+        overflow: scroll;
+        gap: 4px;
+    }
+
+    .games-list-footer {
+        flex-shrink: 0;
+    }
 }
 
-.games-list {
+LobbyEntry {
+    flex-direction: row;
+    flex-shrink: 0;
+    padding: 20px;
+    background-color: rgba(black, .55);
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(black, .8);
+    }
+
+    .versus {
+        color: #ff6a00;
+    }
+}
+
+PlayerBox {
+
+    .name {
+        font-weight: 800;
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+}
+
+LobbySetup {
     flex-direction: column;
-    overflow: scroll;
-    gap: 4px;
+    padding: 10px;
+    background-color: rgba(black, .5);
 
-    .games-entry {
-        flex-direction: row;
-        flex-shrink: 0;
-        padding: 20px;
-        background-color: rgba(black, .55);
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
+    .slots {
+        margin-top: 20px;
+        gap: 10px;
 
-        &:hover {
-            background-color: rgba(black, .8);
-        }
-
-        .player-box {
-            min-width: 200px;
-
-            .name {
-                font-weight: 800;
-                font-size: 30px;
-                margin-bottom: 10px;
-            }
-        }
-
-        .versus {
-            color: #ff6a00;
+        .player-slot {
+            flex-shrink: 0;
+            flex-grow: 1;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba($primary, .25);
         }
     }
 }

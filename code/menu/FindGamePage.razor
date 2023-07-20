@@ -1,29 +1,63 @@
-
+@inherits Sandbox.UI.Panel
+@using System
+@using Sandbox
+@using Sandbox.UI
+@using Sandbox.Menu
+@using Sandbox.UI.GameMenu
+@using System.Collections.Generic
 @page "/findgame"
 
 <root>
-    <div class="rows">
-        <div class="button">Create a game</div>
-    </div>
+    @if (!InLobby)
+    {
+        <div class="button" @onmousedown=@CreateLobby>Create a game</div>
+    }
+    @if (InLobby)
+    {
+        <LobbySetup Lobby=@Lobby />
+    }
     <div class="games-list">
-        <div class="games-entry">
-            <div class="player-box">
-                <div class="rows">
-                    <div class="columns">
-                        <div class="name">Crayz</div>
-                        <div class="score">Elo: 1345</div>
-                    </div>
-                </div>
-            </div>
-            <div class="versus">vs</div>
-            <div class="player-box">
-                <div class="rows">
-                    <div class="columns">
-                        <div class="name">Crayz</div>
-                        <div class="score">Elo: 1345</div>
-                    </div>
-                </div>
-            </div>
-        </div>        
+        @if(Lobbies == null || Lobbies.Count == 0)
+        {
+            <div>There are no games right now</div>
+        }
+        else
+        {
+            @foreach(var lobby in Lobbies)
+            {
+                <LobbyEntry Lobby=@lobby />
+            }
+        }
+    </div>
+    <div class="games-list-footer">
+        <div class="button" @onmousedown=@RefreshGameList>Refresh</div>
     </div>
 </root>
+
+@code {
+    bool InLobby => Lobby != null && Lobby.IsMember;
+
+    ILobby Lobby;
+    List<Sandbox.Menu.ILobby> Lobbies = new();
+
+    protected async void CreateLobby()
+    {
+        if (InLobby) throw new Exception("why are you still in a lobby");
+
+        Lobby = await Game.Menu.CreateLobbyAsync(8);
+        StateHasChanged();
+    }
+
+    async void RefreshGameList()
+    {
+        Lobbies.Clear();
+        var lobbies = await Game.Menu.QueryLobbiesAsync();
+        Lobbies.AddRange(lobbies);
+        StateHasChanged();
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(Lobby?.IsMember);
+    }
+}

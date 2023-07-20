@@ -1,0 +1,18 @@
+
+@using Sandbox.MenuSystem
+@using Sandbox.Menu
+
+<root>
+    <PlayerBox Player="@(new Sandbox.Friend(steamid: 76561197979190498))" />
+    <div class="versus">vs</div>
+    <PlayerBox />
+</root>
+
+@code {
+    public ILobby Lobby { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        
+    }
+}
