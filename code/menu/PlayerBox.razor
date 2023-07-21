@@ -1,40 +1,16 @@
 
-@inherits Sandbox.UI.Panel
-@using System.Threading.Tasks
-@using System
-@using Sandbox
+@inherits Panel
 
 <root>
     <div class="rows">
         <div class="columns">
-            @if(Player == null )
-            {
-                <div>No player assigned, press here to play</div>
-            }
-            else
-            {
-                <div class="name">@Player.Value.Name</div>
-                <div class="score">Elo: @EloScore</div>
-            }
+            <div class="name">@Name</div>
+            <div class="score">Elo: @Elo</div>
         </div>
     </div>
 </root>
 
 @code {
-    public Friend? Player { get; set; }
-
-    int EloScore;
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-
-        EloScore = 123;
-        // get from stats service
-    }
-
-    protected override int BuildHash()
-    {
-        return HashCode.Combine(Player?.Id);
-    }
+    public string Name { get; set; }
+    public int Elo { get; set; }
 }

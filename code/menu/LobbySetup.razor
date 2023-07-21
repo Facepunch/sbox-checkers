@@ -1,5 +1,5 @@
-@using Sandbox.MenuSystem
-@using Sandbox.Menu
+
+@inherits Panel
 
 @if(Lobby == null)
 {
@@ -7,20 +7,97 @@
     return;
 }
 
-<root>
-    <div class="button" @onmousedown=@LeaveLobby>Leave Game</div>
+<root class="grow">
     <div class="slots">
         <div class="player-slot red">
-            <PlayerBox />
+            @if(red != null)
+            {
+                <PlayerBox Name=@red.Value.Name Elo=@red.Value.EloScore />
+            }
+            else
+            {
+                <div class="button" onmousedown=@(() => JoinTeam(CheckersTeam.Red))>Play as red</div>
+            }
         </div>
         <div class="player-slot black">
-            <PlayerBox />
+            @if(black != null)
+            {
+                <PlayerBox Name=@black.Value.Name Elo=@black.Value.EloScore />
+            }
+            else
+            {
+                <div class="button" onmousedown=@(() => JoinTeam(CheckersTeam.Black))>Play as black</div>
+            }
         </div>
+    </div>
+    <div class="spectators">
+        <div class="button" onmousedown=@(() => JoinTeam(CheckersTeam.Spectator))>Spectate</div>
+        <div class="spectator-list">
+            @if(Spectators == null || Spectators.Count == 0)
+            {
+                <div>No spectators</div>
+            }
+            else
+            {
+                @foreach (var spec in Spectators)
+                {
+                    <div class="spectator-entry">@spec</div>
+                }
+            }
+        </div>
+    </div>
+    <div class="grow"></div>
+    <div class="footer-buttons">
+        <div class="button" onmousedown=@LeaveLobby>Leave</div>
+        <div class="button" onmousedown=@StartGame>Start</div>
     </div>
 </root>
 
 @code {
     public ILobby Lobby { get; set; }
+
+    PlayerInfo? red;
+    PlayerInfo? black;
+
+    List<string> Spectators = new();
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        red = Lobby.GetPlayerInfo(CheckersTeam.Red);
+        black = Lobby.GetPlayerInfo(CheckersTeam.Black);
+
+        Spectators.Clear();
+
+        foreach(var member in Lobby.Members)
+        {
+            var pi = Lobby.GetPlayerInfo(member.Id);
+            if(pi == null || pi.Value.Team == CheckersTeam.Spectator)
+            {
+                Spectators.Add(member.Name);
+            }
+        }
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(red?.Name, black?.Name, Spectators.Count);
+    }
+
+    public void JoinTeam ( CheckersTeam team )
+    {
+        var result = Lobby.SetPlayerTeam(Game.SteamId, team);
+        if (!result)
+        {
+            Log.Error("Failed to join team: " + team);
+        }
+    }
+
+    async void StartGame()
+    {
+        _ = Lobby.LaunchGameAsync();
+    }
 
     void LeaveLobby()
     {

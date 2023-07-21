@@ -113,6 +113,21 @@ FindGamePage {
     .games-list-footer {
         flex-shrink: 0;
     }
+
+    .spectators {
+        margin-top: 20px;
+        flex-direction: column;
+
+        .spectator-list {
+            margin-top: 20px;
+            gap: 5px;
+
+            .spectator-entry {
+                padding: 4px 10px;
+                background-color: black;
+            }
+        }
+    }
 }
 
 LobbyEntry {
@@ -148,7 +163,6 @@ LobbySetup {
     background-color: rgba(black, .5);
 
     .slots {
-        margin-top: 20px;
         gap: 10px;
 
         .player-slot {
@@ -157,6 +171,17 @@ LobbySetup {
             justify-content: center;
             padding: 20px;
             background-color: rgba($primary, .25);
+        }
+    }
+
+    .footer-buttons {
+        flex-direction: row;
+        gap: 10px;
+
+        .button {
+            align-self: auto;
+            flex-grow: 1;
+            justify-content: center;
         }
     }
 }
