@@ -94,6 +94,10 @@
         {
             Log.Error("Failed to join team: " + team);
         }
+        else
+        {
+            Lobby.SendChat("changed team to " + team.ToString().ToLower() + ".");
+        }
     }
 
     async void StartGame()
