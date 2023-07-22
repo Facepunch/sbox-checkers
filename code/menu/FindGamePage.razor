@@ -15,7 +15,7 @@
             {
                 @foreach (var lobby in Lobbies)
                 {
-                    <LobbyEntry Lobby=@lobby />
+                    <LobbyEntry onmousedown=@(() => JoinLobby(lobby)) Lobby=@lobby />
                 }
             }
         </div>
@@ -57,6 +57,23 @@
         Lobbies.Clear();
         var lobbies = await Game.Menu.QueryLobbiesAsync();
         Lobbies.AddRange(lobbies);
+        StateHasChanged();
+    }
+
+    async void JoinLobby(ILobby lobby)
+    {
+        Lobby?.Leave();
+        Lobby = null;
+
+        var result = await lobby.JoinAsync();
+
+        if (!result)
+        {
+            Log.Error("Failed to join the lobby");
+            return;
+        }
+
+        Lobby = lobby;
         StateHasChanged();
     }
 

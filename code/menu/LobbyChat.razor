@@ -1,0 +1,74 @@
+
+@inherits Panel
+
+<root>
+    <div class="chat-entries">
+        @foreach(var entry in Entries)
+        {
+            <div class="chat-entry">
+                <div class="name">@entry.name</div>
+                <div class="message">@entry.message</div>
+            </div>
+        }
+    </div>
+    <div class="chat-input">
+        <TextEntry @ref="Input" />
+    </div>
+</root>
+
+@code {
+    public ILobby Lobby { get; set; }
+
+    public List<(string name, string message)> Entries = new();
+
+    TextEntry Input;
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+
+        if (!firstTime)
+            return;
+
+        Lobby.OnChatMessage = (x, y) =>
+        {
+            AddChat(x.Name, y);
+        };
+
+        Lobby.OnMemberEnter = x =>
+        {
+            AddChat(x.Name, "has joined the lobby");
+        };
+
+        Lobby.OnMemberLeave = x =>
+        {
+            AddChat(x.Name, "has left the lobby");
+        };
+
+        Input.AddEventListener("onsubmit", () =>
+        {
+            SendChat(Input.Text);
+            Input.Text = string.Empty;
+            Input.Focus();
+        });
+    }
+
+    public void SendChat( string message )
+    {
+        if (message == null) return;
+
+        message = message.Trim();
+        if (string.IsNullOrEmpty(message)) return;
+
+        if (message.Length > 200)
+            message = message.Substring(0, 200);
+
+        Lobby.SendChat(message);
+    }
+
+    public void AddChat( string name, string message )
+    {
+        Entries.Add((name, message));
+        StateHasChanged();
+    }
+}

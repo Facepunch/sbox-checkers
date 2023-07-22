@@ -25,6 +25,7 @@ namespace Sandbox
 
         public static void SetPlayerInfo(this ILobby lobby, long steamId, PlayerInfo info)
         {
+            info.SteamId = steamId;
             lobby.SetData(steamId.ToString(), Json.Serialize(info));
         }
 
@@ -75,6 +76,7 @@ namespace Sandbox
 
     public struct PlayerInfo
     {
+        public long SteamId { get; set; }
         public string Name { get; set; }
         public int EloScore { get; set; }
         public CheckersTeam Team { get; set; }

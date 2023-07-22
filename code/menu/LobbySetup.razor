@@ -1,7 +1,6 @@
-
 @inherits Panel
 
-@if(Lobby == null)
+@if (Lobby == null)
 {
     <div>Lobby is null, this shouldn't happen</div>
     return;
@@ -10,9 +9,9 @@
 <root class="grow">
     <div class="slots">
         <div class="player-slot red">
-            @if(red != null)
+            @if (red != null)
             {
-                <PlayerBox Name=@red.Value.Name Elo=@red.Value.EloScore />
+                <PlayerBox SteamId=@red.Value.SteamId Name=@red.Value.Name Elo=@red.Value.EloScore />
             }
             else
             {
@@ -20,9 +19,9 @@
             }
         </div>
         <div class="player-slot black">
-            @if(black != null)
+            @if (black != null)
             {
-                <PlayerBox Name=@black.Value.Name Elo=@black.Value.EloScore />
+                <PlayerBox SteamId=@black.Value.SteamId Name=@black.Value.Name Elo=@black.Value.EloScore />
             }
             else
             {
@@ -33,20 +32,22 @@
     <div class="spectators">
         <div class="button" onmousedown=@(() => JoinTeam(CheckersTeam.Spectator))>Spectate</div>
         <div class="spectator-list">
-            @if(Spectators == null || Spectators.Count == 0)
+            @if (Spectators == null || Spectators.Count == 0)
             {
-                <div>No spectators</div>
             }
             else
             {
                 @foreach (var spec in Spectators)
                 {
-                    <div class="spectator-entry">@spec</div>
+                    <div class="spectator-entry">
+                        <img class="avatar" src="avatar:@(@spec.Id)" />
+                        <div class="name">@spec.Name</div>
+                    </div>
                 }
             }
         </div>
     </div>
-    <div class="grow"></div>
+    <LobbyChat Lobby=@Lobby ref="Chat" class="grow" />
     <div class="footer-buttons">
         <div class="button" onmousedown=@LeaveLobby>Leave</div>
         <div class="button" onmousedown=@StartGame>Start</div>
@@ -58,8 +59,9 @@
 
     PlayerInfo? red;
     PlayerInfo? black;
+    LobbyChat Chat;
 
-    List<string> Spectators = new();
+    List<Friend> Spectators = new();
 
     public override void Tick()
     {
@@ -70,12 +72,12 @@
 
         Spectators.Clear();
 
-        foreach(var member in Lobby.Members)
+        foreach (var member in Lobby.Members)
         {
             var pi = Lobby.GetPlayerInfo(member.Id);
-            if(pi == null || pi.Value.Team == CheckersTeam.Spectator)
+            if (pi == null || pi.Value.Team == CheckersTeam.Spectator)
             {
-                Spectators.Add(member.Name);
+                Spectators.Add(member);
             }
         }
     }
@@ -85,7 +87,7 @@
         return HashCode.Combine(red?.Name, black?.Name, Spectators.Count);
     }
 
-    public void JoinTeam ( CheckersTeam team )
+    public void JoinTeam(CheckersTeam team)
     {
         var result = Lobby.SetPlayerTeam(Game.SteamId, team);
         if (!result)

@@ -3,6 +3,7 @@
 
 <root>
     <div class="rows">
+        <img class="avatar" src="avatar:@(@SteamId)" />
         <div class="columns">
             <div class="name">@Name</div>
             <div class="score">Elo: @Elo</div>
@@ -13,4 +14,5 @@
 @code {
     public string Name { get; set; }
     public int Elo { get; set; }
+    public long SteamId { get; set; }
 }
