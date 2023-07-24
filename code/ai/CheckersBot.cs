@@ -24,7 +24,7 @@ class CheckersBot : Bot
 			return;
 		}
 
-		_moveDelay = new Random().Float( 1, 3.5f );
+		_moveDelay = new Random().Float( 0.65f, 2f );
 
 		if ( !FindBestMove( out Vector2 piecePos, out Vector2 targetPos ) )
 		{
