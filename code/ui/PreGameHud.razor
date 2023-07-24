@@ -3,17 +3,47 @@
 @using Facepunch.Checkers;
 
 <root class="@(Visible ? "visible" : "hidden")">
-    <div class="title">Waiting for players...</div>
+    <div class="players">
+        <div class="team red">
+            <div class="title">Red</div>
+            <PlayerBox SteamId="@RedSteamId" />
+        </div>
+        <div class="versus">⚔️</div>
+        <div class="team black">
+            <div class="title">Black</div>
+            <PlayerBox SteamId="@BlackSteamId" />
+        </div>
+    </div>
+    <div class="escape">
+        <div class="label">Taking too long?</div>
+        <div class="button" @onmousedown=@AbortGame>Leave this game</div>
+    </div>
 </root>
 
 @code {
-    string Player1Name => CheckersGame.Instance.RedPlayer?.Client.Name ?? "Nobody";
-    string Player2Name => CheckersGame.Instance.BlackPlayer?.Client.Name ?? "Nobody";
 
     bool Visible => CheckersGame.Instance.CurrentState == GameState.WaitingToStart;
+    long RedSteamId;
+    long BlackSteamId;
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+
+        if (!firstTime) return;
+
+        if (long.TryParse(CheckersGame.Player1Red, out var rid)) RedSteamId = rid;
+        if (long.TryParse(CheckersGame.Player2Black, out var bid)) BlackSteamId = bid;
+    }
+
+    void AbortGame()
+    {
+        CheckersGame.RequestQuit();
+    }
 
     protected override int BuildHash()
     {
-        return System.HashCode.Combine(Player1Name, Player2Name);
+        return HashCode.Combine(RedSteamId, BlackSteamId);
     }
+
 }

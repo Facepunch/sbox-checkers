@@ -1,3 +1,7 @@
+
+$primary: #669dcb;
+$foreground: #c9c9c9;
+
 CheckersHud {
     pointer-events: none;
 }
@@ -10,8 +14,30 @@ CheckersHud {
     display: flex;
 }
 
+.rows {flex-direction:row;}
+.columns {flex-direction:column;}
+
 .pointer-visible {
     pointer-events: all;
+}
+
+.button {
+    padding: 8px;
+    background-color: darken( $primary, 25% );
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    cursor: pointer;
+    align-self: flex-start;
+    border-radius: 4px;
+    box-shadow: 2px 2px 15px rgba(black, .6);
+
+    &:hover {
+        background-color: $primary;
+    }
+
+    &:active {
+        background-color: lighten($primary, 25%);
+    }
 }
 
 pregamehud {
@@ -27,6 +53,78 @@ pregamehud {
     font-family: Poppins;
     pointer-events: all;
 
+    .title {
+        font-size: 28px;
+        color: white;
+        text-shadow: 1px 1px 2px black;
+    }
+
+    .players {
+        flex-direction: row;
+        gap: 60px;
+
+        .versus {
+            align-items: center;
+            color: orange;
+            font-size: 40px;
+            text-stroke: 4px black;
+        }
+
+        .team {
+            flex-direction: column;
+
+            .title {
+                padding: 5px 20px;
+                border-radius: 4px 4px 0 0;
+                background-color: orange;
+            }
+
+            &.red {
+                .title {
+                    background-color: #943d3d;
+                }
+
+                PlayerBox {
+                    border-color: #943d3d;
+                }
+            }
+
+            &.black .title {
+                background-color: black;
+            }
+        }
+
+        PlayerBox {
+            padding: 20px;
+            border: 1px solid black;
+            background-color: rgba(black, .65);
+            border-radius: 0 0 4px 4px;
+            color: white;
+            flex-direction: column;
+            min-width: 300px;
+
+            .waiting {
+                color: yellow;
+                margin-bottom: 10px;
+            }
+
+            .avatar {
+                margin-right: 20px;
+                border-radius: 4px;
+                flex-shrink: 0;
+                width: 64px;
+                aspect-ratio: 1;
+            }
+        }
+    }
+
+    .escape {
+        margin-top: 100px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        color: white;
+    }
 }
 
 livegamehud {

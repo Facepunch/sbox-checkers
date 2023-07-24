@@ -5,6 +5,10 @@
     <div class="rows">
         <img class="avatar" src="avatar:@(@SteamId)" />
         <div class="columns">
+            @if (WaitingToJoin)
+            {
+                <div class="waiting">Waiting on this player</div>
+            }
             <div class="name">@Name</div>
             <div class="score">Elo - @Elo</div>
         </div>
@@ -12,7 +16,41 @@
 </root>
 
 @code {
-    public string Name { get; set; }
-    public int Elo { get; set; }
-    public long SteamId { get; set; }
+    public string? Name { get; set; }
+    public int? Elo { get; set; }
+    public long? SteamId { get; set; }
+
+    bool WaitingToJoin;
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if(SteamId != null)
+        {
+            WaitingToJoin = CheckersGame.Instance?.IsWaitingFor(SteamId.Value) ?? false;
+        }
+    }
+
+    protected override int BuildHash()
+    {
+        return WaitingToJoin ? 1 : 0;
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (SteamId == null) return;
+
+        if (string.IsNullOrEmpty(Name))
+        {
+            Name = new Friend(SteamId.Value).Name;
+        }
+
+        if(Elo == null)
+        {
+            Elo = 312;
+        }
+    }
 }

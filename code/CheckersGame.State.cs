@@ -1,4 +1,6 @@
 ﻿
+using Sandbox;
+
 namespace Facepunch.Checkers;
 
 partial class CheckersGame
@@ -79,6 +81,15 @@ partial class CheckersGame
 		bot.Client.Pawn = botPlayer;
 
 		return botPlayer;
+	}
+
+	public bool IsWaitingFor( long steamid )
+	{
+		if ( Player1Red != steamid.ToString() && Player2Black != steamid.ToString() ) return false;
+
+		var player = Entity.All.OfType<CheckersPlayer>().FirstOrDefault( x => x.Client?.SteamId.ToString() == Player1Red );
+
+		return !player.IsValid();
 	}
 
 	private void TickWaitingToStart()

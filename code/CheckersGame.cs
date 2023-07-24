@@ -99,4 +99,13 @@ partial class CheckersGame : GameManager
 		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( 55 );
 	}
 
+	[ConCmd.Server("mequit")]
+	public static void RequestQuit()
+	{
+		if ( !ConsoleSystem.Caller.IsValid() ) 
+			return;
+
+		ConsoleSystem.Caller.Kick();
+	}
+
 }
