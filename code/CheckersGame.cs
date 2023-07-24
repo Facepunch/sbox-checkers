@@ -14,6 +14,17 @@ partial class CheckersGame : GameManager
 		if ( Game.IsServer )
 		{
 			SetGameState( GameState.WaitingToStart );
+
+			// is this suppose to be done internally?
+			try
+			{
+				var dict = Json.Deserialize<Dictionary<string, string>>( ConsoleSystem.GetValue( "gamesettings" ) );
+				foreach ( var kvp in dict )
+				{
+					ConsoleSystem.SetValue( kvp.Key, kvp.Value );
+				}
+			}
+			catch { Log.Error( "Failed to load game settings" ); }
 		}
 
 		if ( Game.IsClient )

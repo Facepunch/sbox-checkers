@@ -4,6 +4,11 @@ namespace Facepunch.Checkers;
 partial class CheckersGame
 {
 
+	[ConVar.Replicated( name: "player1red" )]
+	public static string Player1Red { get; set; }
+	[ConVar.Replicated( name: "player2black" )]
+	public static string Player2Black { get; set; }
+
 	[Net, Change( nameof( ClientGameStateChanged ) )]
 	public GameState CurrentState { get; set; }
 	[Net]
@@ -62,24 +67,53 @@ partial class CheckersGame
 		}
 	}
 
+	CheckersPlayer EnsureAI ( CheckersTeam team )
+	{
+		var botClient = Game.Clients.FirstOrDefault( x => x.IsBot && x.Pawn is CheckersPlayer pl && pl.Team == team );
+		if ( botClient != null ) return botClient.Pawn as CheckersPlayer;
+
+		var bot = new CheckersBot();
+		bot.Client.Pawn?.Delete();
+		var botPlayer = new CheckersPlayer();
+		botPlayer.Team = team;
+		bot.Client.Pawn = botPlayer;
+
+		return botPlayer;
+	}
+
 	private void TickWaitingToStart()
 	{
-		var player1 = Entity.All.FirstOrDefault( x => x is CheckersPlayer pl
-			&& pl.Team == CheckersTeam.Red
-			&& pl.IsValid );
-		var player2 = Entity.All.FirstOrDefault( x => x is CheckersPlayer pl
-			&& pl.Team == CheckersTeam.Black
-			&& pl.IsValid );
+		var players = Entity.All.OfType<CheckersPlayer>();
 
-		if ( player1 == null || player2 == null )
+		var player1 = players.FirstOrDefault( x => x.Client?.SteamId.ToString() == Player1Red );
+		var player2 = players.FirstOrDefault( x => x.Client?.SteamId.ToString() == Player2Black );
+
+		if ( Player1Red == "ai" )
 		{
-			return;
+			//player1 = EnsureAI( CheckersTeam.Red );
 		}
 
-		TurnTimer = PlayerTurnTime;
-		ActiveTeam = CheckersTeam.Black;
+		if ( Player2Black == "ai" )
+		{
+			//player2 = EnsureAI( CheckersTeam.Black );
+		}
 
-		SetGameState( GameState.Live );
+		if ( player1.IsValid() )
+		{
+			player1.Team = CheckersTeam.Red;
+		}
+
+		if ( player2.IsValid() )
+		{
+			player2.Team = CheckersTeam.Black;
+		}
+
+		if ( player1.IsValid() && player2.IsValid() )
+		{
+			TurnTimer = PlayerTurnTime;
+			ActiveTeam = CheckersTeam.Black;
+			SetGameState( GameState.Live );
+		}
 	}
 
 	private void SetGameState( GameState newState )

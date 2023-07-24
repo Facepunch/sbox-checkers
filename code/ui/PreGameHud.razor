@@ -3,23 +3,7 @@
 @using Facepunch.Checkers;
 
 <root>
-    <text class="title">Choose a team</text>
-    <div class="team-buttons">
-        <button @onclick=@(() => CheckersGame.SetClientTeam(CheckersTeam.Red))>
-            <text>Red: </text>
-            <text text=@Player1Name />
-        </button>
-        <button @onclick=@(() => CheckersGame.SetClientTeam(CheckersTeam.Black))>
-            <text>Black: </text>
-            <text text=@Player2Name />
-        </button>
-        <button @onclick=@(() => CheckersGame.SetClientTeam(CheckersTeam.Spectator))>
-            <text>Spectate</text>
-        </button>
-        <button @onclick=@CheckersGame.PlayAgainstAi>
-            <text>Play vs AI</text>
-        </button>
-    </div>
+    Waiting for players...
 </root>
 
 @code {

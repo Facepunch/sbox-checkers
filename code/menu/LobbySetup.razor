@@ -100,8 +100,31 @@
         }
     }
 
+    int timeUntilGameStart;
     async void StartGame()
     {
+        if (timeUntilGameStart > 0) return;
+
+        var player1id = Lobby.GetPlayer(CheckersTeam.Red);
+        var player2id = Lobby.GetPlayer(CheckersTeam.Black);
+
+        timeUntilGameStart = 3;
+
+        var settings = new Dictionary<string, string>()
+        {
+            { "player1red", player1id?.ToString() ?? "ai" },
+            { "player2black", player2id?.ToString() ?? "ai" },
+        };
+
+        Lobby.ConVars = settings.ToImmutableDictionary();
+
+        while(timeUntilGameStart > 0)
+        {
+            timeUntilGameStart -= 1;
+            Lobby.SendChat("Game starting in " + timeUntilGameStart);
+            await Task.Delay(1000);
+        }
+
         _ = Lobby.LaunchGameAsync();
     }
 
