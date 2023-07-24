@@ -101,12 +101,12 @@ partial class CheckersGame
 
 		if ( Player1Red == "ai" )
 		{
-			//player1 = EnsureAI( CheckersTeam.Red );
+			player1 = EnsureAI( CheckersTeam.Red );
 		}
 
 		if ( Player2Black == "ai" )
 		{
-			//player2 = EnsureAI( CheckersTeam.Black );
+			player2 = EnsureAI( CheckersTeam.Black );
 		}
 
 		if ( player1.IsValid() )

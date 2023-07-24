@@ -1,4 +1,4 @@
-@inherits Panel
+﻿@inherits Panel
 
 @if (Lobby == null)
 {
@@ -15,7 +15,7 @@
             }
             else
             {
-                <div class="button" onmousedown=@(() => JoinTeam(CheckersTeam.Red))>Play as red</div>
+                <div class="button join-team" onmousedown=@(() => JoinTeam(CheckersTeam.Red))>AI 🤖</div>
             }
         </div>
         <div class="player-slot black">
@@ -25,7 +25,7 @@
             }
             else
             {
-                <div class="button" onmousedown=@(() => JoinTeam(CheckersTeam.Black))>Play as black</div>
+                <div class="button join-team" onmousedown=@(() => JoinTeam(CheckersTeam.Black))>AI 🤖</div>
             }
         </div>
     </div>
