@@ -1,6 +1,7 @@
 ﻿
 namespace Facepunch.Checkers;
 
+[StyleSheet]
 class CellWorldPanel : WorldPanel
 {
 
@@ -11,7 +12,6 @@ class CellWorldPanel : WorldPanel
 		_cell = cell;
 		UpdateSizeAndPosition();
 		Add.Panel( "border" );
-		StyleSheet.Load( "/ui/cellworldpanel.scss" );
 	}
 
 	private void UpdateSizeAndPosition()

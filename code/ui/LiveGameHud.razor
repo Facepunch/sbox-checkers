@@ -5,7 +5,7 @@
 @using Facepunch.Checkers;
 @using System.Linq;
 
-<root>
+<root class="@(Visible ? "visible" : "hidden")">
     <div class="details">
         <div>
             <label class="team" text=@PlayerName />
@@ -20,6 +20,8 @@
 	Sandbox.UI.Panel Fill;
 	float TurnTimer => (int)CheckersGame.Instance.TurnTimer;
 	string PlayerName => GetActiveTeamName();
+
+	bool Visible => CheckersGame.Instance.CurrentState == GameState.Live;
 
 	protected override int BuildHash()
 	{

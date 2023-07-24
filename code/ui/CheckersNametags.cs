@@ -20,6 +20,7 @@ public class CheckersBaseNameTag : Panel
 	}
 }
 
+[StyleSheet]
 class CheckersNametags : Panel
 {
 

@@ -1,5 +1,13 @@
-﻿CheckersHud {
+CheckersHud {
     pointer-events: none;
+}
+
+.hidden { 
+    display: none;
+}
+
+.visible {
+    display: flex;
 }
 
 .pointer-visible {
@@ -13,49 +21,12 @@ pregamehud {
     height: 100%;
     background-color: rgba(#222, 0.9);
     backdrop-filter: blur(15px);
-    transition: all .5s ease-out;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding-bottom: 100px;
     font-family: Poppins;
     pointer-events: all;
 
-    .title {
-        color: white;
-        font-size: 32px;
-        font-weight: 800;
-    }
-
-    .team-buttons {
-        width: 400px;
-        flex-direction: column;
-        pointer-events: auto;
-        padding: 12px;
-        align-items: center;
-
-        button {
-            color: white;
-            font-size: 24px;
-            padding: 12px;
-            background-color: rgba(black 0.75);
-            width: 400px;
-
-            &:first-child {
-                border-radius: 10px 10px 0 0;
-            }
-
-            &:last-child {
-                margin-bottom: 0;
-                border-radius: 0 0 10px 10px;
-            }
-
-            &:hover {
-                background-color: black;
-                cursor: pointer;
-            }
-        }
-    }
 }
 
 livegamehud {
@@ -130,24 +101,3 @@ endgamehud {
         }
     }
 }
-
-CheckersHud {
-    &.completed {
-        endgamehud {
-            display: flex;
-        }
-    }
-
-    &.waitingtostart {
-        pregamehud {
-            display: flex;
-        }
-    }
-
-    &.live {
-        livegamehud {
-            display: flex;
-        }
-    }
-}
-

@@ -1,0 +1,38 @@
+checkersnametags {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+
+    checkersbasenametag {
+        font-family: Poppins;
+        position: absolute;
+        font-weight: 500;
+        color: white;
+        background-color: rgba( #222, 0.95 );
+        font-size: 40px;
+        transform-origin: 50% 0%;
+        border-radius: 10px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row-reverse;
+        padding: 15px 25px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: black;
+        }
+
+
+        label {
+        }
+
+        image {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            border-radius: 100px;
+        }
+    }
+}

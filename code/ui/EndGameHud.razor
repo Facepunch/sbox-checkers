@@ -5,7 +5,7 @@
 @using Sandbox.UI;
 @using Facepunch.Checkers;
 
-<root class="endgamehud">
+<root class="@(Visible ? "visible" : "hidden")">
     <div class="bar">
         <text class="result" text=@GetGameResultString()></text>
         <text class="timer" text=@GetTimerString()></text>
@@ -13,6 +13,9 @@
 </root>
 
 @code {
+
+	bool Visible => CheckersGame.Instance.CurrentState == GameState.Completed;
+
 	private string GetTimerString()
 	{
 		return "Restarting in " + (int)CheckersGame.Instance.EndGameTimer + " seconds";

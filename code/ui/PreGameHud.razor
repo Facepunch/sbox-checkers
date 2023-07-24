@@ -2,13 +2,15 @@
 @inherits Sandbox.UI.Panel
 @using Facepunch.Checkers;
 
-<root>
-    Waiting for players...
+<root class="@(Visible ? "visible" : "hidden")">
+    <div class="title">Waiting for players...</div>
 </root>
 
 @code {
     string Player1Name => CheckersGame.Instance.RedPlayer?.Client.Name ?? "Nobody";
     string Player2Name => CheckersGame.Instance.BlackPlayer?.Client.Name ?? "Nobody";
+
+    bool Visible => CheckersGame.Instance.CurrentState == GameState.WaitingToStart;
 
     protected override int BuildHash()
     {
