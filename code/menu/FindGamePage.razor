@@ -4,7 +4,10 @@
 <root>
     @if (!InLobby)
     {
-        <div class="button" @onmousedown=@CreateLobby>Create a game</div>
+        <div class="games-list-buttons">
+            <div class="button" @onmousedown=@CreateLobby>Create a game</div>
+            <div class="button" @onmousedown=@RefreshGameList>Refresh game list</div>
+        </div>
 
         <div class="games-list">
             @if (Lobbies == null || Lobbies.Count == 0)
@@ -19,9 +22,7 @@
                 }
             }
         </div>
-        <div class="games-list-footer">
-            <div class="button" @onmousedown=@RefreshGameList>Refresh</div>
-        </div>
+
     }
     else
     {

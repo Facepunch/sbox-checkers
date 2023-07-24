@@ -47,9 +47,10 @@ CheckersMainMenu {
         left: 0;
         right: 0;
         bottom: 0;
-        background-size: cover;
-        background-position: center;
-        background-image: url( "menu/bg.jpg" );
+        background-size: 100%;
+        background-position: center 200px;
+        background-repeat: no-repeat;
+        background-image: url( "menu/bg3.png" );
     }
 
 
@@ -112,8 +113,16 @@ FindGamePage {
         gap: 4px;
     }
 
-    .games-list-footer {
+    .games-list-buttons {
         flex-shrink: 0;
+        gap: 10px;
+
+        .button {
+            align-self: auto;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     .spectators {
