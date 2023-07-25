@@ -42,8 +42,6 @@
         if (InLobby) throw new Exception("why are you still in a lobby");
 
         Lobby = await Game.Menu.CreateLobbyAsync(8);
-        Lobby.OnMemberEnter = OnMemberEntered;
-        Lobby.OnMemberLeave = OnMemberLeft;
         Lobby.Map = "facepunch.checkers_park";
         Lobby.SetPlayerInfo(Game.SteamId, new PlayerInfo()
             {
@@ -56,7 +54,7 @@
 
     async void RefreshGameList()
     {
-        TimeUntilRefresh = 3f;
+        TimeUntilRefresh = 15f;
         Lobbies.Clear();
         var lobbies = await Game.Menu.QueryLobbiesAsync();
         Lobbies.AddRange(lobbies);
@@ -69,7 +67,7 @@
 
         if (TimeUntilRefresh < 0)
         {
-            TimeUntilRefresh = 0;
+            TimeUntilRefresh = 15;
             RefreshGameList();
         }
     }
@@ -94,19 +92,5 @@
     protected override int BuildHash()
     {
         return HashCode.Combine(Lobby?.IsMember);
-    }
-
-    void OnMemberEntered(Friend friend)
-    {
-        Lobby.SetPlayerInfo(friend.Id, new PlayerInfo()
-            {
-                Name = friend.Name,
-                Team = CheckersTeam.Spectator,
-                EloScore = 661
-            });
-    }
-
-    void OnMemberLeft(Friend friend)
-    {
     }
 }

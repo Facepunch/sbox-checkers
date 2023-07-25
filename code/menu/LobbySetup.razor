@@ -47,7 +47,7 @@
             }
         </div>
     </div>
-    <LobbyChat Lobby=@Lobby ref="Chat" class="grow" />
+    <LobbyChat Lobby=@Lobby @ref="Chat" class="grow" />
     <div class="footer-buttons">
         <div class="button" onmousedown=@LeaveLobby>Leave</div>
         <div class="button" onmousedown=@StartGame>Start</div>
@@ -67,6 +67,8 @@
     {
         base.Tick();
 
+        Lobby.ReceiveMessages(OnNetworkMessage);
+
         red = Lobby.GetPlayerInfo(CheckersTeam.Red);
         black = Lobby.GetPlayerInfo(CheckersTeam.Black);
 
@@ -80,8 +82,6 @@
                 Spectators.Add(member);
             }
         }
-
-        Lobby.ReceiveMessages(OnNetworkMessage);
     }
 
     protected override int BuildHash()
@@ -127,6 +127,29 @@
     void LeaveLobby()
     {
         Lobby.Leave();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (Lobby == null) return;
+
+        Lobby.OnMemberEnter = x =>
+        {
+            Lobby.SetPlayerInfo(x.Id, new PlayerInfo()
+                {
+                    Name = x.Name,
+                    Team = CheckersTeam.Spectator,
+                    EloScore = 661
+                });
+            Chat?.AddChat(x.Name, "has joined the game");
+        };
+
+        Lobby.OnMemberLeave = x =>
+        {
+            Chat?.AddChat(x.Name, "has left the game");
+        };
     }
 
     void OnNetworkMessage(ILobby.NetworkMessage msg)

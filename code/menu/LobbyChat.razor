@@ -35,16 +35,6 @@
             AddChat(x.Name, y);
         };
 
-        Lobby.OnMemberEnter = x =>
-        {
-            AddChat(x.Name, "has joined the lobby");
-        };
-
-        Lobby.OnMemberLeave = x =>
-        {
-            AddChat(x.Name, "has left the lobby");
-        };
-
         Input.AddEventListener("onsubmit", () =>
         {
             SendChat(Input.Text);
