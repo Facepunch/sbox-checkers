@@ -35,6 +35,7 @@
 
     ILobby Lobby;
     List<Sandbox.Menu.ILobby> Lobbies = new();
+    TimeUntil TimeUntilRefresh;
 
     protected async void CreateLobby()
     {
@@ -55,10 +56,22 @@
 
     async void RefreshGameList()
     {
+        TimeUntilRefresh = 3f;
         Lobbies.Clear();
         var lobbies = await Game.Menu.QueryLobbiesAsync();
         Lobbies.AddRange(lobbies);
         StateHasChanged();
+    }
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if (TimeUntilRefresh < 0)
+        {
+            TimeUntilRefresh = 0;
+            RefreshGameList();
+        }
     }
 
     async void JoinLobby(ILobby lobby)
