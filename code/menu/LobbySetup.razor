@@ -15,7 +15,10 @@
             }
             else
             {
-                <div class="button join-team" onmousedown=@(() => JoinTeam(CheckersTeam.Red))>AI 🤖</div>
+                <div class="button join-team" onmousedown=@(() => JoinTeam(CheckersTeam.Red))>
+AI 🤖 
+click to play here
+                </div>
             }
         </div>
         <div class="player-slot black">
@@ -25,7 +28,10 @@
             }
             else
             {
-                <div class="button join-team" onmousedown=@(() => JoinTeam(CheckersTeam.Black))>AI 🤖</div>
+                <div class="button join-team" onmousedown=@(() => JoinTeam(CheckersTeam.Black))>
+AI 🤖
+click to play here
+                </div>
             }
         </div>
     </div>
@@ -66,6 +72,12 @@
     public override void Tick()
     {
         base.Tick();
+
+        if (Lobby.State == "active")
+        {
+            _ = Lobby.LaunchGameAsync();
+            return;
+        }
 
         Lobby.ReceiveMessages(OnNetworkMessage);
 
