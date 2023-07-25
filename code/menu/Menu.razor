@@ -6,7 +6,10 @@
     <div class="navbar">
         <div class="logo">Checkers</div>
         <navlink href="/findgame" class="link">⚔️ Versus Player</navlink>
-        <div class="link">🚶‍♂️ Quit</div>
+        @if (Sandbox.Game.InGame)
+        {
+            <div class="link" @onmousedown="@QuitGame">🚶‍♂️ Leave Game</div>
+        }
     </div>
     <div @ref="NavigatorCanvas" class="body"></div>
 </root>
@@ -17,5 +20,10 @@
         base.OnParametersSet();
 
         if(firstTime) Navigate("/findgame");
+    }
+
+    void QuitGame()
+    {
+        Sandbox.Game.Menu.LeaveServer("Client left");
     }
 }
