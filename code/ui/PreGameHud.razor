@@ -32,8 +32,8 @@
 
         if (!firstTime) return;
 
-        if (long.TryParse(CheckersGame.Player1Red, out var rid)) RedSteamId = rid;
-        if (long.TryParse(CheckersGame.Player2Black, out var bid)) BlackSteamId = bid;
+        RedSteamId = CheckersGame.Player1Red;
+        BlackSteamId = CheckersGame.Player2Black;
     }
 
     void AbortGame()

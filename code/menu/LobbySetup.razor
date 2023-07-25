@@ -120,8 +120,8 @@ click to play here
 
         var settings = new Dictionary<string, string>()
         {
-            { "player1red", player1id?.ToString() ?? "ai" },
-            { "player2black", player2id?.ToString() ?? "ai" },
+            { "player1red", player1id?.ToString() ?? "-1" },
+            { "player2black", player2id?.ToString() ?? "-1" },
         };
 
         Lobby.ConVars = settings.ToImmutableDictionary();

@@ -34,6 +34,8 @@ public partial class CheckersPlayer : AnimatedEntity
 		EnableShadowInFirstPerson = true;
 
 		MoveToSpawnPoint();
+
+		Transmit = TransmitType.Always;
 	}
 
 	public void Dress( IClient client )

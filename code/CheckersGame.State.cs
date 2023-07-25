@@ -7,9 +7,9 @@ partial class CheckersGame
 {
 
 	[ConVar.Replicated( name: "player1red" )]
-	public static string Player1Red { get; set; }
+	public static long Player1Red { get; set; }
 	[ConVar.Replicated( name: "player2black" )]
-	public static string Player2Black { get; set; }
+	public static long Player2Black { get; set; }
 
 	[Net, Change( nameof( ClientGameStateChanged ) )]
 	public GameState CurrentState { get; set; }
@@ -85,9 +85,9 @@ partial class CheckersGame
 
 	public bool IsWaitingFor( long steamid )
 	{
-		if ( Player1Red != steamid.ToString() && Player2Black != steamid.ToString() ) return false;
+		if ( Player1Red != steamid && Player2Black != steamid ) return false;
 
-		var player = Entity.All.OfType<CheckersPlayer>().FirstOrDefault( x => x.Client?.SteamId.ToString() == Player1Red );
+		var player = Entity.All.OfType<CheckersPlayer>().FirstOrDefault( x => x.Client?.SteamId == Player1Red );
 
 		return !player.IsValid();
 	}
@@ -96,28 +96,13 @@ partial class CheckersGame
 	{
 		var players = Entity.All.OfType<CheckersPlayer>();
 
-		var player1 = players.FirstOrDefault( x => x.Client?.SteamId.ToString() == Player1Red );
-		var player2 = players.FirstOrDefault( x => x.Client?.SteamId.ToString() == Player2Black );
+		var player1 = players.FirstOrDefault( x => x.Client?.SteamId == Player1Red );
+		var player2 = players.FirstOrDefault( x => x.Client?.SteamId == Player2Black );
 
-		if ( Player1Red == "ai" )
-		{
-			player1 = EnsureAI( CheckersTeam.Red );
-		}
-
-		if ( Player2Black == "ai" )
-		{
-			player2 = EnsureAI( CheckersTeam.Black );
-		}
-
-		if ( player1.IsValid() )
-		{
-			player1.Team = CheckersTeam.Red;
-		}
-
-		if ( player2.IsValid() )
-		{
-			player2.Team = CheckersTeam.Black;
-		}
+		if ( Player1Red == -1 ) player1 = EnsureAI( CheckersTeam.Red );
+		if ( Player2Black == -1 ) player2 = EnsureAI( CheckersTeam.Black );
+		if ( player1.IsValid() ) player1.Team = CheckersTeam.Red;
+		if ( player2.IsValid() ) player2.Team = CheckersTeam.Black;
 
 		if ( player1.IsValid() && player2.IsValid() )
 		{
