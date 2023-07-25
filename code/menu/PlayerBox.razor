@@ -17,9 +17,9 @@
 
 @code {
     public string? Name { get; set; }
-    public int? Elo { get; set; }
     public long? SteamId { get; set; }
 
+    int Elo;
     bool WaitingToJoin;
 
     public override void Tick()
@@ -48,9 +48,15 @@
             Name = new Friend(SteamId.Value).Name;
         }
 
-        if(Elo == null)
-        {
-            Elo = 312;
-        }
+        FetchElo();
+    }
+
+    async void FetchElo()
+    {
+        if (SteamId == null) return;
+
+        Elo = (int)(await CheckersLeaderboard.GetScore(SteamId.Value));
+
+        StateHasChanged();
     }
 }

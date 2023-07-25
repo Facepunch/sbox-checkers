@@ -46,13 +46,10 @@ internal partial class CheckersGame
 	[Event( CheckersEvents.ServerMatchCompleted )]
 	private void OnMatchCompleted()
 	{
-		//if (Winner.Client.IsBot || Loser.Client.IsBot)
-		//	return;
+		if (Winner.Client.IsBot || Loser.Client.IsBot)
+			return;
 
-		//Winner.Client.SetGameResult(GameplayResult.Win, 0);
-		//Loser.Client.SetGameResult(GameplayResult.Lose, 0);
-
-		//  Global.Service.EndGame();
+		_ = CheckersLeaderboard.UpdateScores( Winner.Client, Loser.Client );
 	}
 
 }

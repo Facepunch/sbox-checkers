@@ -11,7 +11,7 @@
         <div class="player-slot red">
             @if (red != null)
             {
-                <PlayerBox SteamId=@red.Value.SteamId Name=@red.Value.Name Elo=@red.Value.EloScore />
+                <PlayerBox SteamId=@red.Value.SteamId Name=@red.Value.Name />
             }
             else
             {
@@ -21,7 +21,7 @@
         <div class="player-slot black">
             @if (black != null)
             {
-                <PlayerBox SteamId=@black.Value.SteamId Name=@black.Value.Name Elo=@black.Value.EloScore />
+                <PlayerBox SteamId=@black.Value.SteamId Name=@black.Value.Name />
             }
             else
             {
